@@ -1,0 +1,129 @@
+<template name="profile">
+  <div class="container" style="padding-top: 60px;">
+    <h1 class="page-header">Изменить профиль</h1>
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="text-center">
+          <img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">
+          <h6>Upload a different photo...</h6>
+          <input type="file" class="text-center center-block well well-sm">
+        </div>
+      </div>
+      {{#autoForm collection="Meteor.users" id="profile" doc=this type="update"}}
+      <!-- edit form column -->
+      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        <h3>Персональные данные</h3>
+        <div class="form-horizontal">
+          <!-- ID -->
+          <!-- <input id="ID" name="ID" type="hidden" value="{{currentUser._id}}"> -->
+          <!-- Имя пользователя -->
+          <div class="form-group {{#if afFieldIsInvalid name='username'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">Имя пользователя:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='username'}}
+              {{#if afFieldIsInvalid name='username'}}
+                <span class="help-block">{{afFieldMessage name='username'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <!-- Имя -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.firstName'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">Имя:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='profile.firstName'}}
+              {{#if afFieldIsInvalid name='profile.firstName'}}
+                <span class="help-block">{{afFieldMessage name='profile.firstName'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <!-- Отчество -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.middleName'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">Отчество:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='profile.middleName'}}
+              {{#if afFieldIsInvalid name='profile.middleName'}}
+                <span class="help-block">{{afFieldMessage name='profile.middleName'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <!-- Фамилия -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.lastName'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">Фамилия:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='profile.lastName'}}
+              {{#if afFieldIsInvalid name='profile.lastName'}}
+                <span class="help-block">{{afFieldMessage name='profile.lastName'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <!-- День рождения -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.birthday'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">День рождения:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='profile.birthday'}}
+              {{#if afFieldIsInvalid name='profile.birthday'}}
+                <span class="help-block">{{afFieldMessage name='profile.birthday'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <!-- Пол -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.gender'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">Пол:</label>
+            <div class="col-lg-8">
+              <div class="ui-select">
+                {{> afFieldInput name='profile.gender' firstOption="(Выберите пол)" options="allowed"}}
+                {{#if afFieldIsInvalid name='profile.gender'}}
+                <span class="help-block">{{afFieldMessage name='profile.gender'}}</span>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          <!-- Организация -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.organization'}}has-error{{/if}}">
+            <label class="col-lg-3 control-label">Организация:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='profile.organization'}}
+              {{#if afFieldIsInvalid name='profile.organization'}}
+                <span class="help-block">{{afFieldMessage name='profile.organization'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="form-group {{#if afFieldIsInvalid name='emails.0.address'}} has-error{{/if}}">
+            <label class="col-lg-3 control-label">Email*:</label>
+            <div class="col-lg-8">
+              {{> afFieldInput name='emails.0.address'}}
+              {{#if afFieldIsInvalid name='emails.0.address'}}
+                <span class="help-block">{{afFieldMessage name='emails.0.address'}}</span>
+              {{/if}}
+              {{> afFieldInput name='emails.0.verified'}}
+            </div>
+          </div>
+          <!-- Адрес места работы -->
+          <div class="form-group {{#if afFieldIsInvalid name='profile.addressWork'}}has-error{{/if}}">
+            <label class="col-md-3 control-label">Адрес места работы:</label>
+            <div class="col-md-8">
+              {{> afFieldInput name='profile.addressWork'}}
+              {{#if afFieldIsInvalid name='profile.addressWork'}}
+                <span class="help-block">{{afFieldMessage name='profile.addressWork'}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input class="btn btn-primary" type="submit" name="submit" value="Сохранить">
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/autoForm}}
+    </div>
+  </div>
+</template>
+
+<template name="_loginButtonsAdditionalLoggedInDropdownActions">
+    <button class="btn btn-default btn-block" id="login-buttons-edit-profile">Изменить профиль</button>
+</template>

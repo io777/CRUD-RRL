@@ -1,0 +1,49 @@
+<template name="userList">
+	<a class="btn btn-success" href="{{pathFor 'insertUserForm'}}">
+		<i class="ion-plus">&nbsp;Добавить пользователя</i>
+	</a>
+	<br>
+	<br>
+	{{> reactiveTable settings=settings}}
+</template>
+
+<template name="insertUserForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'userList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Meteor.users" buttonContent="Создать" id="insertUserForm" type="insert" template="bootstrap3-horizontal" fields="username,emails,createdAt,profile,roles"}}
+	</div>
+</template>
+
+<template name="updateUserForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'userList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Meteor.users" doc=this id="updateUserForm" buttonContent="Изменить" type="update" template="bootstrap3-horizontal" fields="username,emails,createdAt,profile,roles"}}
+	</div>
+</template>
+
+<template name="setPasswordForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'userList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		<form id="addPasswordForm" class="password form page" data-parsley-validate>
+		    <div class="form-group">
+			    <label class="control-label" for="password">Пароль*</label>
+			    <div class="controls">
+			        <input name="password" id="password" type="password" value="" placeholder="Введите 	пароль" class="form-control" data-parsley-minlength="6" data-parsley-maxlength="20" required/>
+			    </div>
+		    </div>
+		    <input type="submit" name="submit" value="Применить" class="btn btn-primary submit"/>
+		</form>
+	</div>
+</template>

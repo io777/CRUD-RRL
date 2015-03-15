@@ -1,0 +1,37 @@
+<template name="insertAlarmForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'AlarmList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Alarms" buttonContent="Создать" id="insertAlarmForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateAlarmForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'AlarmList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="Alarms" buttonContent="Изменить" doc=this id="updateAlarmForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="Alarms" buttonContent=false doc=this id="updateAlarmForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="AlarmList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertAlarmForm'}}">
+			<i class="ion-plus">&nbsp;Добавить Аварию</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего аварий: {{AlarmsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

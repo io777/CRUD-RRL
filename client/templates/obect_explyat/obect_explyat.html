@@ -1,0 +1,37 @@
+<template name="insertObectExplyatForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'ObectExplyatList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="ObectExplyats" buttonContent="Создать" id="insertObectExplyatForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateObectExplyatForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'ObectExplyatList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="ObectExplyats" buttonContent="Изменить" doc=this id="updateObectExplyatForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="ObectExplyats" buttonContent=false doc=this id="updateObectExplyatForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="ObectExplyatList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertObectExplyatForm'}}">
+			<i class="ion-plus">&nbsp;Добавить объект эксплуатации</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего объектов эксплуатации: {{ObectExplyatsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

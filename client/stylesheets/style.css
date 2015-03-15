@@ -1,0 +1,9 @@
+#spinner {
+  height: 300px; 
+}
+
+.centered {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}

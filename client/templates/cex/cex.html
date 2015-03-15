@@ -1,0 +1,37 @@
+<template name="insertCexForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'CexList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Cexs" buttonContent="Создать" id="insertCexForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateCexForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'CexList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="Cexs" buttonContent="Изменить" doc=this id="updateCexForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="Cexs" buttonContent=false doc=this id="updateCexForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="CexList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertCexForm'}}">
+			<i class="ion-plus">&nbsp;Добавить Цех</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего Цехов: {{CexsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

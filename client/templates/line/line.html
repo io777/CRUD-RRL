@@ -1,0 +1,37 @@
+<template name="insertLineForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'LineList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Lines" buttonContent="Создать" id="insertLineForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateLineForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'LineList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="Lines" buttonContent="Изменить" doc=this id="updateLineForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="Lines" buttonContent=false doc=this id="updateLineForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="LineList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertLineForm'}}">
+			<i class="ion-plus">&nbsp;Добавить линию РРЛ</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего линий РРЛ: {{LinesCount}}
+	{{> reactiveTable settings=settings}}
+</template>

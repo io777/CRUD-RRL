@@ -1,0 +1,37 @@
+<template name="insertAMSForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'AMSList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="AMSs" buttonContent="Создать" id="insertAMSForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateAMSForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'AMSList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="AMSs" buttonContent="Изменить" doc=this id="updateAMSForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="AMSs" buttonContent=false doc=this id="updateAMSForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="AMSList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertAMSForm'}}">
+			<i class="ion-plus">&nbsp;Добавить АМС</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего АМС: {{AMSsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

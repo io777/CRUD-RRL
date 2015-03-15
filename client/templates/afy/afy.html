@@ -1,0 +1,37 @@
+<template name="insertAFYForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'AFYList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="AFYs" buttonContent="Создать" id="insertAFYForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateAFYForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'AFYList'}}">
+			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="AFYs" buttonContent="Изменить" doc=this id="updateAFYForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="AFYs" buttonContent=false doc=this id="updateAFYForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="AFYList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertAFYForm'}}">
+			<i class="ion-plus">&nbsp;Добавить АФУ</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего АФУ: {{AFYsCount}}
+	{{> reactiveTable settings=settings}}
+</template>
