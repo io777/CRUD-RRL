@@ -1,0 +1,37 @@
+<template name="insertStancionOborydForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'StancionOborydList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="StancionOboryds" buttonContent="Создать" id="insertStancionOborydForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateStancionOborydForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'StancionOborydList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="StancionOboryds" buttonContent="Изменить" doc=this id="updateStancionOborydForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="StancionOboryds" buttonContent=false doc=this id="updateStancionOborydForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="StancionOborydList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertStancionOborydForm'}}">
+			<i class="fa fa-plus">&nbsp;Добавить Станцион. оборудование</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего станцион. оборудования: {{StancionOborydsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

@@ -14,7 +14,6 @@ twbs:bootstrap
 ian:accounts-ui-bootstrap-3
 anti:i18n
 iron:router
-pagebakers:ionicons
 sacha:spin
 spacebars
 ovcharik:alertify
@@ -31,3 +30,4 @@ rgoomar:bootstrap-validator
 amr:parsley.js
 less
 raix:handlebar-helpers
+momentjs:moment

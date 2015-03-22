@@ -14,7 +14,7 @@ Template.userList.helpers({
 			    	label: 'Удалить',
 			    	sortable: false,
 			    	fn: function (value){
-			    		return new Spacebars.SafeString('<a class="btn btn-danger"><i class="ion-close-circled"></i></a>');
+			    		return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
 			    	}
 			    },
 			    { 
@@ -23,7 +23,7 @@ Template.userList.helpers({
 			    	label: 'Изменить / посмотреть',
 			    	sortable: false,
 			    	fn: function (value){
-			    		return new Spacebars.SafeString('<a class="btn btn-warning"><i class="ion-android-create"></i></a>');
+			    		return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 			    	}
 			    },
     			{ key: 'username', label: 'Имя пользователя', sortable: true},
@@ -36,11 +36,11 @@ Template.userList.helpers({
 			    	fn: function (value){
 			    		if(value){
 			    			return new Spacebars.SafeString(
-			    				'<a class="btn btn-info"><i class="ion-lock-combination"></i></a>'
+			    				'<a><i class="fa fa-lock fa-lg"></i></a>'
 			    			);
 			    		} else {
 			    			return new Spacebars.SafeString(
-			    				'<a class="btn btn-info"><i class="ion-close"></i></a>'
+			    				'<a><i class="fa fa-unlock fa-lg"></i></a>'
 			    			);
 			    		}
 			    	}
@@ -52,7 +52,7 @@ Template.userList.helpers({
 			    { key: 'profile.birthday', label: 'День рождения', sortable: true},
 			    { key: 'profile.gender', label: 'Пол', sortable: true},
 			    { key: 'profile.organization', label: 'Организация', sortable: true},
-			    { key: 'profile.website', label: 'Сайт', sortable: true},
+			    // { key: 'profile.website', label: 'Сайт', sortable: true},
 			    { key: 'profile.addressWork', label: 'Адрес работы', sortable: true},
 			    { key: 'roles', label: 'Роли', sortable: true}
 			]
@@ -67,8 +67,7 @@ Template.userList.events({
     event.preventDefault();
     var user = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-android-create" ||
-    	event.target.className == "btn btn-warning") {
+    if (event.target.className == "fa fa-pencil fa-lg") {
       Router.go('updateUserForm', {_id: this._id});
     }
   }
@@ -80,8 +79,7 @@ Template.userList.events({
     event.preventDefault();
     var user = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-close-circled" ||
-    	event.target.className == "btn btn-danger") {
+    if (event.target.className == "fa fa-times fa-lg") {
       Meteor.users.remove(user._id, function(error){
       	if(error){
       		alertify.error("Ошибка!", error);
@@ -99,9 +97,8 @@ Template.userList.events({
     event.preventDefault();
     var user = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-lock-combination" || 
-    	event.target.className == "ion-close" || 
-    	event.target.className == "btn btn-info") {
+    if (event.target.className == "fa fa-unlock fa-lg" || 
+    	event.target.className == "fa fa-lock fa-lg") {
 			Router.go('setPasswordForm', {_id: this._id});
     }
   }
@@ -173,8 +170,12 @@ AutoForm.addHooks(['insertUserForm', 'updateUserForm'], {
     after: {
       insert: function(error, result) {
         if (error) {
-        	alertify.error("Ошибка!", error);
-          	console.log("Insert Error:", error);
+        	if(error.error === 409){
+				alertify.error("Такое имя пользователя или почтовый адресс уже существуют!");
+			} else {
+	        	alertify.error("Ошибка!", error);
+	          	console.log("Insert Error:", error);
+	        }
         } else {
         	Router.go('userList');
         	alertify.success("Пользователь успешно добавлен!");
@@ -183,8 +184,12 @@ AutoForm.addHooks(['insertUserForm', 'updateUserForm'], {
       },
       update: function(error) {
         if (error) {
-        	alertify.error("Ошибка!", error);
-        	console.log("Update Error:", error);
+        	if(error.error === 409){
+				alertify.error("Такое имя пользователя или почтовый адресс уже существуют!");
+			} else {
+	        	alertify.error("Ошибка!", error);
+	        	console.log("Update Error:", error);
+	        }
         } else {
         	Router.go('userList');
         	alertify.success("Пользователь успешно изменен!");

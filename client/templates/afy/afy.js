@@ -24,7 +24,7 @@ Template.AFYList.helpers({
 				    	}
 			    	},
 			    	fn: function (value){
-			    		return new Spacebars.SafeString('<a class="btn btn-danger"><i class="ion-close-circled"></i></a>');
+			    		return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
 			    	}
 			    },
 			    { 
@@ -33,7 +33,7 @@ Template.AFYList.helpers({
 			    	label: 'Изменить / посмотреть',
 			    	sortable: false,
 			    	fn: function (value){
-			    		return new Spacebars.SafeString('<a class="btn btn-warning"><i class="ion-android-create"></i></a>');
+			    		return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 			    	}
 			    },
     			{ key: 'napravlenie', label: 'Направление', sortable: true},
@@ -72,8 +72,7 @@ Template.AFYList.events({
     event.preventDefault();
     var AFY = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-android-create" ||
-    	event.target.className == "btn btn-warning") {
+    if (event.target.className == "fa fa-pencil fa-lg") {
       Router.go('updateAFYForm', {_id: this._id});
     }
   }
@@ -84,8 +83,7 @@ Template.AFYList.events({
     event.preventDefault();
     var AFY = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-close-circled" ||
-    	event.target.className == "btn btn-danger") {
+    if (event.target.className == "fa fa-times fa-lg") {
       	AFYs.remove(AFY._id, function(error){
       		if(error){
       			alertify.error("Ошибка!", error);

@@ -24,7 +24,7 @@ Template.AMSList.helpers({
 				    	}
 			    	},
 			    	fn: function (value){
-			    		return new Spacebars.SafeString('<a class="btn btn-danger"><i class="ion-close-circled"></i></a>');
+			    		return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
 			    	}
 			    },
 			    { 
@@ -33,7 +33,7 @@ Template.AMSList.helpers({
 			    	label: 'Изменить / посмотреть',
 			    	sortable: false,
 			    	fn: function (value){
-			    		return new Spacebars.SafeString('<a class="btn btn-warning"><i class="ion-android-create"></i></a>');
+			    		return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 			    	}
 			    },
     			{ key: 'name_psevdo', label: 'Наименование', sortable: true},
@@ -99,8 +99,7 @@ Template.AMSList.events({
     event.preventDefault();
     var AMS = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-android-create" ||
-    	event.target.className == "btn btn-warning") {
+    if (event.target.className == "fa fa-pencil fa-lg") {
       Router.go('updateAMSForm', {_id: this._id});
     }
   }
@@ -111,8 +110,7 @@ Template.AMSList.events({
     event.preventDefault();
     var AMS = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-close-circled" ||
-    	event.target.className == "btn btn-danger") {
+    if (event.target.className == "fa fa-times fa-lg") {
       	AMSs.remove(AMS._id, function(error){
       		if(error){
       			alertify.error("Ошибка!", error);

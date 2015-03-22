@@ -1,7 +1,7 @@
 <template name="insertAlarmForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'AlarmList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -12,7 +12,7 @@
 <template name="updateAlarmForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'AlarmList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -27,7 +27,7 @@
 <template name="AlarmList">
 	{{#if isInRole 'moderator,admin'}}
 		<a class="btn btn-success" href="{{pathFor 'insertAlarmForm'}}">
-			<i class="ion-plus">&nbsp;Добавить Аварию</i>
+			<i class="fa fa-plus">&nbsp;Добавить Аварию</i>
 		</a>
 	{{/if}}
 	<br>

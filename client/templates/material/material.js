@@ -1,11 +1,11 @@
-Template.skladList.helpers({
-    // настройки для reactiv table
-    SkladsCount: function(){
-    	return Sklads.find().count();
+Template.MaterialList.helpers({
+    MaterialsCount: function(){
+      return Materials.find().count();
     },
+    // настройки для reactiv table
     settings: function(){
     	return {
-    		collection: Sklads,
+    		collection: Materials,
     		rowsPerPage: 10,
     		showFilter: true,
     		showColumnToggles: true,
@@ -37,55 +37,55 @@ Template.skladList.helpers({
 			    	}
 			    },
     			{ key: 'name', label: 'Наименование', sortable: true},
-			    { key: 'adress', label: 'Адресс', sortable: true },
-			    { key: 'primechanie', label: 'Примечание', sortable: true }
-			    
+          { key: 'kolvo', label: 'Количество', sortable: true},
+          { key: 'razmer', label: 'Размер', sortable: true},
+          { key: 'primechanie', label: 'Примечание', sortable: true}
 			]
     	};
     }
 });
 
-// редактировать склад
-Template.skladList.events({
+// редактировать матерьял
+Template.MaterialList.events({
   'click .reactive-table tr': function (event) {
     // set the blog post we'll display details and news for
     event.preventDefault();
-    var sklad = this;
+    var Material = this;
     // checks if the actual clicked element has the class `delete`
     if (event.target.className == "fa fa-pencil fa-lg") {
-      Router.go('updateSkladForm', {_id: this._id});
+      Router.go('updateMaterialForm', {_id: this._id});
     }
   }
 });
-// удалить склад
-Template.skladList.events({
+// удалить матерьял
+Template.MaterialList.events({
   'click .reactive-table tr': function (event) {
     event.preventDefault();
-    var sklad = this;
+    var Material = this;
     // checks if the actual clicked element has the class `delete`
     if (event.target.className == "fa fa-times fa-lg") {
-      	Sklads.remove(sklad._id, function(error){
+      	Materials.remove(Material._id, function(error){
       		if(error){
       			alertify.error("Ошибка!", error);
       			console.log("Remove Error:", error);
       		} else {
-      			alertify.success("Склад успешно удален!");
-      			console.log("Sklad Remove!");
+      			alertify.success("Матерьял успешно удален!");
+      			console.log("Material Remove!");
       		}
       	});
     }
   }
 });
 // перенаправить на список после создания и изменения
-AutoForm.addHooks(['insertSkladForm', 'updateSkladForm'], {
+AutoForm.addHooks(['insertMaterialForm', 'updateMaterialForm'], {
     after: {
       insert: function(error, result) {
         if (error) {
         	alertify.error("Ошибка!", error);
           	console.log("Insert Error:", error);
         } else {
-        	Router.go('skladList');
-        	alertify.success("Склад успешно добавлен!");
+        	Router.go('MaterialList');
+        	alertify.success("Матерьял успешно добавлен!");
         	console.log("Insert Result:", result);
         }
       },
@@ -94,8 +94,8 @@ AutoForm.addHooks(['insertSkladForm', 'updateSkladForm'], {
         	alertify.error("Ошибка!", error);
         	console.log("Update Error:", error);
         } else {
-        	Router.go('skladList');
-        	alertify.success("Склад успешно изменен!");
+        	Router.go('MaterialList');
+        	alertify.success("Матерьял успешно изменен!");
         	console.log("Updated!");
         }
       }

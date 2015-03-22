@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="{{pathFor 'dashboard'}}">
-          <i class="ion-android-cloud-outline"></i>&nbsp;Центр данных
+          <i class="fa fa-cloud fa-lg"></i>&nbsp;Центр данных
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navigation">
@@ -17,17 +17,17 @@
         {{#if isInRole 'admin'}}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="ion-happy-outline"></i>&nbsp;Админ панель<b class="caret"></b>
+              <i class="fa fa-smile-o"></i>&nbsp;Админ панель<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="{{pathFor 'userList'}}"><i class="ion-person-stalker">&nbsp;Пользователи</i></a></li>
+              <li><a href="{{pathFor 'userList'}}"><i class="fa fa-users">&nbsp;Пользователи</i></a></li>
             </ul>
           </li>
         {{/if}}
         {{#if currentUser or isInRole 'admin,moderator'}}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="ion-arrow-graph-up-right"></i>&nbsp;РРЛ<b class="caret"></b>
+              <i class="fa fa-bolt"></i>&nbsp;РРЛ<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
               <li><a href="{{pathFor 'skladList'}}">Склады</a></li>
@@ -37,6 +37,11 @@
               <li><a href="{{pathFor 'CexList'}}">Цеха</a></li>
               <li><a href="{{pathFor 'LineList'}}">Линии РРЛ</a></li>
               <li><a href="{{pathFor 'ObectExplyatList'}}">Объекты эксплуатации</a></li>
+              <li><a href="{{pathFor 'TechZdaniaList'}}">Тех. здания</a></li>
+              <li><a href="{{pathFor 'StancionOborydList'}}">Станцион. оборудование</a></li>
+              <li><a href="{{pathFor 'MaterialList'}}">Матерьялы</a></li>
+              <li><a href="{{pathFor 'WorkerList'}}">Работники</a></li>
+              <li><a href="{{pathFor 'SpezOdezdaList'}}">Спец. одежда</a></li>
             </ul>
           </li>
         {{/if}}

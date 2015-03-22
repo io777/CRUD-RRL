@@ -1,0 +1,37 @@
+<template name="insertMaterialForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'MaterialList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Materials" buttonContent="Создать" id="insertMaterialForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateMaterialForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'MaterialList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="Materials" buttonContent="Изменить" doc=this id="updateMaterialForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="Materials" buttonContent=false doc=this id="updateMaterialForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="MaterialList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertMaterialForm'}}">
+			<i class="fa fa-plus">&nbsp;Добавить матерьял</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего матерьялов: {{MaterialsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

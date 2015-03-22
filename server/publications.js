@@ -21,7 +21,6 @@ Meteor.publish('singleUser', function(id) {
 Meteor.publish(null, function (){ 
   return Meteor.roles.find({})
 });
-
 // опубликовать все АФУ
 Meteor.publish('AFYs', function(){
   return AFYs.find();
@@ -76,10 +75,51 @@ Meteor.publish('singleObectExplyat', function(id) {
   check(id, String);
   return ObectExplyats.find(id);
 });
-
-
-
-
+// опубликовать все тех. здания
+Meteor.publish('TechZdanias', function(){
+  return TechZdanias.find();
+});
+// опубликовать одно тех. здание
+Meteor.publish('singleTechZdania', function(id) {
+  check(id, String);
+  return TechZdanias.find(id);
+});
+// опубликовать все станцион. оборудование
+Meteor.publish('StancionOboryds', function(){
+  return StancionOboryds.find();
+});
+// опубликовать один станцион. оборудование
+Meteor.publish('singleStancionOboryd', function(id) {
+  check(id, String);
+  return StancionOboryds.find(id);
+});
+// опубликовать все матерьялы
+Meteor.publish('Materials', function(){
+  return Materials.find();
+});
+// опубликовать один матерьял
+Meteor.publish('singleMaterial', function(id) {
+  check(id, String);
+  return Materials.find(id);
+});
+// опубликовать всех работников
+Meteor.publish('Workers', function(){
+  return Workers.find();
+});
+// опубликовать одиного работника
+Meteor.publish('singleWorker', function(id) {
+  check(id, String);
+  return Workers.find(id);
+});
+// опубликовать всю спец. одежда
+Meteor.publish('SpezOdezdas', function(){
+  return SpezOdezdas.find();
+});
+// опубликовать одину спец. одежду
+Meteor.publish('singleSpezOdezda', function(id) {
+  check(id, String);
+  return SpezOdezdas.find(id);
+});
 
 
 

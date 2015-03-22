@@ -25,6 +25,7 @@ AutoForm.addHooks(['profile'], {
 	}
   });
 
+
 // Template.profile.rendered=function() {
 //     $('#birthday').datepicker({
 //     	language: 'ru'

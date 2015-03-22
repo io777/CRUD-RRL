@@ -1,7 +1,7 @@
 <template name="insertAMSForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'AMSList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -12,7 +12,7 @@
 <template name="updateAMSForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'AMSList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -27,7 +27,7 @@
 <template name="AMSList">
 	{{#if isInRole 'moderator,admin'}}
 		<a class="btn btn-success" href="{{pathFor 'insertAMSForm'}}">
-			<i class="ion-plus">&nbsp;Добавить АМС</i>
+			<i class="fa fa-plus">&nbsp;Добавить АМС</i>
 		</a>
 	{{/if}}
 	<br>

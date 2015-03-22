@@ -10,7 +10,7 @@
           <input type="file" class="text-center center-block well well-sm">
         </div>
       </div>
-      {{#autoForm collection="Meteor.users" id="profile" doc=this type="update"}}
+      {{#autoForm collection="Meteor.users" id="profile" doc=currentUser type="update"}}
       <!-- edit form column -->
       <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
         <h3>Персональные данные</h3>

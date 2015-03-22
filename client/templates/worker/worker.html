@@ -1,0 +1,37 @@
+<template name="insertWorkerForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'WorkerList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="Workers" buttonContent="Создать" id="insertWorkerForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateWorkerForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'WorkerList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="Workers" buttonContent="Изменить" doc=this id="updateWorkerForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="Workers" buttonContent=false doc=this id="updateWorkerForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="WorkerList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertWorkerForm'}}">
+			<i class="fa fa-plus">&nbsp;Добавить работника</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего работников: {{WorkersCount}}
+	{{> reactiveTable settings=settings}}
+</template>

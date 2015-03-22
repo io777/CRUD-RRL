@@ -1,7 +1,7 @@
 <template name="insertLineForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'LineList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -12,7 +12,7 @@
 <template name="updateLineForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'LineList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -27,7 +27,7 @@
 <template name="LineList">
 	{{#if isInRole 'moderator,admin'}}
 		<a class="btn btn-success" href="{{pathFor 'insertLineForm'}}">
-			<i class="ion-plus">&nbsp;Добавить линию РРЛ</i>
+			<i class="fa fa-plus">&nbsp;Добавить линию РРЛ</i>
 		</a>
 	{{/if}}
 	<br>

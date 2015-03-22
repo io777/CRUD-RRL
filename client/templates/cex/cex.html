@@ -1,7 +1,7 @@
 <template name="insertCexForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'CexList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -12,7 +12,7 @@
 <template name="updateCexForm">
 	<div class="col-md-4 centered">
 		<a class="btn btn-info" href="{{pathFor 'CexList'}}">
-			<i class="ion-arrow-left-c">&nbsp;Назад к списку</i>
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
 		</a>
 		<br>
 		<br>
@@ -27,7 +27,7 @@
 <template name="CexList">
 	{{#if isInRole 'moderator,admin'}}
 		<a class="btn btn-success" href="{{pathFor 'insertCexForm'}}">
-			<i class="ion-plus">&nbsp;Добавить Цех</i>
+			<i class="fa fa-plus">&nbsp;Добавить Цех</i>
 		</a>
 	{{/if}}
 	<br>

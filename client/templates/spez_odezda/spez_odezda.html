@@ -1,0 +1,37 @@
+<template name="insertSpezOdezdaForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'SpezOdezdaList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="SpezOdezdas" buttonContent="Создать" id="insertSpezOdezdaForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateSpezOdezdaForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'SpezOdezdaList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="SpezOdezdas" buttonContent="Изменить" doc=this id="updateSpezOdezdaForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="SpezOdezdas" buttonContent=false doc=this id="updateSpezOdezdaForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="SpezOdezdaList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertSpezOdezdaForm'}}">
+			<i class="fa fa-plus">&nbsp;Добавить спец. оджеду</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего спец. одежды: {{SpezOdezdasCount}}
+	{{> reactiveTable settings=settings}}
+</template>

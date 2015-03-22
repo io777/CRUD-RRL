@@ -1,0 +1,37 @@
+<template name="insertTechZdaniaForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'TechZdaniaList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="TechZdanias" buttonContent="Создать" id="insertTechZdaniaForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateTechZdaniaForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'TechZdaniaList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="TechZdanias" buttonContent="Изменить" doc=this id="updateTechZdaniaForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="TechZdanias" buttonContent=false doc=this id="updateTechZdaniaForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="TechZdaniaList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertTechZdaniaForm'}}">
+			<i class="fa fa-plus">&nbsp;Добавить Тех. здание</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего Тех. зданий: {{TechZdaniasCount}}
+	{{> reactiveTable settings=settings}}
+</template>

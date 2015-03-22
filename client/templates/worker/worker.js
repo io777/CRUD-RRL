@@ -1,11 +1,11 @@
-Template.skladList.helpers({
-    // настройки для reactiv table
-    SkladsCount: function(){
-    	return Sklads.find().count();
+Template.WorkerList.helpers({
+    WorkersCount: function(){
+      return Workers.find().count();
     },
+    // настройки для reactiv table
     settings: function(){
     	return {
-    		collection: Sklads,
+    		collection: Workers,
     		rowsPerPage: 10,
     		showFilter: true,
     		showColumnToggles: true,
@@ -36,56 +36,66 @@ Template.skladList.helpers({
 			    		return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 			    	}
 			    },
-    			{ key: 'name', label: 'Наименование', sortable: true},
-			    { key: 'adress', label: 'Адресс', sortable: true },
-			    { key: 'primechanie', label: 'Примечание', sortable: true }
-			    
+    			{ key: 'Familia', label: 'Фамилия', sortable: true},
+          { key: 'Name', label: 'Имя', sortable: true},
+          { key: 'Otchestvo', label: 'Отчество', sortable: true},
+          { key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
+          { key: 'data_postyplenia_na_raboty', label: 'Дата поступления на работу', sortable: true},
+          { key: 'pol', label: 'Пол', sortable: true},
+          { key: 'rost', label: 'Рост', sortable: true},
+          { key: 'razmer_odezdi', label: 'Размер одежды', sortable: true},
+          { key: 'razmer_obyvi', label: 'Размер обуви', sortable: true},
+          { key: 'razmer_golovnogo_ubora', label: 'Размер головного убора', sortable: true},
+          { key: 'tel', label: 'Телефон', sortable: true},
+          { key: 'tel_rab', label: 'Рабочий телефон', sortable: true},
+          { key: 'dolznost', label: 'dolznost', sortable: true},
+          { key: 'podpis', label: 'Подпись', sortable: true}
 			]
     	};
     }
 });
 
-// редактировать склад
-Template.skladList.events({
+// редактировать работника
+Template.WorkerList.events({
   'click .reactive-table tr': function (event) {
     // set the blog post we'll display details and news for
     event.preventDefault();
-    var sklad = this;
+    var Worker = this;
     // checks if the actual clicked element has the class `delete`
     if (event.target.className == "fa fa-pencil fa-lg") {
-      Router.go('updateSkladForm', {_id: this._id});
+      Router.go('updateWorkerForm', {_id: this._id});
     }
   }
 });
-// удалить склад
-Template.skladList.events({
+// удалить работника
+Template.WorkerList.events({
   'click .reactive-table tr': function (event) {
     event.preventDefault();
-    var sklad = this;
+    var Worker = this;
     // checks if the actual clicked element has the class `delete`
     if (event.target.className == "fa fa-times fa-lg") {
-      	Sklads.remove(sklad._id, function(error){
+      	Workers.remove(Worker._id, function(error){
       		if(error){
       			alertify.error("Ошибка!", error);
       			console.log("Remove Error:", error);
       		} else {
-      			alertify.success("Склад успешно удален!");
-      			console.log("Sklad Remove!");
+      			alertify.success("Работник успешно удален!");
+      			console.log("Worker Remove!");
       		}
       	});
     }
   }
 });
 // перенаправить на список после создания и изменения
-AutoForm.addHooks(['insertSkladForm', 'updateSkladForm'], {
+AutoForm.addHooks(['insertWorkerForm', 'updateWorkerForm'], {
     after: {
       insert: function(error, result) {
         if (error) {
         	alertify.error("Ошибка!", error);
           	console.log("Insert Error:", error);
         } else {
-        	Router.go('skladList');
-        	alertify.success("Склад успешно добавлен!");
+        	Router.go('WorkerList');
+        	alertify.success("Работник успешно добавлен!");
         	console.log("Insert Result:", result);
         }
       },
@@ -94,8 +104,8 @@ AutoForm.addHooks(['insertSkladForm', 'updateSkladForm'], {
         	alertify.error("Ошибка!", error);
         	console.log("Update Error:", error);
         } else {
-        	Router.go('skladList');
-        	alertify.success("Склад успешно изменен!");
+        	Router.go('WorkerList');
+        	alertify.success("Работник успешно изменен!");
         	console.log("Updated!");
         }
       }
