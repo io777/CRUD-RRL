@@ -129,6 +129,15 @@ Meteor.publish('singleSpezOdezda', function(id) {
   check(id, String);
   return SpezOdezdas.find(id);
 });
+// опубликовать все СИЗ
+Meteor.publish('Cizs', function(){
+  return Cizs.find();
+});
+// опубликовать один СИЗ
+Meteor.publish('singleCiz', function(id) {
+  check(id, String);
+  return Cizs.find(id);
+});
 
 
 
