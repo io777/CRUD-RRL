@@ -25,7 +25,7 @@
 		</a>
 		<br>
 		<br>
-		{{> quickForm collection="Meteor.users" doc=this id="updateUserForm" buttonContent="Изменить" type="update" template="bootstrap3-horizontal" fields="username,emails,createdAt,profile,roles"}}
+		{{> quickForm keepArrays=true collection="Meteor.users" doc=this id="updateUserForm" buttonContent="Изменить" type="update" template="bootstrap3-horizontal" fields="username,emails,createdAt,profile,roles"}}
 	</div>
 </template>
 

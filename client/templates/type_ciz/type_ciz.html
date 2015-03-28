@@ -1,0 +1,37 @@
+<template name="insertTypeCizForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'TypeCizList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{> quickForm collection="TypeCizs" buttonContent="Создать" id="insertTypeCizForm" type="insert"}}
+  	</div>
+</template>
+
+<template name="updateTypeCizForm">
+	<div class="col-md-4 centered">
+		<a class="btn btn-info" href="{{pathFor 'TypeCizList'}}">
+			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+		</a>
+		<br>
+		<br>
+		{{#if isInRole 'admin,moderator'}}
+	  		{{> quickForm collection="TypeCizs" buttonContent="Изменить" doc=this id="updateTypeCizForm" type="update"}}
+	  	{{else}}
+	  		{{> quickForm collection="TypeCizs" buttonContent=false doc=this id="updateTypeCizForm" }}
+	  	{{/if}}
+	</div>
+</template>
+
+<template name="TypeCizList">
+	{{#if isInRole 'moderator,admin'}}
+		<a class="btn btn-success" href="{{pathFor 'insertTypeCizForm'}}">
+			<i class="fa fa-plus">&nbsp;Добавить тип СИЗ</i>
+		</a>
+	{{/if}}
+	<br>
+	<br>
+	Всего Цехов: {{TypeCizsCount}}
+	{{> reactiveTable settings=settings}}
+</template>

@@ -140,6 +140,40 @@ Template.setPasswordForm.rendered = function(){
 	});
 };
 
+// перенаправить на список после создания и изменения
+AutoForm.addHooks(['insertUserForm', 'updateUserForm'], {
+    onSuccess: function(insert, result) {
+    	Router.go('userList');
+        alertify.success("Пользователь успешно добавлен!");
+        console.log("Insert Result:", result);
+    },
+    onError: function(insert, error) {
+    	if (error) {
+        	if(error.error === 409){
+				alertify.error("Такое имя пользователя или почтовый адресс уже существуют!");
+			} else {
+	        	alertify.error("Ошибка!", error);
+	          	console.log("Insert Error:", error);
+	        }
+        }
+    },
+    onSuccess: function(update, result) {
+    	Router.go('userList');
+        alertify.success("Пользователь успешно изменен!");
+        console.log("Updated!");
+    },
+    onError: function(update, error) {
+    	if (error) {
+        	if(error.error === 409){
+				alertify.error("Такое имя пользователя или почтовый адресс уже существуют!");
+			} else {
+	        	alertify.error("Ошибка!", error);
+	        	console.log("Update Error:", error);
+	        }
+        }
+    },
+});
+
 // Template.setPasswordForm.rendered = function(){
 // 	$(document).ready(function() {
 // 		$('#addPasswordForm').bootstrapValidator({
@@ -165,40 +199,6 @@ Template.setPasswordForm.rendered = function(){
 // 		});
 // 	});
 // };
-// перенаправить на список после создания и изменения
-AutoForm.addHooks(['insertUserForm', 'updateUserForm'], {
-    after: {
-      insert: function(error, result) {
-        if (error) {
-        	if(error.error === 409){
-				alertify.error("Такое имя пользователя или почтовый адресс уже существуют!");
-			} else {
-	        	alertify.error("Ошибка!", error);
-	          	console.log("Insert Error:", error);
-	        }
-        } else {
-        	Router.go('userList');
-        	alertify.success("Пользователь успешно добавлен!");
-        	console.log("Insert Result:", result);
-        }
-      },
-      update: function(error) {
-        if (error) {
-        	if(error.error === 409){
-				alertify.error("Такое имя пользователя или почтовый адресс уже существуют!");
-			} else {
-	        	alertify.error("Ошибка!", error);
-	        	console.log("Update Error:", error);
-	        }
-        } else {
-        	Router.go('userList');
-        	alertify.success("Пользователь успешно изменен!");
-        	console.log("Updated!");
-        }
-      }
-    }
-});
-
 
 // Template.insertUserForm.events({
 // 	'submit form': function(e){

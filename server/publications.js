@@ -7,6 +7,15 @@ Meteor.publish('singleSklad', function(id) {
   check(id, String);
   return Sklads.find(id);
 });
+// опубликовать все типы СИЗ
+Meteor.publish('TypeCizs', function(){
+  return TypeCizs.find();
+});
+// опубликовать один тип СИЗ
+Meteor.publish('singleTypeCiz', function(id) {
+  check(id, String);
+  return TypeCizs.find(id);
+});
 // опубликовать всех пользователей
 Meteor.publish('Users', function() {
   return Meteor.users.find();
