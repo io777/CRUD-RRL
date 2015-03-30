@@ -37,6 +37,7 @@ Template.skladList.helpers({
 			    	}
 			    },
     			{ key: 'name', label: 'Наименование', sortable: true},
+          { key: 'nomerKarti', label: 'Номер карты', sortable: true},
 			    { key: 'adress', label: 'Адресс', sortable: true },
 			    { key: 'primechanie', label: 'Примечание', sortable: true }
 			    

@@ -61,8 +61,7 @@ Template.CexList.events({
     event.preventDefault();
     var Cex = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-close-circled" ||
-    	event.target.className == "btn btn-danger") {
+    if (event.target.className == "fa fa-times fa-lg") {
       	Cexs.remove(Cex._id, function(error){
       		if(error){
       			alertify.error("Ошибка!", error);

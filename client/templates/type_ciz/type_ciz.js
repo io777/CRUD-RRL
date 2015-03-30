@@ -61,8 +61,7 @@ Template.TypeCizList.events({
     event.preventDefault();
     var TypeCiz = this;
     // checks if the actual clicked element has the class `delete`
-    if (event.target.className == "ion-close-circled" ||
-    	event.target.className == "btn btn-danger") {
+    if (event.target.className == "fa fa-times fa-lg") {
       	TypeCizs.remove(TypeCiz._id, function(error){
       		if(error){
       			alertify.error("Ошибка!", error);

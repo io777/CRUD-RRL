@@ -38,6 +38,7 @@ Template.ObectExplyatList.helpers({
 			    },
     			{ key: 'name', label: 'Наименование', sortable: true},
 			    { key: 'setevoi_nomer', label: 'Сетевой номер', sortable: true },
+          { key: 'nomerKarti', label: 'Номер карты', sortable: true},
           { key: 'adress', label: 'Адресс', sortable: true },
           { key: 'rasstoyanie_do_osn_stancii', label: 'Расстояние до основной станции (км)', sortable: true },
           { key: 'rasstoyanie_mezdy_stanciami', label: 'Расстояние между станциями (км)', sortable: true },

@@ -39,6 +39,7 @@ Template.WorkerList.helpers({
     			{ key: 'Familia', label: 'Фамилия', sortable: true},
           { key: 'Name', label: 'Имя', sortable: true},
           { key: 'Otchestvo', label: 'Отчество', sortable: true},
+          { key: 'nomerKarti', label: 'Номер карты', sortable: true},
           { key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
           { key: 'data_postyplenia_na_raboty', label: 'Дата поступления на работу', sortable: true},
           { key: 'pol', label: 'Пол', sortable: true},
