@@ -37,11 +37,32 @@
 		</a>
 		<br>
 		<br>
-		{{#if isInRole 'admin,moderator'}}
+		<!-- {{#if isInRole 'admin,moderator'}}
 			{{> quickForm collection="Cizs" buttonContent="Изменить" doc=this id="updateCizForm" type="update"}}
 		{{else}}
 			{{> quickForm collection="Cizs" buttonContent=false doc=this id="updateCizForm" }}
-		{{/if}}
+		{{/if}} -->
+		{{#autoForm collection="Cizs" id="updateCizForm" doc=this type="update"}}
+			<fieldset>
+				<legend>СИЗ</legend>
+				{{> afQuickField name='mesto'}}
+				{{> afQuickField name='number'}}
+				{{> afQuickField name='typeCiz'}}
+				{{> afQuickField name='nameCiz' firstOption="(Выберите СИЗ)" options=nameCizOptions}}
+				<!-- Период поверки -->
+				<div class="form-group">
+					<label class="control-label">Период поверки:</label>
+					{{periodPoverki}}
+				</div>
+				{{> afQuickField name='datePoverki'}}
+				<!-- Дата следующей поверки -->
+				<div class="form-group">
+					<label class="control-label">Дата следующей поверки:</label>
+					{{dateSledPoverki}}
+				</div>
+			</fieldset>
+			<button type="submit" class="btn btn-primary">Изменить</button>
+		{{/autoForm}}
 	</div>
 </template>
 
@@ -53,7 +74,7 @@
 	{{/if}}
 	<br>
 	<br>
-	Всего Цехов: {{CizsCount}}
+	Всего СИЗ: {{CizsCount}}
 	{{> reactiveTable settings=settings}}
 </template>
 

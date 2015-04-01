@@ -40,7 +40,7 @@ Template.CizList.helpers({
 					{ key: 'number', label: 'Порядковый номер', sortable: true },
 					{ key: 'typeCiz', label: 'Тип СИЗ', sortable: true },
 					{ key: 'nameCiz', label: 'Наименование СИЗ', sortable: true},
-					{ key: 'periodPverki', label: 'Период поверки', sortable: true},
+					{ key: 'periodPoverki', label: 'Период поверки', sortable: true},
 					{ key: 'datePoverki', label: 'Дата поверки', sortable: true },
 					{ key: 'dateSledPoverki', label: 'Дата следующей поверки', sortable: true },
 					
@@ -73,7 +73,7 @@ Template.CizList.events({
 						alertify.error("Ошибка!", error);
 						console.log("Remove Error:", error);
 					} else {
-						alertify.success("Тип СИЗ успешно удален!");
+						alertify.success("СИЗ успешно удалено!");
 						console.log("Ciz Remove!");
 					}
 				});
@@ -82,9 +82,42 @@ Template.CizList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
-	befor: {
+	before: {
 		insert: function(doc) {
-			
+			if(AutoForm.getFieldValue("typeCiz") && AutoForm.getFieldValue("nameCiz")){
+				var nameCiz = AutoForm.getFieldValue("nameCiz");
+				var typeCizId = AutoForm.getFieldValue("typeCiz");
+				try{
+					var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+					var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
+					var periodNumber = period.periodPoverki;
+					doc.periodPoverki = periodNumber;
+				} catch(e){}
+				if(AutoForm.getFieldValue("datePoverki")){
+					var datePoverki = AutoForm.getFieldValue("datePoverki");
+					doc.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
+				} 
+			}
+			AutoForm.validateForm("insertCizForm");
+			return doc;
+		},
+		update: function(doc) {
+			if(AutoForm.getFieldValue("typeCiz") && AutoForm.getFieldValue("nameCiz")){
+				var nameCiz = AutoForm.getFieldValue("nameCiz");
+				var typeCizId = AutoForm.getFieldValue("typeCiz");
+				try{
+					var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+					var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
+					var periodNumber = period.periodPoverki;
+					doc.$set.periodPoverki = periodNumber;
+				} catch(e){}
+				if(AutoForm.getFieldValue("datePoverki")){
+					var datePoverki = AutoForm.getFieldValue("datePoverki");
+					doc.$set.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
+				} 
+			}
+			AutoForm.validateForm("updateCizForm");
+			return doc;
 		}
 	},
 	after: {
@@ -94,7 +127,7 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 					console.log("Insert Error:", error);
 			} else {
 				Router.go('CizList');
-				alertify.success("Тип СИЗ успешно добавлен!");
+				alertify.success("СИЗ успешно добавлено!");
 				console.log("Insert Result:", result);
 			}
 		},
@@ -104,11 +137,13 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 				console.log("Update Error:", error);
 			} else {
 				Router.go('CizList');
-				alertify.success("Тип СИЗ успешно изменен!");
+				alertify.success("СИЗ успешно изменено!");
 				console.log("Updated!");
 			}
 		}
-	}
+	},
+	beginSubmit: function() {},
+  	endSubmit: function() {}
 });
 // хелпер который показывает текущее значение строки
 // Template.registerHelper("test", function (fieldName) {
@@ -149,7 +184,47 @@ Template.insertCizForm.helpers({
 				var periodNumber = period.periodPoverki;
 			} catch(e){}
 			var datePoverki = AutoForm.getFieldValue("datePoverki");
-			return moment(datePoverki).add(periodNumber, 'y').format('DD.MM.YYYY');
+			return moment(datePoverki).add(periodNumber, 'M').format('DD.MM.YYYY');
+		}
+	}
+
+});
+
+Template.updateCizForm.helpers({
+	nameCizOptions: function(){
+		if (AutoForm.getFieldValue("typeCiz")){
+			var typeCizId = AutoForm.getFieldValue("typeCiz");
+			var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+			// return typeCizOne.ciz.length;
+			_.pluck(typeCizOne.ciz, 'name');
+			result = _.map(_.pluck(typeCizOne.ciz, 'name'), function(name){ 
+				return {label: name, value: name};
+			 });
+			return result;
+		}
+	},
+	periodPoverki: function(){
+		if(AutoForm.getFieldValue("typeCiz") && AutoForm.getFieldValue("nameCiz")){
+			var nameCiz = AutoForm.getFieldValue("nameCiz");
+			var typeCizId = AutoForm.getFieldValue("typeCiz");
+			try{
+				var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+				var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
+				return period.periodPoverki;
+			} catch(e){}
+		}
+	},
+	dateSledPoverki: function(){
+		if(AutoForm.getFieldValue("datePoverki") && AutoForm.getFieldValue("nameCiz")){
+			var typeCizId = AutoForm.getFieldValue("typeCiz");
+			var nameCiz = AutoForm.getFieldValue("nameCiz");
+			try{
+				var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+				var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
+				var periodNumber = period.periodPoverki;
+			} catch(e){}
+			var datePoverki = AutoForm.getFieldValue("datePoverki");
+			return moment(datePoverki).add(periodNumber, 'M').format('DD.MM.YYYY');
 		}
 	}
 
