@@ -1,52 +1,73 @@
 Template.CizList.helpers({
-		CizsCount: function(){
-			return Cizs.find().count();
-		},
-		// настройки для reactiv table
-		settings: function(){
-			return {
-				collection: Cizs,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+	CizsCount: function(){
+		return Cizs.find().count();
+	},
+	// настройки для reactiv table
+	settings: function(){
+		return {
+			collection: Cizs,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
-						}
-					},
-					{ key: 'mesto', label: 'Место нахождения', sortable: true},
-					{ key: 'number', label: 'Порядковый номер', sortable: true },
-					{ key: 'typeCiz', label: 'Тип СИЗ', sortable: true },
-					{ key: 'nameCiz', label: 'Наименование СИЗ', sortable: true},
-					{ key: 'periodPoverki', label: 'Период поверки', sortable: true},
-					{ key: 'datePoverki', label: 'Дата поверки', sortable: true },
-					{ key: 'dateSledPoverki', label: 'Дата следующей поверки', sortable: true },
-					
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+					}
+				},
+				{ key: 'mesto', label: 'Место нахождения', sortable: true},
+				{ key: 'number', label: 'Порядковый номер', sortable: true },
+				{ 
+					key: 'typeCiz',
+					label: 'Тип СИЗ',
+					sortable: true,
+					fn: function (value) {
+						var typeCizOne = TypeCizs.findOne({_id: value});
+						return typeCizOne.name;
+					}
+				},
+				{ key: 'nameCiz', label: 'Наименование СИЗ', sortable: true},
+				{ key: 'periodPoverki', label: 'Период поверки (мес)', sortable: true},
+				{ 
+					key: 'datePoverki',
+					label: 'Дата поверки',
+					sortable: true,
+					fn: function(value){
+						return moment(value).format('DD.MM.YYYY');
+					}
+				},
+				{ 
+					key: 'dateSledPoverki',
+					label: 'Дата следующей поверки',
+					sortable: true,
+					fn: function(value){
+						return moment(value).format('DD.MM.YYYY');
+					}
+				}
 			]
-			};
-		}
+		};
+	}
 });
 
 // редактировать цех
