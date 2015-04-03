@@ -36,7 +36,45 @@ Template.CizList.helpers({
 						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 					}
 				},
-				{ key: 'mesto', label: 'Место нахождения', sortable: true},
+				{ 
+					key: 'mesto',
+					label: 'Место нахождения',
+					sortable: true,
+					fn: function(value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (Workers.findOne({_id: value})){
+							var workerOne = Workers.findOne({_id: value});
+							return workerOne.Familia;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ 
+					key: 'mesto',
+					label: 'Номер карты',
+					sortable: true,
+					fn: function(value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.nomerKarti;
+						};
+						if (Workers.findOne({_id: value})){
+							var workerOne = Workers.findOne({_id: value});
+							return workerOne.nomerKarti;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.nomerKarti;
+						};
+					}
+
+				},
 				{ key: 'number', label: 'Порядковый номер', sortable: true },
 				{ 
 					key: 'typeCiz',
@@ -63,6 +101,20 @@ Template.CizList.helpers({
 					sortable: true,
 					fn: function(value){
 						return moment(value).format('DD.MM.YYYY');
+					}
+				},
+				{
+					key: 'dateSledPoverki',
+					label: 'Поверка',
+					sortable: true,
+					fn: function(value){
+						nowDate = new Date();
+						if (nowDate > value){
+							return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+						} else {
+							return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+						}
+						
 					}
 				}
 			]
