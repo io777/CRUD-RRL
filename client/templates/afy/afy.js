@@ -38,6 +38,21 @@ Template.AFYList.helpers({
 			    },
     			{ key: 'napravlenie', label: 'Направление', sortable: true},
 			    { key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
+          {
+            key: 'mesto',
+            label: 'Место размещения',
+            sortable: true,
+            fn: function (value){
+              if (Sklads.findOne({_id: value})){
+                var skladOne = Sklads.findOne({_id: value});
+                return skladOne.name;
+              };
+              if (ObectExplyats.findOne({_id: value})){
+                var obectExplyatOne = ObectExplyats.findOne({_id: value});
+                return obectExplyatOne.name;
+              };
+            }
+          },
 			    { key: 'freqvansi', label: 'Частота', sortable: true },
 			    { key: 'freqvansi_prd', label: 'Частота прд.', sortable: true},
           { key: 'freqvansi_prm', label: 'Частота прм.', sortable: true },

@@ -38,6 +38,21 @@ Template.StancionOborydList.helpers({
 			    },
     			{ key: 'full_name', label: 'Наименование', sortable: true},
 			    { key: 'inventari_nomer', label: 'Инвентарный номер', sortable: true},
+          {
+            key: 'mesto',
+            label: 'Место размещения',
+            sortable: true,
+            fn: function (value){
+              if (Sklads.findOne({_id: value})){
+                var skladOne = Sklads.findOne({_id: value});
+                return skladOne.name;
+              };
+              if (ObectExplyats.findOne({_id: value})){
+                var obectExplyatOne = ObectExplyats.findOne({_id: value});
+                return obectExplyatOne.name;
+              };
+            }
+          },
           { key: 'function_naznachenie', label: 'Функциональное назначение', sortable: true},
           { key: 'decimal_nomer', label: 'Децимальный номер', sortable: true},
           { key: 'serial_nomer', label: 'Серийный номер', sortable: true},

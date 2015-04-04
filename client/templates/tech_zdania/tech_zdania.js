@@ -37,6 +37,21 @@ Template.TechZdaniaList.helpers({
 			    	}
 			    },
     			{ key: 'adress', label: 'Адресс', sortable: true},
+          {
+            key: 'mesto',
+            label: 'Место размещения',
+            sortable: true,
+            fn: function (value){
+              if (Sklads.findOne({_id: value})){
+                var skladOne = Sklads.findOne({_id: value});
+                return skladOne.name;
+              };
+              if (ObectExplyats.findOne({_id: value})){
+                var obectExplyatOne = ObectExplyats.findOne({_id: value});
+                return obectExplyatOne.name;
+              };
+            }
+          },
           { key: 'god_postroiki', label: 'Год постройки', sortable: true},
           { key: 'god_pereoboryd', label: 'Год переоборудования', sortable: true},
           { key: 'krovla', label: 'Кровля', sortable: true},

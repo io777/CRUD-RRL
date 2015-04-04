@@ -1,19 +1,19 @@
 <template name="profile">
   <div class="container" style="padding-top: 60px;">
-    <h1 class="page-header">Изменить профиль</h1>
+    <h1 class="page-header">Профиль пользователя</h1>
     <div class="row">
       <!-- left column -->
-      <div class="col-md-4 col-sm-6 col-xs-12">
+     <!--  <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="text-center">
           <img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">
           <h6>Upload a different photo...</h6>
           <input type="file" class="text-center center-block well well-sm">
         </div>
-      </div>
+      </div> -->
       {{#autoForm collection="Meteor.users" id="profile" doc=currentUser type="update"}}
       <!-- edit form column -->
       <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-        <h3>Персональные данные</h3>
+        
         <div class="form-horizontal">
           <!-- ID -->
           <!-- <input id="ID" name="ID" type="hidden" value="{{currentUser._id}}"> -->

@@ -259,8 +259,41 @@ Template.insertCizForm.helpers({
 			var datePoverki = AutoForm.getFieldValue("datePoverki");
 			return moment(datePoverki).add(periodNumber, 'M').format('DD.MM.YYYY');
 		}
+	},
+	nomerKarti: function(){
+		var mestoID = AutoForm.getFieldValue("mesto");
+		if (Sklads.findOne({_id: mestoID})){
+			var skladOne = Sklads.findOne({_id: mestoID});
+			return skladOne.nomerKarti;
+		};
+		if (Workers.findOne({_id: mestoID})){
+			var workerOne = Workers.findOne({_id: mestoID});
+			return workerOne.nomerKarti;
+		};
+		if (ObectExplyats.findOne({_id: mestoID})){
+			var obectExplyatOne = ObectExplyats.findOne({_id: mestoID});
+			return obectExplyatOne.nomerKarti;
+		};
+	},
+	poverka: function() {
+		if(AutoForm.getFieldValue("datePoverki") && AutoForm.getFieldValue("nameCiz")){
+			var typeCizId = AutoForm.getFieldValue("typeCiz");
+			var nameCiz = AutoForm.getFieldValue("nameCiz");
+			try{
+				var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+				var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
+				var periodNumber = period.periodPoverki;
+			} catch(e){}
+			var datePoverki = AutoForm.getFieldValue("datePoverki");
+			var dateSledPoverki = moment(datePoverki).add(periodNumber, 'M');
+			nowDate = new Date();
+			if (nowDate > dateSledPoverki){
+				return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+			} else {
+				return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+			}
+		}
 	}
-
 });
 
 Template.updateCizForm.helpers({
@@ -299,6 +332,39 @@ Template.updateCizForm.helpers({
 			var datePoverki = AutoForm.getFieldValue("datePoverki");
 			return moment(datePoverki).add(periodNumber, 'M').format('DD.MM.YYYY');
 		}
+	},
+	nomerKarti: function(){
+		var mestoID = AutoForm.getFieldValue("mesto");
+		if (Sklads.findOne({_id: mestoID})){
+			var skladOne = Sklads.findOne({_id: mestoID});
+			return skladOne.nomerKarti;
+		};
+		if (Workers.findOne({_id: mestoID})){
+			var workerOne = Workers.findOne({_id: mestoID});
+			return workerOne.nomerKarti;
+		};
+		if (ObectExplyats.findOne({_id: mestoID})){
+			var obectExplyatOne = ObectExplyats.findOne({_id: mestoID});
+			return obectExplyatOne.nomerKarti;
+		};
+	},
+	poverka: function() {
+		if(AutoForm.getFieldValue("datePoverki") && AutoForm.getFieldValue("nameCiz")){
+			var typeCizId = AutoForm.getFieldValue("typeCiz");
+			var nameCiz = AutoForm.getFieldValue("nameCiz");
+			try{
+				var typeCizOne = TypeCizs.findOne({_id: typeCizId});
+				var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
+				var periodNumber = period.periodPoverki;
+			} catch(e){}
+			var datePoverki = AutoForm.getFieldValue("datePoverki");
+			var dateSledPoverki = moment(datePoverki).add(periodNumber, 'M');
+			nowDate = new Date();
+			if (nowDate > dateSledPoverki){
+				return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+			} else {
+				return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+			}
+		}
 	}
-
-})
+});

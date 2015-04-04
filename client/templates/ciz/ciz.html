@@ -10,20 +10,42 @@
 			<fieldset>
 				<legend>СИЗ</legend>
 				{{> afQuickField name='mesto'}}
+				<!-- Номер карты -->
+				{{#if nomerKarti}}
+					<div class="form-group">
+						<label class="control-label">Номер карты:</label>
+						{{nomerKarti}}
+					</div>
+				{{/if}}
+				<!-- end Номер карты -->
 				{{> afQuickField name='number'}}
 				{{> afQuickField name='typeCiz'}}
 				{{> afQuickField name='nameCiz' firstOption="(Выберите СИЗ)" options=nameCizOptions}}
 				<!-- Период поверки -->
-				<div class="form-group">
-					<label class="control-label">Период поверки:</label>
-					{{periodPoverki}}
-				</div>
+				{{#if periodPoverki}}
+					<div class="form-group">
+						<label class="control-label">Период поверки:</label>
+						{{periodPoverki}}
+					</div>
+				{{/if}}
+				<!-- end Период поверки-->
 				{{> afQuickField name='datePoverki'}}
 				<!-- Дата следующей поверки -->
-				<div class="form-group">
-					<label class="control-label">Дата следующей поверки:</label>
-					{{dateSledPoverki}}
-				</div>
+				{{#if dateSledPoverki}}
+					<div class="form-group">
+						<label class="control-label">Дата следующей поверки:</label>
+						{{dateSledPoverki}}
+					</div>
+				{{/if}}
+				<!-- end Дата следующей поверки-->
+				<!-- Поверка -->
+				{{#if poverka}}
+					<div class="form-group">
+						<label class="control-label">Поверка:</label>
+						{{poverka}}
+					</div>
+				{{/if}}
+				<!-- end Поверка -->
 			</fieldset>
 			<button type="submit" class="btn btn-primary">Создать</button>
 		{{/autoForm}}
@@ -46,20 +68,42 @@
 			<fieldset>
 				<legend>СИЗ</legend>
 				{{> afQuickField name='mesto'}}
+				<!-- Номер карты -->
+				{{#if nomerKarti}}
+					<div class="form-group">
+						<label class="control-label">Номер карты:</label>
+						{{nomerKarti}}
+					</div>
+				{{/if}}
+				<!-- end Номер карты -->
 				{{> afQuickField name='number'}}
 				{{> afQuickField name='typeCiz'}}
 				{{> afQuickField name='nameCiz' firstOption="(Выберите СИЗ)" options=nameCizOptions}}
 				<!-- Период поверки -->
-				<div class="form-group">
-					<label class="control-label">Период поверки:</label>
-					{{periodPoverki}}
-				</div>
+				{{#if periodPoverki}}
+					<div class="form-group">
+						<label class="control-label">Период поверки:</label>
+						{{periodPoverki}}
+					</div>
+				{{/if}}
+				<!-- end Период поверки-->
 				{{> afQuickField name='datePoverki'}}
 				<!-- Дата следующей поверки -->
-				<div class="form-group">
-					<label class="control-label">Дата следующей поверки:</label>
-					{{dateSledPoverki}}
-				</div>
+				{{#if dateSledPoverki}}
+					<div class="form-group">
+						<label class="control-label">Дата следующей поверки:</label>
+						{{dateSledPoverki}}
+					</div>
+				{{/if}}
+				<!-- end Дата следующей поверки-->
+				<!-- Поверка -->
+				{{#if poverka}}
+					<div class="form-group">
+						<label class="control-label">Поверка:</label>
+						{{poverka}}
+					</div>
+				{{/if}}
+				<!-- end Поверка -->
 			</fieldset>
 			<button type="submit" class="btn btn-primary">Изменить</button>
 		{{/autoForm}}
