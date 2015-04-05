@@ -17,6 +17,13 @@
 		<br>
 		<br>
 		{{#if isInRole 'admin,moderator'}}
+			<!-- Линия РРЛ -->
+			{{#if lineRRL}}
+				<div class="form-group">
+					<label class="control-label">Линия РРЛ:</label>
+					{{lineRRL}}
+				</div>
+			{{/if}}
 	  		{{> quickForm collection="AMSs" buttonContent="Изменить" doc=this id="updateAMSForm" type="update"}}
 	  	{{else}}
 	  		{{> quickForm collection="AMSs" buttonContent=false doc=this id="updateAMSForm" }}

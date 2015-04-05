@@ -229,7 +229,7 @@ Template.insertCizForm.helpers({
 			var typeCizId = AutoForm.getFieldValue("typeCiz");
 			var typeCizOne = TypeCizs.findOne({_id: typeCizId});
 			// return typeCizOne.ciz.length;
-			_.pluck(typeCizOne.ciz, 'name');
+			// _.pluck(typeCizOne.ciz, 'name');
 			result = _.map(_.pluck(typeCizOne.ciz, 'name'), function(name){ 
 				return {label: name, value: name};
 			 });

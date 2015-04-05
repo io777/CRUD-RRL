@@ -54,6 +54,22 @@ Template.AMSList.helpers({
 							};
 						}
 					},
+					{ 
+						key: '_id',
+						label: 'Линия РРЛ',
+						sortable: true,
+						fn: function(value){
+							var result = [];
+							lines = Lines.find();
+							var currentLineId = value;
+							lines.forEach(function(line){
+								if(_.contains(line.ams, value.toString())){
+									result.push(" "+line.name+" - "+line.nomer);
+								}
+							});
+							return result;
+						}
+					 },
 					{ key: 'obect_explyat_name', label: 'Место размещения (объект эксплуатации)', sortable: true },
 					{ key: 'sever_shirot', label: 'СШ', sortable: true },
 					{ key: 'west_dolg', label: 'ВД', sortable: true},
@@ -162,3 +178,18 @@ AutoForm.addHooks(['insertAMSForm', 'updateAMSForm'], {
 			}
 		}
 	});
+
+Template.updateAMSForm.helpers({
+	lineRRL: function(){
+		var result = [];
+		lines = Lines.find();
+		var currentLineId = this._id;
+		lines.forEach(function(line){
+			if(_.contains(line.ams, currentLineId.toString())){
+				result.push(" "+line.name+" - "+line.nomer);
+			}
+		});
+		return result;
+
+	}
+})
