@@ -61,7 +61,6 @@ Template.AMSList.helpers({
 						fn: function(value){
 							var result = [];
 							lines = Lines.find();
-							var currentLineId = value;
 							lines.forEach(function(line){
 								if(_.contains(line.ams, value.toString())){
 									result.push(" "+line.name+" - "+line.nomer);

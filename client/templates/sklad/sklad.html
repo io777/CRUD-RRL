@@ -10,18 +10,36 @@
 </template>
 
 <template name="updateSkladForm">
+	<a class="btn btn-info" href="{{pathFor 'skladList'}}">
+		<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+	</a>
+	{{test}}
+	<br>
+	<br>
+	<!-- editSklad -->
+	<a href="#" data-toggle="collapse" data-target="#editSklad">Редактировать склад</a>
+	<hr>
 	<div class="col-md-4 centered">
-		<a class="btn btn-info" href="{{pathFor 'skladList'}}">
-			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
-		</a>
-		<br>
-		<br>
+		<div id="editSklad" class="collapse in">
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="Sklads" buttonContent="Изменить" doc=this id="updateSkladForm" type="update"}}
 	  	{{else}}
 	  		{{> quickForm collection="Sklads" buttonContent=false doc=this id="updateSkladForm" }}
 	  	{{/if}}
+	  	</div>
 	</div>
+	<!-- End editSklad -->
+
+	<!-- listAMS -->
+	<a href="#" data-toggle="collapse" data-target="#listAMS">Список АМС на складе</a>
+	<hr>
+	<div id="listAMS" class="collapse">
+		Всего АМС на складе: {{AMSsCount}}
+		{{> reactiveTable settings=settingsListAMS}}
+	</div>
+	<!-- End listAMS -->
+
+
 </template>
 
 <template name="skladList">
@@ -32,6 +50,7 @@
 	{{/if}}
 	<br>
 	<br>
+	<legend>Список складов</legend>
 	Всего складов: {{SkladsCount}}
 	{{> reactiveTable settings=settings}}
 </template>
