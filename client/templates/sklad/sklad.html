@@ -29,15 +29,26 @@
 	  	</div>
 	</div>
 	<!-- End editSklad -->
-
-	<!-- listAMS -->
-	<a href="#" data-toggle="collapse" data-target="#listAMS">Список АМС на складе</a>
-	<hr>
-	<div id="listAMS" class="collapse">
-		Всего АМС на складе: {{AMSsCount}}
-		{{> reactiveTable settings=settingsListAMS}}
-	</div>
-	<!-- End listAMS -->
+	{{#if AMSsCount}}
+		<!-- listAMS -->
+		<a href="#" data-toggle="collapse" data-target="#listAMS">Список АМС на складе</a>
+		<hr>
+		<div id="listAMS" class="collapse">
+			Всего АМС на складе: {{AMSsCount}}
+			{{> reactiveTable settings=settingsListAMS}}
+		</div>
+		<!-- End listAMS -->
+	{{/if}}
+	{{#if TechZdaniasCount}}
+		<!-- listTechZdanias -->
+		<a href="#" data-toggle="collapse" data-target="#listTechZdanias">Список тех. зданий на складе</a>
+		<hr>
+		<div id="listTechZdanias" class="collapse">
+			Всего АМС на складе: {{TechZdaniasCount}}
+			{{> reactiveTable settings=settingsListTechZdania}}
+		</div>
+		<!-- End listTechZdanias -->
+	{{/if}}
 
 
 </template>
