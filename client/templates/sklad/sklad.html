@@ -44,12 +44,31 @@
 		<a href="#" data-toggle="collapse" data-target="#listTechZdanias">Список тех. зданий на складе</a>
 		<hr>
 		<div id="listTechZdanias" class="collapse">
-			Всего АМС на складе: {{TechZdaniasCount}}
+			Всего тех. зданий на складе: {{TechZdaniasCount}}
 			{{> reactiveTable settings=settingsListTechZdania}}
 		</div>
 		<!-- End listTechZdanias -->
 	{{/if}}
-
+	{{#if AFYsCount}}
+		<!-- listAFYs -->
+		<a href="#" data-toggle="collapse" data-target="#listAFYs">Список АФУ на складе</a>
+		<hr>
+		<div id="listAFYs" class="collapse">
+			Всего АФУ на складе: {{AFYsCount}}
+			{{> reactiveTable settings=settingsListAFY}}
+		</div>
+		<!-- End listAFYs -->
+	{{/if}}
+	{{#if StancionOborydsCount}}
+		<!-- listStancionOboryds -->
+		<a href="#" data-toggle="collapse" data-target="#listStancionOboryds">Список станцион. оборудования на складе</a>
+		<hr>
+		<div id="listStancionOboryds" class="collapse">
+			Всего станцион. оборудования на складе: {{StancionOborydsCount}}
+			{{> reactiveTable settings=settingsListStancionOboryd}}
+		</div>
+		<!-- End listStancionOboryds -->
+	{{/if}}
 
 </template>
 
