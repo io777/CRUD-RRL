@@ -69,6 +69,16 @@
 		</div>
 		<!-- End listStancionOboryds -->
 	{{/if}}
+	{{#if CizsCount}}
+		<!-- ListCizs -->
+		<a href="#" data-toggle="collapse" data-target="#ListCizs">Список СИЗ на складе</a>
+		<hr>
+		<div id="ListCizs" class="collapse">
+			Всего СИЗ на складе: {{CizsCount}}
+			{{> reactiveTable settings=settingsListCiz}}
+		</div>
+		<!-- End ListCizs -->
+	{{/if}}
 
 </template>
 
