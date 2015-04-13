@@ -122,7 +122,7 @@ Template.CizList.helpers({
 	}
 });
 
-// редактировать цех
+// редактировать СИЗ
 Template.CizList.events({
 	'click .reactive-table tr': function (event) {
 		// set the blog post we'll display details and news for
@@ -134,7 +134,7 @@ Template.CizList.events({
 		}
 	}
 });
-// удалить цех
+// удалить СИЗ
 Template.CizList.events({
 	'click .reactive-table tr': function (event) {
 		event.preventDefault();

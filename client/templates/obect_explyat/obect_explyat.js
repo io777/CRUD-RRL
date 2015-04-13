@@ -1,9 +1,9 @@
 Template.ObectExplyatList.helpers({
-		ObectExplyatsCount: function(){
-			return ObectExplyats.find().count();
-		},
-		// настройки для reactiv table
-		settings: function(){
+	ObectExplyatsCount: function(){
+		return ObectExplyats.find().count();
+	},
+	// настройки для reactiv table
+	settings: function(){
 			return {
 				collection: ObectExplyats,
 				rowsPerPage: 10,
@@ -75,7 +75,101 @@ Template.ObectExplyatList.helpers({
 					{ key: 'Petli_Faza_Null_protokol', label: 'Измерение петли фаза-ноль, протокол', sortable: true }
 			]
 			};
+	}
+});
+
+Template.updateObectExplyatForm.helpers({
+	AlarmsCount: function(){
+		var obectExplyatId = this._id;
+		var alarms = Alarms.find().fetch();
+		var alarmsInSklad = _.where(alarms, {mesto: obectExplyatId});
+		return alarmsInSklad.length;
+	},
+	settingsListAlarm: function(){
+		var obectExplyatId = this._id;
+		var alarms = Alarms.find().fetch();
+		var alarmsInSklad = _.where(alarms, {mesto: obectExplyatId});
+		return {
+			collection: alarmsInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+								return true;
+						}
+					},
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg alarm"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg alarm"></i></a>');
+					}
+				},
+				{ key: 'name', label: 'Наименование', sortable: true},
+				{ key: 'type', label: 'Тип', sortable: true },
+				{
+					key: 'mesto',
+					label: 'Место аварии',
+					sortable: true,
+					fn: function (value){
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ key: 'primechanie', label: 'Примечание', sortable: true }
+			]
 		}
+	}
+});
+
+// редактировать аварию
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		// set the blog post we'll display details and news for
+		event.preventDefault();
+		var Alarm = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-pencil fa-lg alarm") {
+			Router.go('updateAlarmForm', {_id: this._id});
+		}
+	}
+});
+// удалить аварию
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var Alarm = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-times fa-lg alarm") {
+				Alarms.remove(Alarm._id, function(error){
+					if(error){
+						alertify.error("Ошибка!", error);
+						console.log("Remove Error:", error);
+					} else {
+						alertify.success("Авария успешно удалена!");
+						console.log("Alarm Remove!");
+					}
+				});
+		}
+	}
 });
 
 // редактировать объект эксплуатации

@@ -10,18 +10,34 @@
 </template>
 
 <template name="updateObectExplyatForm">
+	<a class="btn btn-info" href="{{pathFor 'ObectExplyatList'}}">
+		<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+	</a>
+	<br>
+	<br>
+	<!-- editObectExplyat -->
+	<a href="#" data-toggle="collapse" data-target="#editObectExplyat">Редактировать объект эксплуатации</a>
+	<hr>
 	<div class="col-md-4 centered">
-		<a class="btn btn-info" href="{{pathFor 'ObectExplyatList'}}">
-			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
-		</a>
-		<br>
-		<br>
+		<div id="editObectExplyat" class="collapse in">
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="ObectExplyats" buttonContent="Изменить" doc=this id="updateObectExplyatForm" type="update"}}
 	  	{{else}}
 	  		{{> quickForm collection="ObectExplyats" buttonContent=false doc=this id="updateObectExplyatForm" }}
 	  	{{/if}}
+	  	</div>
 	</div>
+	<!-- End editObectExplyat -->
+	{{#if AlarmsCount}}
+		<!-- listAlarm -->
+		<a href="#" data-toggle="collapse" data-target="#listAlarm">Список аварий на объекте эксплуатации</a>
+		<hr>
+		<div id="listAlarm" class="collapse">
+			Всего аварий на объекте эксплуатации: {{AlarmsCount}}
+			{{> reactiveTable settings=settingsListAlarm}}
+		</div>
+		<!-- End listAlarm -->
+	{{/if}}
 </template>
 
 <template name="ObectExplyatList">
