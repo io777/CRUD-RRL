@@ -38,6 +38,16 @@
 		</div>
 		<!-- End listAlarm -->
 	{{/if}}
+	{{#if AMSsCount}}
+		<!-- listAMS -->
+		<a href="#" data-toggle="collapse" data-target="#listAMS">Список АМС на объекте эксплуатации</a>
+		<hr>
+		<div id="listAMS" class="collapse">
+			Всего АМС на объекте эксплуатации: {{AMSsCount}}
+			{{> reactiveTable settings=settingsListAMS}}
+		</div>
+		<!-- End listAMS -->
+	{{/if}}
 </template>
 
 <template name="ObectExplyatList">
