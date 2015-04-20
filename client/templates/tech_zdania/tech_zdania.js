@@ -60,7 +60,7 @@ Template.TechZdaniaList.helpers({
 					{ key: 'kybatura', label: 'Кубатура', sortable: true},
 					{ key: 'organizaciya', label: 'Организация', sortable: true},
 					{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
-			]
+				]
 			};
 		}
 });

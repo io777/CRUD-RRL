@@ -48,6 +48,46 @@
 		</div>
 		<!-- End listAMS -->
 	{{/if}}
+	{{#if TechZdaniasCount}}
+		<!-- listTechZdania -->
+		<a href="#" data-toggle="collapse" data-target="#listTechZdania">Список тех. зданий на объекте эксплуатации</a>
+		<hr>
+		<div id="listTechZdania" class="collapse">
+			Всего тех. зданий на объекте эксплуатации: {{TechZdaniasCount}}
+			{{> reactiveTable settings=settingsListTechZdania}}
+		</div>
+		<!-- End listTechZdania -->
+	{{/if}}
+	{{#if AFYsCount}}
+		<!-- listAFY -->
+		<a href="#" data-toggle="collapse" data-target="#listAFY">Список АФУ на объекте эксплуатации</a>
+		<hr>
+		<div id="listAFY" class="collapse">
+			Всего АФУ на объекте эксплуатации: {{AFYsCount}}
+			{{> reactiveTable settings=settingsListAFY}}
+		</div>
+		<!-- End listAFY -->
+	{{/if}}
+	{{#if StancionOborydsCount}}
+		<!-- listStancionOboryd -->
+		<a href="#" data-toggle="collapse" data-target="#listStancionOboryd">Список станцион. оборудования на объекте эксплуатации</a>
+		<hr>
+		<div id="listStancionOboryd" class="collapse">
+			Всего станцион. оборудования на объекте эксплуатации: {{StancionOborydsCount}}
+			{{> reactiveTable settings=settingsListStancionOboryd}}
+		</div>
+		<!-- End listStancionOboryd -->
+	{{/if}}
+	{{#if CizsCount}}
+		<!-- listCiz -->
+		<a href="#" data-toggle="collapse" data-target="#listCiz">Список СИЗ на объекте эксплуатации</a>
+		<hr>
+		<div id="listCiz" class="collapse">
+			Всего Сиз на объекте эксплуатации: {{CizsCount}}
+			{{> reactiveTable settings=settingsListCiz}}
+		</div>
+		<!-- End listCiz -->
+	{{/if}}
 </template>
 
 <template name="ObectExplyatList">

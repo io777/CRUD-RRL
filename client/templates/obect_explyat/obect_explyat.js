@@ -262,6 +262,480 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'primechania_po_remonty', label: 'Примечания по ремонту', sortable: true }
 			]
 		};
+	},
+	TechZdaniasCount: function(){
+		var obectExplyatId = this._id;
+		var techZdanias = TechZdanias.find().fetch();
+		var techZdaniasInObectExplyat = _.where(techZdanias, {mesto: obectExplyatId});
+		return techZdaniasInObectExplyat.length;
+	},
+	settingsListTechZdania: function(){
+		var obectExplyatId = this._id;
+		var techZdanias = TechZdanias.find().fetch();
+		var techZdaniasInObectExplyat = _.where(techZdanias, {mesto: obectExplyatId});
+		return {
+			collection: techZdaniasInObectExplyat,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+								return true;
+						}
+					},
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg techZdania"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg techZdania"></i></a>');
+					}
+				},
+				{ key: 'adress', label: 'Адресс', sortable: true},
+				{
+					key: 'mesto',
+					label: 'Место размещения',
+					sortable: true,
+					fn: function (value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ key: 'god_postroiki', label: 'Год постройки', sortable: true},
+				{ key: 'god_pereoboryd', label: 'Год переоборудования', sortable: true},
+				{ key: 'krovla', label: 'Кровля', sortable: true},
+				{ key: 'perekritia', label: 'Перекрытия', sortable: true},
+				{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
+				{ key: 'kybatura', label: 'Кубатура', sortable: true},
+				{ key: 'organizaciya', label: 'Организация', sortable: true},
+				{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
+			]
+		};
+	},
+	AFYsCount: function(){
+		var obectExplyatId = this._id;
+		var afys = AFYs.find().fetch();
+		var afysInObectExplyat = _.where(afys, {mesto: obectExplyatId});
+		return afysInObectExplyat.length;
+	},
+	settingsListAFY: function(){
+		var obectExplyatId = this._id;
+		var afys = AFYs.find().fetch();
+		var afysInObectExplyat = _.where(afys, {mesto: obectExplyatId});
+		return {
+			collection: afysInObectExplyat,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+								return true;
+						}
+					},
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg AFY"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AFY"></i></a>');
+					}
+				},
+				{ key: 'napravlenie', label: 'Направление', sortable: true},
+				{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
+				{
+					key: 'mesto',
+					label: 'Место размещения',
+					sortable: true,
+					fn: function (value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ key: 'freqvansi', label: 'Частота', sortable: true },
+				{ key: 'freqvansi_prd', label: 'Частота прд.', sortable: true},
+				{ key: 'freqvansi_prm', label: 'Частота прм.', sortable: true },
+				{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
+				{ key: 'power_tx', label: 'Мощность прд.', sortable: true},
+				{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ', sortable: true },
+				{ key: 'primechanie', label: 'Примечание', sortable: true },
+				{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр', sortable: true},
+				{ key: 'shirina_lycha', label: 'Ширина луча', sortable: true },
+				{ key: 'koll_pered', label: 'Количество прд.', sortable: true},
+				{ key: 'azimut_izluchenia', label: 'Азимут излучения', sortable: true },
+				{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн', sortable: true },
+				{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр', sortable: true},
+				{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн', sortable: true },
+				{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
+				{ key: 'sechenie', label: 'Сечение', sortable: true },
+				{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ', sortable: true },
+				{ key: 'moshnost_na_vhode_antenn', label: 'Мощность на входе антенн', sortable: true},
+				{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
+				{ key: 'rezervir', label: 'Резервирование', sortable: true},
+				{ key: 'koll_potokov', label: 'Колич. потоков', sortable: true },
+				{ key: 'razmeshenie', label: 'Размещение', sortable: true }
+			]
+		};
+	},
+	StancionOborydsCount: function(){
+		var obectExplyatId = this._id;
+		var stancionOboryds = StancionOboryds.find().fetch();
+		var stancionOborydsInObectExplyat = _.where(stancionOboryds, {mesto: obectExplyatId});
+		return stancionOborydsInObectExplyat.length;
+	},
+	settingsListStancionOboryd: function(){
+		var obectExplyatId = this._id;
+		var stancionOboryds = StancionOboryds.find().fetch();
+		var stancionOborydsInObectExplyat = _.where(stancionOboryds, {mesto: obectExplyatId});
+		return {
+			collection: stancionOborydsInObectExplyat,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+								return true;
+						}
+					},
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg StancionOboryd"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg StancionOboryd"></i></a>');
+					}
+				},
+				{ key: 'full_name', label: 'Наименование', sortable: true},
+				{ key: 'inventari_nomer', label: 'Инвентарный номер', sortable: true},
+				{
+					key: 'mesto',
+					label: 'Место размещения',
+					sortable: true,
+					fn: function (value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ key: 'function_naznachenie', label: 'Функциональное назначение', sortable: true},
+				{ key: 'decimal_nomer', label: 'Децимальный номер', sortable: true},
+				{ key: 'serial_nomer', label: 'Серийный номер', sortable: true},
+				{ key: 'adress', label: 'Адресс', sortable: true},
+				{ key: 'primechanie', label: 'Примечание', sortable: true}
+		  ]
+		};
+	},
+	CizsCount: function(){
+		var obectExplyatId = this._id;
+		var cizs = Cizs.find().fetch();
+		var cizsInObectExplyat = _.where(cizs, {mesto: obectExplyatId});
+		return cizsInObectExplyat.length;
+	},
+	settingsListCiz: function(){
+		var obectExplyatId = this._id;
+		var cizs = Cizs.find().fetch();
+		var cizsInObectExplyat = _.where(cizs, {mesto: obectExplyatId});
+		return {
+			collection: cizsInObectExplyat,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
+						}
+					},
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Ciz"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Ciz"></i></a>');
+					}
+				},
+				{ 
+					key: 'mesto',
+					label: 'Место нахождения',
+					sortable: true,
+					fn: function(value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (Workers.findOne({_id: value})){
+							var workerOne = Workers.findOne({_id: value});
+							return workerOne.Familia;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ 
+					key: 'mesto',
+					label: 'Номер карты',
+					sortable: true,
+					fn: function(value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.nomerKarti;
+						};
+						if (Workers.findOne({_id: value})){
+							var workerOne = Workers.findOne({_id: value});
+							return workerOne.nomerKarti;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.nomerKarti;
+						};
+					}
+
+				},
+				{ key: 'number', label: 'Порядковый номер', sortable: true },
+				{ 
+					key: 'typeCiz',
+					label: 'Тип СИЗ',
+					sortable: true,
+					fn: function (value) {
+						var typeCizOne = TypeCizs.findOne({_id: value});
+						return typeCizOne.name;
+					}
+				},
+				{ key: 'nameCiz', label: 'Наименование СИЗ', sortable: true},
+				{ key: 'periodPoverki', label: 'Период поверки (мес)', sortable: true},
+				{ 
+					key: 'datePoverki',
+					label: 'Дата поверки',
+					sortable: true,
+					fn: function(value){
+						return moment(value).format('DD.MM.YYYY');
+					}
+				},
+				{ 
+					key: 'dateSledPoverki',
+					label: 'Дата следующей поверки',
+					sortable: true,
+					fn: function(value){
+						return moment(value).format('DD.MM.YYYY');
+					}
+				},
+				{
+					key: 'dateSledPoverki',
+					label: 'Поверка',
+					sortable: true,
+					fn: function(value){
+						nowDate = new Date();
+						if (nowDate > value){
+							return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+						} else {
+							return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+						}
+						
+					}
+				}
+			]
+		};
+	}
+});
+
+// редактировать СИЗ
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		// set the blog post we'll display details and news for
+		event.preventDefault();
+		var Ciz = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-pencil fa-lg Ciz") {
+			Router.go('updateCizForm', {_id: this._id});
+		}
+	}
+});
+// удалить СИЗ
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var Ciz = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-times fa-lg Ciz") {
+				Cizs.remove(Ciz._id, function(error){
+					if(error){
+						alertify.error("Ошибка!", error);
+						console.log("Remove Error:", error);
+					} else {
+						alertify.success("СИЗ успешно удалено!");
+						console.log("Ciz Remove!");
+					}
+				});
+		}
+	}
+});
+
+// редактировать станцион. оборуд
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		// set the blog post we'll display details and news for
+		event.preventDefault();
+		var StancionOboryd = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-pencil fa-lg StancionOboryd") {
+			Router.go('updateStancionOborydForm', {_id: this._id});
+		}
+	}
+});
+// удалить станцион. оборуд
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var StancionOboryd = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-times fa-lg StancionOboryd") {
+				StancionOboryds.remove(StancionOboryd._id, function(error){
+					if(error){
+						alertify.error("Ошибка!", error);
+						console.log("Remove Error:", error);
+					} else {
+						alertify.success("Станцион. оборудование успешно удалено!");
+						console.log("StancionOboryd Remove!");
+					}
+				});
+		}
+	}
+});
+
+// редактировать АФУ
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		// set the blog post we'll display details and news for
+		event.preventDefault();
+		var AFY = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-pencil fa-lg AFY") {
+			Router.go('updateAFYForm', {_id: this._id});
+		}
+	}
+});
+// удалить АФУ
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var AFY = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-times fa-lg AFY") {
+				AFYs.remove(AFY._id, function(error){
+					if(error){
+						alertify.error("Ошибка!", error);
+						console.log("Remove Error:", error);
+					} else {
+						alertify.success("АФУ успешно удалено!");
+						console.log("AFY Remove!");
+					}
+				});
+		}
+	}
+});
+
+// редактировать тех. здания
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		// set the blog post we'll display details and news for
+		event.preventDefault();
+		var TechZdania = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-pencil fa-lg techZdania") {
+			Router.go('updateTechZdaniaForm', {_id: this._id});
+		}
+	}
+});
+// удалить тех. здания
+Template.updateObectExplyatForm.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var TechZdania = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-times fa-lg techZdania") {
+				TechZdanias.remove(TechZdania._id, function(error){
+					if(error){
+						alertify.error("Ошибка!", error);
+						console.log("Remove Error:", error);
+					} else {
+						alertify.success("Тех. здание успешно удалено!");
+						console.log("TechZdania Remove!");
+					}
+				});
+		}
 	}
 });
 
