@@ -10,18 +10,56 @@
 </template>
 
 <template name="updateWorkerForm">
+	<a class="btn btn-info" href="{{pathFor 'WorkerList'}}">
+		<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+	</a>
+	<br>
+	<br>
+	<!-- editWorker -->
+	<a href="#" data-toggle="collapse" data-target="#editObectExplyat">Редактировать работника</a>
+	<hr>
 	<div class="col-md-4 centered">
-		<a class="btn btn-info" href="{{pathFor 'WorkerList'}}">
-			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
-		</a>
-		<br>
-		<br>
-		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="Workers" buttonContent="Изменить" doc=this id="updateWorkerForm" type="update"}}
-	  	{{else}}
-	  		{{> quickForm collection="Workers" buttonContent=false doc=this id="updateWorkerForm" }}
-	  	{{/if}}
+		<div id="editObectExplyat" class="collapse in">
+			{{#if isInRole 'admin,moderator'}}
+				{{> quickForm collection="Workers" buttonContent="Изменить" doc=this id="updateWorkerForm" type="update"}}
+			{{else}}
+				{{> quickForm collection="Workers" buttonContent=false doc=this id="updateWorkerForm" }}
+			{{/if}}
+		</div>
 	</div>
+	<!-- End editWorker -->
+	{{#if ObectExplyatsCount}}
+		<!-- listObectExplyat -->
+		<a href="#" data-toggle="collapse" data-target="#listObectExplyat">Список объектов эксплуатации за которые отвечает данный работник</a>
+		<hr>
+		<div id="listObectExplyat" class="collapse">
+			Всего объектов эксплуатации за которые отвечает данный работник: {{ObectExplyatsCount}}
+			{{> reactiveTable settings=settingsListObectExplyat}}
+		</div>
+		<!-- End listObectExplyat -->
+	{{/if}}
+	{{#if CizsCount}}
+		<!-- listCiz -->
+		<a href="#" data-toggle="collapse" data-target="#listCiz">Список СИЗ которые закреплены за данным работником</a>
+		<hr>
+		<div id="listCiz" class="collapse">
+			Всего СИЗ которые закреплены за данным работником: {{CizsCount}}
+			{{> reactiveTable settings=settingsListCiz}}
+		</div>
+		<!-- End listCiz -->
+	{{/if}}
+	{{#if SpezOdezdasCount}}
+		<!-- listSpezOdezda -->
+		<a href="#" data-toggle="collapse" data-target="#listSpezOdezda">Список спец. одежды которая закреплена за данным работником</a>
+		<hr>
+		<div id="listSpezOdezda" class="collapse">
+			Всего спец. одежды которая закреплена за данным работником: {{SpezOdezdasCount}}
+			{{> reactiveTable settings=settingsListSpezOdezda}}
+		</div>
+		<!-- End listSpezOdezda -->
+	{{/if}}
+
+
 </template>
 
 <template name="WorkerList">

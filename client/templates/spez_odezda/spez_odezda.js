@@ -67,7 +67,7 @@ Template.SpezOdezdaList.helpers({
 					{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
 					{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
 					{ key: 'primechanie', label: 'Примечание', sortable: true}
-			]
+				]
 			};
 		}
 });

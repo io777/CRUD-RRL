@@ -10,18 +10,35 @@
 </template>
 
 <template name="updateCexForm">
+	<a class="btn btn-info" href="{{pathFor 'CexList'}}">
+		<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+	</a>
+	<br>
+	<br>
+	<!-- editCex -->
+	<a href="#" data-toggle="collapse" data-target="#editCex">Редактировать Цех</a>
+	<hr>
 	<div class="col-md-4 centered">
-		<a class="btn btn-info" href="{{pathFor 'CexList'}}">
-			<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
-		</a>
-		<br>
-		<br>
-		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="Cexs" buttonContent="Изменить" doc=this id="updateCexForm" type="update"}}
-	  	{{else}}
-	  		{{> quickForm collection="Cexs" buttonContent=false doc=this id="updateCexForm" }}
-	  	{{/if}}
+		<div id="editCex" class="collapse in">
+			{{#if isInRole 'admin,moderator'}}
+				{{> quickForm collection="Cexs" buttonContent="Изменить" doc=this id="updateCexForm" type="update"}}
+			{{else}}
+				{{> quickForm collection="Cexs" buttonContent=false doc=this id="updateCexForm" }}
+			{{/if}}
+		</div>
 	</div>
+	<!-- End editCex -->
+	{{#if WorkersCount}}
+		<!-- listWorker -->
+		<a href="#" data-toggle="collapse" data-target="#listWorker">Список работников в цехе</a>
+		<hr>
+		<div id="listWorker" class="collapse">
+			Всего работников в цехе: {{WorkersCount}}
+			{{> reactiveTable settings=settingsListWorker}}
+		</div>
+		<!-- End listWorker -->
+	{{/if}}
+	
 </template>
 
 <template name="CexList">
