@@ -92,7 +92,9 @@ Template.CizList.helpers({
 					label: 'Дата поверки',
 					sortable: true,
 					fn: function(value){
-						return moment(value).format('DD.MM.YYYY');
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{ 
@@ -100,7 +102,9 @@ Template.CizList.helpers({
 					label: 'Дата следующей поверки',
 					sortable: true,
 					fn: function(value){
-						return moment(value).format('DD.MM.YYYY');
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{
@@ -169,7 +173,9 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 				if(AutoForm.getFieldValue("datePoverki")){
 					var datePoverki = AutoForm.getFieldValue("datePoverki");
 					doc.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
-				} 
+				} else{
+					doc.dateSledPoverki = null;
+				}
 			}
 			AutoForm.validateForm("insertCizForm");
 			return doc;
@@ -187,7 +193,9 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 				if(AutoForm.getFieldValue("datePoverki")){
 					var datePoverki = AutoForm.getFieldValue("datePoverki");
 					doc.$set.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
-				} 
+				} else{
+					doc.$set.dateSledPoverki = null;
+				}
 			}
 			AutoForm.validateForm("updateCizForm");
 			return doc;
