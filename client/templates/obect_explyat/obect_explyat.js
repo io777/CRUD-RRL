@@ -40,6 +40,14 @@ Template.ObectExplyatList.helpers({
 					{ key: 'setevoi_nomer', label: 'Сетевой номер', sortable: true },
 					{ key: 'nomerKarti', label: 'Номер карты', sortable: true},
 					{ 
+						key: 'PRTO',
+						label: 'ПРТО',
+						sortable: true,
+						fn: function(value){
+							return new Spacebars.SafeString('<a class="label label-warning">ПРТО</a><br><a class="label label-success">exel</a><br><a class="label label-primary">doc</a>')
+						}
+					},
+					{ 
 						key: 'lineRRL',
 						label: 'Линия РРЛ',
 						sortable: true,
@@ -64,14 +72,59 @@ Template.ObectExplyatList.helpers({
 					{ key: 'adress', label: 'Адресс', sortable: true },
 					{ key: 'rasstoyanie_do_osn_stancii', label: 'Расстояние до основной станции (км)', sortable: true },
 					{ key: 'rasstoyanie_mezdy_stanciami', label: 'Расстояние между станциями (км)', sortable: true },
-					{ key: 'worker_Familia', label: 'Ответственный', sortable: true },
-					{ key: 'COM_data', label: 'Измерение СОМ, дата', sortable: true },
+					{ 
+						key: 'god_vvoda_v_exsplyataz',
+						label: 'Год ввода в экспл.',
+						sortable: true,
+						fn: function(value){
+							if(value){
+							return moment(value).format('YYYY');
+							}
+						}
+					},
+					{ 
+						key: 'COM_data',
+						label: 'Измерение СОМ, дата',
+						sortable: true,
+						fn: function(value){
+							if(value){
+							return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'COM_protokol', label: 'Измерение СОМ, протокол', sortable: true },
-					{ key: 'Metallosvazi_data', label: 'Измерение металлосвязи, дата', sortable: true },
+					{ 
+						key: 'Metallosvazi_data',
+						label: 'Измерение металлосвязи, дата',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'Metallosvazi_protokol', label: 'Измерение металлосвязи, протокол', sortable: true },
-					{ key: 'Zazemlenia_data', label: 'Измерение заземления, дата', sortable: true },
+					{ 
+						key: 'Zazemlenia_data',
+						label: 'Измерение заземления, дата',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'Zazemlenia_protokol', label: 'Измерение заземления, протокол', sortable: true },
-					{ key: 'Petli_Faza_Null_data', label: 'Измерение петли фаза-ноль, дата', sortable: true },
+					{ 
+						key: 'Petli_Faza_Null_data',
+						label: 'Измерение петли фаза-ноль, дата',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'Petli_Faza_Null_protokol', label: 'Измерение петли фаза-ноль, протокол', sortable: true }
 			]
 			};
@@ -374,7 +427,7 @@ Template.updateObectExplyatForm.helpers({
 						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AFY"></i></a>');
 					}
 				},
-				{ key: 'napravlenie', label: 'Направление', sortable: true},
+				{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
 				{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
 				{
 					key: 'mesto',
@@ -402,7 +455,9 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'shirina_lycha', label: 'Ширина луча', sortable: true },
 				{ key: 'koll_pered', label: 'Количество прд.', sortable: true},
 				{ key: 'azimut_izluchenia', label: 'Азимут излучения', sortable: true },
+				{ key: 'ygol_mesta', label: 'Азимут излучения', sortable: true },
 				{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн', sortable: true },
+				{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true },
 				{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр', sortable: true},
 				{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн', sortable: true },
 				{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
@@ -799,6 +854,39 @@ Template.updateObectExplyatForm.events({
 						console.log("Alarm Remove!");
 					}
 				});
+		}
+	}
+});
+
+//ПРТО
+Template.ObectExplyatList.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var ObectExplyat = this;
+		if (event.target.className == "label label-warning") {
+			Router.go('PRTO', {_id: this._id});
+		}
+	}
+});
+
+//ПРТО DOC
+Template.ObectExplyatList.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var ObectExplyat = this;
+		if (event.target.className == "label label-primary") {
+			Router.go('PRTOdoc', {_id: this._id});
+		}
+	}
+});
+
+//ПРТО EXEL
+Template.ObectExplyatList.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var ObectExplyat = this;
+		if (event.target.className == "label label-success") {
+			Router.go('PRTO_EXEL', {_id: this._id});
 		}
 	}
 });

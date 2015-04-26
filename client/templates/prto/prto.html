@@ -1,0 +1,18 @@
+<template name="PRTO">
+	<a class="btn btn-info" href="{{pathFor 'ObectExplyatList'}}">
+		<i class="fa fa-arrow-left">&nbsp;Назад к списку</i>
+	</a>
+	<p><center><h4>Основные данные по ПРТО</h4></center></p>
+	<p><center><h4>(согласно СанПиН 2.1.8/2.2.4.1383-03 и СанПиН 2.1.8/2.2.4.1190-03)</h4></center></p>
+	      
+	<p>1. Наименование: {{ obectExplyat.name }}</p>
+	<p>2. Местоположение: {{ obectExplyat.adress }}</p>
+	<p>3. Координаты: {{ obectExplyat.sever_shirot }}N   {{ obectExplyat.west_dolg }}E </p> 
+	<p>4. Владелец: Сургутский РУС ХМФ ОАО «Ростелеком»</p>
+	<p>5. Почтовый адрес владельца: 628400, г. Сургут, ул. Кукуевицкого,6</p>
+	<p>6. Год ввода в эксплуатацию: {{ obectExplyatGod }}</p>
+	<p>7. Время и режим работы объекта: круглосуточно</p>
+
+	<p><center><h4>Основные сведения о передающих средствах</h4></center></p>
+	{{> reactiveTable settings=settings}}
+</template>

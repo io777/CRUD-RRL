@@ -36,7 +36,7 @@ Template.AFYList.helpers({
 							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 						}
 					},
-					{ key: 'napravlenie', label: 'Направление', sortable: true},
+					{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
 					{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
 					{
 						key: 'mesto',
@@ -59,12 +59,13 @@ Template.AFYList.helpers({
 					{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
 					{ key: 'power_tx', label: 'Мощность прд.', sortable: true},
 					{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ', sortable: true },
-					{ key: 'primechanie', label: 'Примечание', sortable: true },
 					{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр', sortable: true},
 					{ key: 'shirina_lycha', label: 'Ширина луча', sortable: true },
 					{ key: 'koll_pered', label: 'Количество прд.', sortable: true},
 					{ key: 'azimut_izluchenia', label: 'Азимут излучения', sortable: true },
+					{ key: 'ygol_mesta', label: 'Азимут излучения', sortable: true },
 					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн', sortable: true },
+					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true },
 					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр', sortable: true},
 					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн', sortable: true },
 					{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
@@ -74,7 +75,8 @@ Template.AFYList.helpers({
 					{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
 					{ key: 'rezervir', label: 'Резервирование', sortable: true},
 					{ key: 'koll_potokov', label: 'Колич. потоков', sortable: true },
-					{ key: 'razmeshenie', label: 'Размещение', sortable: true }
+					{ key: 'razmeshenie', label: 'Размещение', sortable: true },
+					{ key: 'primechanie', label: 'Примечание', sortable: true },
 				]
 			};
 		}

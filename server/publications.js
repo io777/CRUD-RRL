@@ -25,7 +25,6 @@ Meteor.publish('singleUser', function(id) {
 	check(id, String);
   	return Meteor.users.find(id);
 });
-
 // опубликовать роли
 Meteor.publish(null, function (){ 
   return Meteor.roles.find({})
@@ -138,16 +137,3 @@ Meteor.publish('singleCiz', function(id) {
   check(id, String);
   return Cizs.find(id);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-

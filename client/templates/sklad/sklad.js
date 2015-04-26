@@ -283,7 +283,7 @@ Template.updateSkladForm.helpers({
 							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AFY"></i></a>');
 						}
 					},
-					{ key: 'napravlenie', label: 'Направление', sortable: true},
+					{ key: 'type_oborydov', label: 'ТИп оборудования', sortable: true},
 					{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
 					{
 						key: 'mesto',
@@ -311,7 +311,9 @@ Template.updateSkladForm.helpers({
 					{ key: 'shirina_lycha', label: 'Ширина луча', sortable: true },
 					{ key: 'koll_pered', label: 'Количество прд.', sortable: true},
 					{ key: 'azimut_izluchenia', label: 'Азимут излучения', sortable: true },
+					{ key: 'ygol_mesta', label: 'Азимут излучения', sortable: true },
 					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн', sortable: true },
+					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true },
 					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр', sortable: true},
 					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн', sortable: true },
 					{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
