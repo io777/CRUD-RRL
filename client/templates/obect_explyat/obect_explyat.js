@@ -886,7 +886,7 @@ Template.ObectExplyatList.events({
 		event.preventDefault();
 		var ObectExplyat = this;
 		if (event.target.className == "label label-success") {
-			Router.go('PRTO_EXEL', {_id: this._id});
+			Router.go('PRTOxls', {_id: this._id});
 		}
 	}
 });
