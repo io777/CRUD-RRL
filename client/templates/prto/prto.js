@@ -50,7 +50,7 @@ Template.PRTO.helpers({
 					}
 				},
 				{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ', sortable: true },
-				{ key: 'moshnost_na_vhode_antenn', label: 'Мощность на входе антенн', sortable: true}
+				{ key: 'moshnost_na_vhode_antenn_wt', label: 'Мощность на входе антенны (Вт)', sortable: true}
 			]
 		};
 	}

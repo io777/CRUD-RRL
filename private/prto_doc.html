@@ -19,17 +19,17 @@
 			<td align="center"><h5>Тип оборудования</h5></td>
 			<td align="center"><h5>Рабочие частоты (MГц)</h5></td>
 			<td align="center"><h5>Тип модуляции</h5></td>
-			<td align="center"><h5>Мощность передатчика(Вт)</h5></td>
+			<td align="center"><h5>Мощность передатчика (Вт)</h5></td>
 			<td align="center"><h5>Кол-во передат-чиков</h5></td>
-			<td align="center"><h5>Азимут излучения(град.)</h5></td>
-			<td align="center"><h5>Угол места(град.)</h5></td>
+			<td align="center"><h5>Азимут излучения (град.)</h5></td>
+			<td align="center"><h5>Угол места (град.)</h5></td>
 			<td align="center"><h5>Высота под-веса (м)</h5></td>
 			<td align="center"><h5>Высота от кровли (м)</h5></td>
 			<td align="center"><h5>Тип антенны</h5></td>
-			<td align="center"><h5>Усиление антенны(дБi)</h5></td>
-			<td align="center"><h5>Длина фиде-ра, тип фи-дера</h5></td>
-			<td align="center"><h5>Потери в АФТ(дБ)</h5></td>
-			<td align="center"><h5>Мощность на входе антенны(Вт)</h5></td>
+			<td align="center"><h5>Усиление антенны (дБi)</h5></td>
+			<td align="center"><h5>Длина фиде-ра (м), тип фи-дера</h5></td>
+			<td align="center"><h5>Потери в АФТ (дБ)</h5></td>
+			<td align="center"><h5>Мощность на входе антенны (Вт)</h5></td>
 		</tr>
 		<tr>
 			<td align="center">1</td>
@@ -57,14 +57,14 @@
 				<td align="center">{{ power_tx }}</td>
 				<td align="center">{{ koll_pered }}</td>
 				<td align="center">{{ azimut_izluchenia }}</td>
-				<td align="center">0°</td>
+				<td align="center">{{ ygol_mesta }}</td>
 				<td align="center">{{ visota_podvesa_antenn }}</td>
-				<td align="center">-</td>
+				<td align="center">{{ visota_ot_krovli }}</td>
 				<td align="center">{{ type_antenn_diametr }}</td>
 				<td align="center">{{ koeffcient_ysil_antenn }}</td>
 				<td align="center">{{ type_AVT_AFT }},{{ dlinna_AVT_AFT }}</td>
 				<td align="center">{{ poteri_AVT_AFT }}</td>
-				<td align="center">{{ moshnost_na_vhode_antenn }}</td>
+				<td align="center">{{ moshnost_na_vhode_antenn_wt }}</td>
 			</tr>
 		</tbody>
 	{{/each}}
