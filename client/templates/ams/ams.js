@@ -154,29 +154,73 @@ Template.AMSList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertAMSForm', 'updateAMSForm'], {
-		after: {
-			insert: function(error, result) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-						console.log("Insert Error:", error);
-				} else {
-					Router.go('AMSList');
-					alertify.success("АМС успешно добавлен!");
-					console.log("Insert Result:", result);
-				}
-			},
-			update: function(error) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-					console.log("Update Error:", error);
-				} else {
-					Router.go('AMSList');
-					alertify.success("АМС успешно изменен!");
-					console.log("Updated!");
-				}
+	before: {
+		insert: function(doc) {
+			if(AutoForm.getFieldValue("shirota_grad") && AutoForm.getFieldValue("shirota_minut") && AutoForm.getFieldValue("shirota_second")){
+				var shirota_grad = AutoForm.getFieldValue("shirota_grad");
+				var shirota_minut = AutoForm.getFieldValue("shirota_minut");
+				var shirota_second = AutoForm.getFieldValue("shirota_second");
+				try{
+					var shirota = shirota_grad + (shirota_minut / 60) + (shirota_second / 3600);
+					doc.shirota_DD = shirota;
+				} catch(e){}
+			}
+			if(AutoForm.getFieldValue("dolgota_grad") && AutoForm.getFieldValue("dolgota_minut") && AutoForm.getFieldValue("dolgota_second")){
+				var dolgota_grad = AutoForm.getFieldValue("dolgota_grad");
+				var dolgota_minut = AutoForm.getFieldValue("dolgota_minut");
+				var dolgota_second = AutoForm.getFieldValue("dolgota_second");
+				try{
+					var dolgota = dolgota_grad + (dolgota_minut / 60) + (dolgota_second / 3600);
+					doc.dolgota_DD = dolgota;
+				} catch(e){}
+			}
+			return doc;
+		},
+		update: function(doc) {
+			if(AutoForm.getFieldValue("shirota_grad") && AutoForm.getFieldValue("shirota_minut") && AutoForm.getFieldValue("shirota_second")){
+				var shirota_grad = AutoForm.getFieldValue("shirota_grad");
+				var shirota_minut = AutoForm.getFieldValue("shirota_minut");
+				var shirota_second = AutoForm.getFieldValue("shirota_second");
+				try{
+					var shirota = shirota_grad + (shirota_minut / 60) + (shirota_second / 3600);
+					doc.$set.shirota_DD = shirota;
+				} catch(e){}
+			}
+			if(AutoForm.getFieldValue("dolgota_grad") && AutoForm.getFieldValue("dolgota_minut") && AutoForm.getFieldValue("dolgota_second")){
+				var dolgota_grad = AutoForm.getFieldValue("dolgota_grad");
+				var dolgota_minut = AutoForm.getFieldValue("dolgota_minut");
+				var dolgota_second = AutoForm.getFieldValue("dolgota_second");
+				try{
+					var dolgota = dolgota_grad + (dolgota_minut / 60) + (dolgota_second / 3600);
+					doc.$set.dolgota_DD = dolgota;
+				} catch(e){}
+			}
+			return doc;
+		}
+	},
+	after: {
+		insert: function(error, result) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+					console.log("Insert Error:", error);
+			} else {
+				Router.go('AMSList');
+				alertify.success("АМС успешно добавлен!");
+				console.log("Insert Result:", result);
+			}
+		},
+		update: function(error) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Update Error:", error);
+			} else {
+				Router.go('AMSList');
+				alertify.success("АМС успешно изменен!");
+				console.log("Updated!");
 			}
 		}
-	});
+	}
+});
 
 Template.updateAMSForm.helpers({
 	lineRRL: function(){

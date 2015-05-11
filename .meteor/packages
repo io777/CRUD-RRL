@@ -33,3 +33,4 @@ raix:handlebar-helpers
 momentjs:moment
 matb33:collection-hooks
 meteorhacks:ssr
+dburles:google-maps
