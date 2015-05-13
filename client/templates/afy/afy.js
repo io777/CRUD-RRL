@@ -125,14 +125,13 @@ AutoForm.addHooks(['insertAFYForm', 'updateAFYForm'], {
 					doc.poteri_AVT_AFT = (ydelnie_poteri_na_metr * dlinna_AVT_AFT).toFixed(2);
 				} catch(e){}
 			}
-			if(AutoForm.getFieldValue("power_tx") && doc.poteri_AVT_AFT){
-				if(AutoForm.getFieldValue("power_tx") !== 0){
-					var power_tx = AutoForm.getFieldValue("power_tx");
-					var log10 = function(x) { return Math.LOG10E * Math.log(x); }
-					try{
-						doc.moshnost_na_vhode_antenn_Dbm = ((10 * log10(power_tx / 0.001)) - doc.poteri_AVT_AFT).toFixed(2);
-					}catch(e){}
-				}
+			if(AutoForm.getFieldValue("power_tx") && doc.poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
+				var power_tx = AutoForm.getFieldValue("power_tx");
+				var koll_pered = AutoForm.getFieldValue("koll_pered");
+				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
+				try{
+					doc.moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx) / 0.001)) - doc.poteri_AVT_AFT).toFixed(2);
+				}catch(e){}
 			}
 			if(doc.moshnost_na_vhode_antenn_Dbm){
 				try{
@@ -150,14 +149,13 @@ AutoForm.addHooks(['insertAFYForm', 'updateAFYForm'], {
 					doc.$set.poteri_AVT_AFT = ((ydelnie_poteri_na_metr * dlinna_AVT_AFT)).toFixed(2);
 				} catch(e){}
 			}
-			if(AutoForm.getFieldValue("power_tx") && doc.$set.poteri_AVT_AFT){
-				if(AutoForm.getFieldValue("power_tx") !== 0){
-					var power_tx = AutoForm.getFieldValue("power_tx");
-					var log10 = function(x) { return Math.LOG10E * Math.log(x); }
-					try{
-						doc.$set.moshnost_na_vhode_antenn_Dbm = ((10 * log10(power_tx / 0.001)) - doc.$set.poteri_AVT_AFT).toFixed(2);
-					}catch(e){}
-				}
+			if(AutoForm.getFieldValue("power_tx") && doc.$set.poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
+				var power_tx = AutoForm.getFieldValue("power_tx");
+				var koll_pered = AutoForm.getFieldValue("koll_pered");
+				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
+				try{
+					doc.$set.moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx) / 0.001)) - doc.$set.poteri_AVT_AFT).toFixed(2);
+				}catch(e){}
 			}
 			if(doc.$set.moshnost_na_vhode_antenn_Dbm){
 				try{
@@ -211,13 +209,16 @@ Template.insertAFYForm.helpers({
 				var poteri_AVT_AFT = ((ydelnie_poteri_na_metr * dlinna_AVT_AFT)).toFixed(2);
 			} catch(e){}
 		}
-		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT){
-			if(AutoForm.getFieldValue("power_tx") !== 0){
-				var power_tx = AutoForm.getFieldValue("power_tx");
-				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
-				try{
-					return moshnost_na_vhode_antenn_Dbm = ((10 * log10(power_tx/0.001)) - poteri_AVT_AFT).toFixed(2);
-				} catch(e){}
+		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
+			if(AutoForm.getFieldValue("power_tx") > 0){
+				if(AutoForm.getFieldValue("koll_pered") > 0){
+					var power_tx = AutoForm.getFieldValue("power_tx");
+					var koll_pered = AutoForm.getFieldValue("koll_pered");
+					var log10 = function(x) { return Math.LOG10E * Math.log(x); }
+					try{
+						return moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx)/0.001)) - poteri_AVT_AFT).toFixed(2);
+					} catch(e){}
+				}
 			}
 		}
 	},
@@ -229,20 +230,25 @@ Template.insertAFYForm.helpers({
 				var poteri_AVT_AFT = ((ydelnie_poteri_na_metr * dlinna_AVT_AFT)).toFixed(2);
 			} catch(e){}
 		}
-		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT){
-			if(AutoForm.getFieldValue("power_tx") !== 0){
-				var power_tx = AutoForm.getFieldValue("power_tx");
-				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
-				try{
-					var moshnost_na_vhode_antenn_Dbm = ((10 * log10(power_tx/0.001)) - poteri_AVT_AFT).toFixed(2);
-				} catch(e){}
+		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
+			if(AutoForm.getFieldValue("power_tx") > 0){
+				if(AutoForm.getFieldValue("koll_pered") > 0){
+					var power_tx = AutoForm.getFieldValue("power_tx");
+					var koll_pered = AutoForm.getFieldValue("koll_pered");
+					var log10 = function(x) { return Math.LOG10E * Math.log(x); }
+					try{
+						moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx)/0.001)) - poteri_AVT_AFT).toFixed(2);
+					} catch(e){}
+				}
 			}
 		}
-		if(moshnost_na_vhode_antenn_Dbm){
-			try{
-				return moshnost_na_vhode_antenn_wt = ((Math.pow(10,(moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
-			}catch(e){}
-		}
+		try{
+			if(moshnost_na_vhode_antenn_Dbm){
+				if(AutoForm.getFieldValue("koll_pered") > 0 && AutoForm.getFieldValue("power_tx") > 0){
+					return moshnost_na_vhode_antenn_wt = ((Math.pow(10,(moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
+				}
+			}
+		}catch(e){}
 	}
 });
 
@@ -265,13 +271,16 @@ Template.updateAFYForm.helpers({
 				var poteri_AVT_AFT = ((ydelnie_poteri_na_metr * dlinna_AVT_AFT)).toFixed(2);
 			} catch(e){}
 		}
-		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT){
-			if(AutoForm.getFieldValue("power_tx") !== 0){
-				var power_tx = AutoForm.getFieldValue("power_tx");
-				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
-				try{
-					return moshnost_na_vhode_antenn_Dbm = ((10 * log10(power_tx/0.001)) - poteri_AVT_AFT).toFixed(2);
-				} catch(e){}
+		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
+			if(AutoForm.getFieldValue("power_tx") > 0){
+				if(AutoForm.getFieldValue("koll_pered") > 0){
+					var power_tx = AutoForm.getFieldValue("power_tx");
+					var koll_pered = AutoForm.getFieldValue("koll_pered");
+					var log10 = function(x) { return Math.LOG10E * Math.log(x); }
+					try{
+						return moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx)/0.001)) - poteri_AVT_AFT).toFixed(2);
+					} catch(e){}
+				}
 			}
 		}
 	},
@@ -283,19 +292,24 @@ Template.updateAFYForm.helpers({
 				var poteri_AVT_AFT = ((ydelnie_poteri_na_metr * dlinna_AVT_AFT)).toFixed(2);
 			} catch(e){}
 		}
-		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT){
-			if(AutoForm.getFieldValue("power_tx") !== 0){
-				var power_tx = AutoForm.getFieldValue("power_tx");
-				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
-				try{
-					var moshnost_na_vhode_antenn_Dbm = ((10 * log10(power_tx/0.001)) - poteri_AVT_AFT).toFixed(2);
-				} catch(e){}
+		if(AutoForm.getFieldValue("power_tx") && poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
+			if(AutoForm.getFieldValue("power_tx") > 0){
+				if(AutoForm.getFieldValue("koll_pered") > 0){
+					var power_tx = AutoForm.getFieldValue("power_tx");
+					var koll_pered = AutoForm.getFieldValue("koll_pered");
+					var log10 = function(x) { return Math.LOG10E * Math.log(x); }
+					try{
+						moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx)/0.001)) - poteri_AVT_AFT).toFixed(2);
+					} catch(e){}
+				}
 			}
 		}
-		if(moshnost_na_vhode_antenn_Dbm){
-			try{
-				return moshnost_na_vhode_antenn_wt = ((Math.pow(10,(moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
-			}catch(e){}
-		}
+		try{
+			if(moshnost_na_vhode_antenn_Dbm){
+				if(AutoForm.getFieldValue("koll_pered") > 0 && AutoForm.getFieldValue("power_tx") > 0){
+					return moshnost_na_vhode_antenn_wt = ((Math.pow(10,(moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
+				}
+			}
+		}catch(e){}
 	}
 });
