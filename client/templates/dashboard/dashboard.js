@@ -29,10 +29,10 @@ Template.dashboard.onRendered(function () {
 				names: {
 					user_kol: 'Пользователи'
 				},
-				type: 'bar',
+				type: 'scatter',
 				labels: true,
 				colors: {
-					user_kol: '#3EA82C'
+					user_kol: d3.rgb('#00ff00').darker(2)
 				},
 			},
 			grid: {
@@ -43,18 +43,22 @@ Template.dashboard.onRendered(function () {
 					show: true
 				}
 			},
-			bar: {
-				width: {
-					ratio: 0.3 // this makes bar width 50% of length between ticks
-				}
-				// or
-				//width: 100 // this makes bar width 100px
-			},
 			axis: {
 				x: {
+					label: {
+						text: 'Дата регистрации',
+						position: 'outer-center'
+					},
 					type: 'timeseries',
 					tick: {
-						format: '%Y-%m-%d'
+						format: '%Y-%m-%d',
+						fit: false
+					}
+				},
+				y: {
+					label: {
+						text: 'Количество пользователей (шт)',
+						position: 'outer-middle'
 					}
 				}
 			}
@@ -101,7 +105,17 @@ Template.dashboard.onRendered(function () {
 			},
 			axis: {
 				x: {
+					label: {
+						text: 'Наименование объекта эксплуатации',
+						position: 'outer-center'
+					},
 					type: 'category' // this needed to load string x value
+				},
+				y: {
+					label: {
+						text: 'Высота (м)',
+						position: 'outer-middle'
+					}
 				}
 			}
 	});
