@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Станционное оборудование</legend>
 		{{> quickForm collection="StancionOboryds" buttonContent="Создать" id="insertStancionOborydForm" type="insert"}}
   	</div>
 </template>
@@ -16,6 +17,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Станционное оборудование</legend>
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="StancionOboryds" buttonContent="Изменить" doc=this id="updateStancionOborydForm" type="update"}}
 	  	{{else}}
@@ -32,6 +34,7 @@
 	{{/if}}
 	<br>
 	<br>
+	<legend>Список станционное оборудование</legend>
 	Всего станцион. оборудования: {{StancionOborydsCount}}
 	{{> reactiveTable settings=settings}}
 </template>

@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Объект эксплуатации</legend>
 		{{> quickForm collection="ObectExplyats" buttonContent="Создать" id="insertObectExplyatForm" type="insert"}}
   	</div>
 </template>
@@ -20,6 +21,7 @@
 	<hr>
 	<div class="col-md-4 centered">
 		<div id="editObectExplyat" class="collapse in">
+		<legend>Объект эксплуатации</legend>
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="ObectExplyats" buttonContent="Изменить" doc=this id="updateObectExplyatForm" type="update"}}
 	  	{{else}}
@@ -101,6 +103,7 @@
 	</a>
 	<br>
 	<br>
+	<legend>Список объектов эксплуатации</legend>
 	Всего объектов эксплуатации: {{ObectExplyatsCount}}
 	{{> reactiveTable settings=settings}}
 </template>

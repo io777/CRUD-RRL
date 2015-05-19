@@ -49,6 +49,16 @@ Template.AlarmList.helpers({
 							};
 						}
 					},
+					{ 
+						key: 'date',
+						label: 'Дата аварии',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'primechanie', label: 'Примечание', sortable: true }
 			]
 			};

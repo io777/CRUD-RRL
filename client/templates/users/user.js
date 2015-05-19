@@ -45,11 +45,29 @@ Template.userList.helpers({
 			    		}
 			    	}
 			    },
-			    { key: 'createdAt', label: 'Дата создания', sortable: true },
+			    { 
+			    	key: 'createdAt',
+			    	label: 'Дата создания',
+			    	sortable: true,
+			    	fn: function(value){
+			    		if(value){
+			    			return moment(value).format('DD.MM.YYYY');
+			    		}
+			    	}
+			    },
 			    { key: 'profile.firstName', label: 'Имя', sortable: true},
 			    { key: 'profile.middleName', label: 'Отчество', sortable: true},
 			    { key: 'profile.lastName', label: 'Фамилия', sortable: true},
-			    { key: 'profile.birthday', label: 'День рождения', sortable: true},
+			    { 
+			    	key: 'profile.birthday',
+			    	label: 'День рождения',
+			    	sortable: true,
+			    	fn: function(value){
+			    		if(value){
+			    			return moment(value).format('DD.MM.YYYY');
+			    		}
+			    	}
+			    },
 			    { key: 'profile.gender', label: 'Пол', sortable: true},
 			    { key: 'profile.organization', label: 'Организация', sortable: true},
 			    // { key: 'profile.website', label: 'Сайт', sortable: true},

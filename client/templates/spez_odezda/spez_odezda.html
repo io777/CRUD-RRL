@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Спец. одежда</legend>
 		{{> quickForm collection="SpezOdezdas" buttonContent="Создать" id="insertSpezOdezdaForm" type="insert"}}
   	</div>
 </template>
@@ -16,6 +17,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Спец. одежда</legend>
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="SpezOdezdas" buttonContent="Изменить" doc=this id="updateSpezOdezdaForm" type="update"}}
 	  	{{else}}
@@ -32,6 +34,7 @@
 	{{/if}}
 	<br>
 	<br>
+	<legend>Список спец. одежда</legend>
 	Всего спец. одежды: {{SpezOdezdasCount}}
 	{{> reactiveTable settings=settings}}
 </template>

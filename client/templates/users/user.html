@@ -4,6 +4,7 @@
 	</a>
 	<br>
 	<br>
+	<legend>Список пользователей</legend>
 	{{> reactiveTable settings=settings}}
 </template>
 
@@ -14,6 +15,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Пользователь</legend>
 		{{> quickForm collection="Meteor.users" buttonContent="Создать" id="insertUserForm" type="insert" template="bootstrap3-horizontal" fields="username,emails,createdAt,profile,roles"}}
 	</div>
 </template>
@@ -25,6 +27,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Пользователь</legend>
 		{{> quickForm keepArrays=true collection="Meteor.users" doc=this id="updateUserForm" buttonContent="Изменить" type="update" template="bootstrap3-horizontal" fields="username,emails,createdAt,profile,roles"}}
 	</div>
 </template>

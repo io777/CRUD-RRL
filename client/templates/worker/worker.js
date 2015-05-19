@@ -52,7 +52,16 @@ Template.WorkerList.helpers({
 						}
 					},
 					{ key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
-					{ key: 'data_postyplenia_na_raboty', label: 'Дата поступления на работу', sortable: true},
+					{ 
+						key: 'data_postyplenia_na_raboty',
+						label: 'Дата поступления на работу',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'pol', label: 'Пол', sortable: true},
 					{ key: 'rost', label: 'Рост', sortable: true},
 					{ key: 'razmer_odezdi', label: 'Размер одежды', sortable: true},

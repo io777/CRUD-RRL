@@ -81,7 +81,16 @@ Template.AMSList.helpers({
 					{ key: 'ploshad_ams', label: 'Площадь АМС', sortable: true },
 					{ key: 'visota_nad_zemley', label: 'Высота над землей', sortable: true},
 					{ key: 'visota_nad_morem', label: 'Высота над уровнем моря', sortable: true },
-					{ key: 'god_vvoda_v_exsplyataz', label: 'Год ввода в экспл.', sortable: true },
+					{ 
+						key: 'god_vvoda_v_exsplyataz',
+						label: 'Год ввода в экспл.',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'koll_yarysov_ottazek', label: 'Колич. ярусов оттяжек', sortable: true },
 					{ key: 'nalichie_gosexpertiz', label: 'Наличие гос. эспертизы', sortable: true },
 					{ key: 'zashitnoe_pokritie_ams', label: 'Защитное покрытие АМС', sortable: true },

@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Работник</legend>
 		{{> quickForm collection="Workers" buttonContent="Создать" id="insertWorkerForm" type="insert"}}
   	</div>
 </template>
@@ -20,6 +21,7 @@
 	<hr>
 	<div class="col-md-4 centered">
 		<div id="editObectExplyat" class="collapse in">
+			<legend>Работник</legend>
 			{{#if isInRole 'admin,moderator'}}
 				{{> quickForm collection="Workers" buttonContent="Изменить" doc=this id="updateWorkerForm" type="update"}}
 			{{else}}
@@ -70,6 +72,7 @@
 	{{/if}}
 	<br>
 	<br>
+	<legend>Список работников</legend>
 	Всего работников: {{WorkersCount}}
 	{{> reactiveTable settings=settings}}
 </template>

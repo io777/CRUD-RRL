@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Склад</legend>
 		{{> quickForm collection="Sklads" buttonContent="Создать" id="insertSkladForm" type="insert"}}
   	</div>
 </template>
@@ -20,6 +21,7 @@
 	<hr>
 	<div class="col-md-4 centered">
 		<div id="editSklad" class="collapse in">
+		<legend>Склад</legend>
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="Sklads" buttonContent="Изменить" doc=this id="updateSkladForm" type="update"}}
 	  	{{else}}

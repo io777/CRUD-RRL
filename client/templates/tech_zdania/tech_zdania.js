@@ -52,7 +52,16 @@ Template.TechZdaniaList.helpers({
 							};
 						}
 					},
-					{ key: 'god_postroiki', label: 'Год постройки', sortable: true},
+					{ 
+						key: 'god_postroiki',
+						label: 'Год постройки',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('YYYY');
+							}
+						}
+					},
 					{ key: 'god_pereoboryd', label: 'Год переоборудования', sortable: true},
 					{ key: 'krovla', label: 'Кровля', sortable: true},
 					{ key: 'perekritia', label: 'Перекрытия', sortable: true},

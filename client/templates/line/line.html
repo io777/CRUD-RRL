@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Линия РРЛ</legend>
 		{{> quickForm collection="Lines" buttonContent="Создать" id="insertLineForm" type="insert"}}
   	</div>
 </template>
@@ -16,6 +17,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>Линия РРЛ</legend>
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="Lines" buttonContent="Изменить" doc=this id="updateLineForm" type="update"}}
 	  	{{else}}
@@ -32,6 +34,7 @@
 	{{/if}}
 	<br>
 	<br>
+	<legend>Список линий РРЛ</legend>
 	Всего линий РРЛ: {{LinesCount}}
 	{{> reactiveTable settings=settings}}
 </template>

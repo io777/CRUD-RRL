@@ -5,6 +5,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>АМС</legend>
 		{{> quickForm collection="AMSs" buttonContent="Создать" id="insertAMSForm" type="insert" fields="name_psevdo,mesto,name_adress,inventari,sever_shirot,shirota_grad,shirota_minut,shirota_second,west_dolg,dolgota_grad,dolgota_minut,dolgota_second,type_ams,massa_ams,konstryktiv_ams,Visota_AMS,nagryzka,ploshad_ams,visota_nad_zemley,visota_nad_morem,god_vvoda_v_exsplyataz,koll_yarysov_ottazek,nalichie_gosexpertiz,zashitnoe_pokritie_ams,nalichie_lebedki,protokol_izmerenia_osadok_fundamenta,protokol_izmerenia_otklonenia_stvola_AMS_ot_vertikali,protokol_izmerenia_yglovih_otkloneniy_AMS,akt_revizii_AMS,akt_proverki_natazenia_v_ottazkah,akt_priemki_remotnih_rabot_na_AMS,akt_defectnogo_sostoyania_AMS,akt_priemki_rabot_po_kap_remonty_AMS,remont_fundamentov_AMS,kap_remont_AMS_bez_pokraski,nalicie_proektnoi_doc,tip_proekta_AMS,project_organization,nalich_transport_seti,obiem_transportnoi_seti,nalichie_svidetelstva_na_pravo_sobstvennosti,Vid_prava_na_zemel_ychastok,nalichie_soglas_s_aviachieu,nalichie_pasporta_som,nalichie_sanepid_na_PRTO,nalichie_pasporta_na_kontyr_zazemlenia_AMS,videlaemaya_moshnost_na_obekt,fakt_potreb_moshnost,MOL_dolznost,MOL_FIO,MOL_tel,Otvetstv_za_AMS_dolznost,Otvetstv_za_AMS_FIO,Otvetstv_za_AMS_tel,primechania_po_remonty"}}
   	</div>
 </template>
@@ -16,6 +17,7 @@
 		</a>
 		<br>
 		<br>
+		<legend>АМС</legend>
 		{{#if isInRole 'admin,moderator'}}
 			<!-- Линия РРЛ -->
 			{{#if lineRRL}}
@@ -39,6 +41,7 @@
 	{{/if}}
 	<br>
 	<br>
+	<legend>Список АМС</legend>
 	Всего АМС: {{AMSsCount}}
 	{{> reactiveTable settings=settings}}
 </template>
