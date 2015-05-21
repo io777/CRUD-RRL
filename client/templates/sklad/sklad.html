@@ -80,6 +80,16 @@
 		</div>
 		<!-- End ListCizs -->
 	{{/if}}
+	{{#if SpezOdezdasCount}}
+		<!-- ListSpezOdezdas -->
+		<a href="#" data-toggle="collapse" data-target="#ListSpezOdezdas">Список спец. одежды на складе</a>
+		<hr>
+		<div id="ListSpezOdezdas" class="collapse">
+			Всего спец. одежды на складе: {{SpezOdezdasCount}}
+			{{> reactiveTable settings=settingsListSpezOdezda}}
+		</div>
+		<!-- End ListSpezOdezdas -->
+	{{/if}}
 
 </template>
 

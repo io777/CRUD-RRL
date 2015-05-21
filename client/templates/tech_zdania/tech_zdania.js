@@ -62,7 +62,16 @@ Template.TechZdaniaList.helpers({
 							}
 						}
 					},
-					{ key: 'god_pereoboryd', label: 'Год переоборудования', sortable: true},
+					{ 
+						key: 'god_pereoboryd',
+						label: 'Год переоборудования',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('YYYY');
+							}
+						}
+					},
 					{ key: 'krovla', label: 'Кровля', sortable: true},
 					{ key: 'perekritia', label: 'Перекрытия', sortable: true},
 					{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},

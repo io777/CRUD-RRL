@@ -38,14 +38,18 @@ Template.SpezOdezdaList.helpers({
 					},
 					{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
 					{
-						key: 'worker',
-						label: 'Работник',
+						key: 'mesto',
+						label: 'Место размещение',
 						sortable: true,
 						fn: function(value){
+							if (Sklads.findOne({_id: value})){
+								var skladOne = Sklads.findOne({_id: value});
+								return skladOne.name;
+							};
 							if (Workers.findOne({_id: value})){
 								var workerOne = Workers.findOne({_id: value});
 								return workerOne.Familia;
-							}
+							};
 						}	
 					},
 					{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
@@ -125,26 +129,26 @@ Template.SpezOdezdaList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertSpezOdezdaForm', 'updateSpezOdezdaForm'], {
-		after: {
-			insert: function(error, result) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-						console.log("Insert Error:", error);
-				} else {
-					Router.go('SpezOdezdaList');
-					alertify.success("Спец. одежда успешно добавлена!");
-					console.log("Insert Result:", result);
-				}
-			},
-			update: function(error) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-					console.log("Update Error:", error);
-				} else {
-					Router.go('SpezOdezdaList');
-					alertify.success("Спец. одежда успешно изменена!");
-					console.log("Updated!");
-				}
+	after: {
+		insert: function(error, result) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Insert Error:", error);
+			} else {
+				Router.go('SpezOdezdaList');
+				alertify.success("Спец. одежда успешно добавлена!");
+				console.log("Insert Result:", result);
+			}
+		},
+		update: function(error) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Update Error:", error);
+			} else {
+				Router.go('SpezOdezdaList');
+				alertify.success("Спец. одежда успешно изменена!");
+				console.log("Updated!");
 			}
 		}
-	});
+	}
+});

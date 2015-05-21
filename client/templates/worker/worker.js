@@ -69,7 +69,7 @@ Template.WorkerList.helpers({
 					{ key: 'razmer_golovnogo_ubora', label: 'Размер головного убора', sortable: true},
 					{ key: 'tel', label: 'Телефон', sortable: true},
 					{ key: 'tel_rab', label: 'Рабочий телефон', sortable: true},
-					{ key: 'dolznost', label: 'dolznost', sortable: true},
+					{ key: 'dolznost', label: 'Должность', sortable: true},
 					{ key: 'podpis', label: 'Подпись', sortable: true}
 				]
 			};

@@ -5,7 +5,7 @@
 		</a>
 		<br>
 		<br>
-		<legend>Матерьял</legend>
+		<legend>Материал</legend>
 		{{> quickForm collection="Materials" buttonContent="Создать" id="insertMaterialForm" type="insert"}}
   	</div>
 </template>
@@ -17,7 +17,7 @@
 		</a>
 		<br>
 		<br>
-		<legend>Матерьял</legend>
+		<legend>Материал</legend>
 		{{#if isInRole 'admin,moderator'}}
 	  		{{> quickForm collection="Materials" buttonContent="Изменить" doc=this id="updateMaterialForm" type="update"}}
 	  	{{else}}
@@ -29,12 +29,12 @@
 <template name="MaterialList">
 	{{#if isInRole 'moderator,admin'}}
 		<a class="btn btn-success" href="{{pathFor 'insertMaterialForm'}}">
-			<i class="fa fa-plus">&nbsp;Добавить матерьял</i>
+			<i class="fa fa-plus">&nbsp;Добавить материал</i>
 		</a>
 	{{/if}}
 	<br>
 	<br>
-	<legend>Список матерьялов</legend>
-	Всего матерьялов: {{MaterialsCount}}
+	<legend>Список материалов</legend>
+	Всего материалов: {{MaterialsCount}}
 	{{> reactiveTable settings=settings}}
 </template>

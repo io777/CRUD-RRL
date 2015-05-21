@@ -46,13 +46,14 @@ Template.dashboard.onRendered(function () {
 			axis: {
 				x: {
 					label: {
-						text: 'Дата регистрации',
-						position: 'outer-center'
+						text: 'Дата регистрации'
 					},
 					type: 'timeseries',
 					tick: {
 						format: '%Y-%m-%d',
-						fit: false
+						fit: false,
+						rotate: 75,
+						multiline: false
 					}
 				},
 				y: {

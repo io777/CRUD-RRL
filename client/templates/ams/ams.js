@@ -69,7 +69,6 @@ Template.AMSList.helpers({
 							return result;
 						}
 					 },
-					{ key: 'obect_explyat_name', label: 'Место размещения (объект эксплуатации)', sortable: true },
 					{ key: 'sever_shirot', label: 'СШ', sortable: true },
 					{ key: 'west_dolg', label: 'ВД', sortable: true},
 					{ key: 'type_ams', label: 'Тип АМС', sortable: true },
