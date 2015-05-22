@@ -1,0 +1,81 @@
+////////////////////////////////////////////////////////////////////////
+//   npm ////////////////////////////
+////////////////////////////////////
+
+// ystanovit packet s sohraneniem v fail package.json
+
+    npm install packaage_name --save
+
+// ydalit packet 
+
+    npm uninstall package_name --save
+    
+// ystanovit v otdel dev package.json
+
+    npm install --save-dev gulp
+
+//////////////////////////////////////////////////////////////////////////
+// gulp //////////////////////////
+/////////////////////////////////
+
+// 1. ystanavlivaem gulp globalno
+
+    npm install --global gulp
+    
+// 2. ystanavlivaem gulp v proekt
+
+    npm install --save-dev gulp
+    
+// 3. Create a gulpfile.js at the root of your project:
+
+    var gulp = require('gulp');
+
+        gulp.task('default', function() {
+        // place code for your default task here
+        });
+
+//  4. Run gulp:
+
+        $ gulp
+        
+
+////////////////////////////////////////////////////////////////////////
+// nodemon //////////////////////
+/////////////////////////////////
+
+ nodemon server.js
+ 
+ 
+ 
+/////////////////////////////////////////////////////////////////////
+// git ///////////////////////
+/////////////////////////////
+
+// Add user name
+git config --global user.name "Daddy Cool"
+// Add email
+git config --global user.email "shirling@mail.ru"
+
+// Pereydite v directoriy proecta
+cd /path/to/your/project
+// inicilizaciya proecta
+git init
+// Add repozitariy ssh
+git remote add origin git@bitbucket.org:SHAPproduction/data-center.git
+
+echo "Andrey Shirling" >> contributors.txt
+git add contributors.txt
+// Add file
+git add .
+// commit
+git commit -m 'Initial commit with contributors'
+// otpravlyem faili v repozitariy
+git push -u origin master
+
+// sozdaem ssh
+ssh-keygen
+// copy ssh key in bitbacket
+cat ~/.ssh/id_rsa.pub
+
+//ydalit papky s failami
+git rm -rf .c9
