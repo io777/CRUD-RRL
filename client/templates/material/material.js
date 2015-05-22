@@ -37,6 +37,21 @@ Template.MaterialList.helpers({
 						}
 					},
 					{ key: 'name', label: 'Наименование', sortable: true},
+					{
+						key: 'mesto',
+						label: 'Место размещения',
+						sortable: true,
+						fn: function (value){
+							if (Sklads.findOne({_id: value})){
+								var skladOne = Sklads.findOne({_id: value});
+								return skladOne.name;
+							};
+							if (ObectExplyats.findOne({_id: value})){
+								var obectExplyatOne = ObectExplyats.findOne({_id: value});
+								return obectExplyatOne.name;
+							};
+						}
+					},
 					{ key: 'kolvo', label: 'Количество', sortable: true},
 					{ key: 'razmer', label: 'Размер', sortable: true},
 					{ key: 'primechanie', label: 'Примечание', sortable: true}

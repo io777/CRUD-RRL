@@ -90,6 +90,16 @@
 		</div>
 		<!-- End listCiz -->
 	{{/if}}
+	{{#if MaterialsCount}}
+		<!-- ListMaterials -->
+		<a href="#" data-toggle="collapse" data-target="#ListMaterials">Список материалов на объекте эксплуатации</a>
+		<hr>
+		<div id="ListMaterials" class="collapse">
+			Всего материалов на объекте эксплуатации: {{MaterialsCount}}
+			{{> reactiveTable settings=settingsListMaterial}}
+		</div>
+		<!-- End ListMaterials -->
+	{{/if}}
 </template>
 
 <template name="ObectExplyatList">

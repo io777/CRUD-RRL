@@ -619,7 +619,103 @@ Template.updateSkladForm.helpers({
 					{ key: 'primechanie', label: 'Примечание', sortable: true}
 				]
 			};
+		},
+		MaterialsCount: function(){
+			var skladId = this._id;
+			var materials = Materials.find().fetch();
+			var materialsInSklad = _.where(materials, {mesto: skladId});
+			return materialsInSklad.length;
+		},
+		settingsListMaterial: function(){
+			var skladId = this._id;
+			var materials = Materials.find().fetch();
+			var materialsInSklad = _.where(materials, {mesto: skladId});
+			return {
+				collection: materialsInSklad,
+				rowsPerPage: 10,
+				showFilter: true,
+				showColumnToggles: true,
+				class: 'table table-bordered table-hover col-sm-12',
+				fields: [
+					{ 
+						key: 'delete',
+						//headerClass: 'col-md-1',
+						label: 'Удалить',
+						hideToggle: true,
+						sortable: false,
+						hidden: function () {
+							var loggedInUser = Meteor.user();
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+									return true;
+							}
+						},
+						fn: function (value){
+							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg material"></i></a>');
+						}
+					},
+					{ 
+						key: 'edit',
+						//headerClass: 'col-md-1',
+						label: 'Изменить / посмотреть',
+						sortable: false,
+						fn: function (value){
+							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg material"></i></a>');
+						}
+					},
+					{ key: 'name', label: 'Наименование', sortable: true},
+					{
+						key: 'mesto',
+						label: 'Место размещения',
+						sortable: true,
+						fn: function (value){
+							if (Sklads.findOne({_id: value})){
+								var skladOne = Sklads.findOne({_id: value});
+								return skladOne.name;
+							};
+							if (ObectExplyats.findOne({_id: value})){
+								var obectExplyatOne = ObectExplyats.findOne({_id: value});
+								return obectExplyatOne.name;
+							};
+						}
+					},
+					{ key: 'kolvo', label: 'Количество', sortable: true},
+					{ key: 'razmer', label: 'Размер', sortable: true},
+					{ key: 'primechanie', label: 'Примечание', sortable: true}
+			]
+			};
 		}
+});
+
+// редактировать материал
+Template.updateSkladForm.events({
+	'click .reactive-table tr': function (event) {
+		// set the blog post we'll display details and news for
+		event.preventDefault();
+		var Material = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-pencil fa-lg material") {
+			Router.go('updateMaterialForm', {_id: this._id});
+		}
+	}
+});
+// удалить материал
+Template.updateSkladForm.events({
+	'click .reactive-table tr': function (event) {
+		event.preventDefault();
+		var Material = this;
+		// checks if the actual clicked element has the class `delete`
+		if (event.target.className == "fa fa-times fa-lg material") {
+				Materials.remove(Material._id, function(error){
+					if(error){
+						alertify.error("Ошибка!", error);
+						console.log("Remove Error:", error);
+					} else {
+						alertify.success("Матерьял успешно удален!");
+						console.log("Material Remove!");
+					}
+				});
+		}
+	}
 });
 
 // редактировать спец. одежду
