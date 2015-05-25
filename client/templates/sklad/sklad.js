@@ -71,8 +71,8 @@ Template.updateSkladForm.helpers({
 						sortable: false,
 						hidden: function () {
 							var loggedInUser = Meteor.user();
-						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
+							if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+								return true;
 							}
 						},
 						fn: function (value){
@@ -113,7 +113,6 @@ Template.updateSkladForm.helpers({
 						fn: function(value){
 							var result = [];
 							lines = Lines.find();
-							var currentLineId = value;
 							lines.forEach(function(line){
 								if(_.contains(line.ams, value.toString())){
 									result.push(" "+line.name+" - "+line.nomer);
@@ -121,8 +120,7 @@ Template.updateSkladForm.helpers({
 							});
 							return result;
 						}
-					 },
-					{ key: 'obect_explyat_name', label: 'Место размещения (объект эксплуатации)', sortable: true },
+					},
 					{ key: 'sever_shirot', label: 'СШ', sortable: true },
 					{ key: 'west_dolg', label: 'ВД', sortable: true},
 					{ key: 'type_ams', label: 'Тип АМС', sortable: true },
@@ -134,7 +132,16 @@ Template.updateSkladForm.helpers({
 					{ key: 'ploshad_ams', label: 'Площадь АМС', sortable: true },
 					{ key: 'visota_nad_zemley', label: 'Высота над землей', sortable: true},
 					{ key: 'visota_nad_morem', label: 'Высота над уровнем моря', sortable: true },
-					{ key: 'god_vvoda_v_exsplyataz', label: 'Год ввода в экспл.', sortable: true },
+					{ 
+						key: 'god_vvoda_v_exsplyataz',
+						label: 'Год ввода в экспл.',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'koll_yarysov_ottazek', label: 'Колич. ярусов оттяжек', sortable: true },
 					{ key: 'nalichie_gosexpertiz', label: 'Наличие гос. эспертизы', sortable: true },
 					{ key: 'zashitnoe_pokritie_ams', label: 'Защитное покрытие АМС', sortable: true },
@@ -169,7 +176,7 @@ Template.updateSkladForm.helpers({
 					{ key: 'Otvetstv_za_AMS_FIO', label: 'Ответств. за АМС ФИО', sortable: true },
 					{ key: 'Otvetstv_za_AMS_tel', label: 'Ответств. за АМС тел', sortable: true },
 					{ key: 'primechania_po_remonty', label: 'Примечания по ремонту', sortable: true }
-			  ]
+				]
 			};
 		},
 		TechZdaniasCount: function(){
@@ -230,15 +237,33 @@ Template.updateSkladForm.helpers({
 							};
 						}
 					},
-					{ key: 'god_postroiki', label: 'Год постройки', sortable: true},
-					{ key: 'god_pereoboryd', label: 'Год переоборудования', sortable: true},
+					{ 
+						key: 'god_postroiki',
+						label: 'Год постройки',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('YYYY');
+							}
+						}
+					},
+					{ 
+						key: 'god_pereoboryd',
+						label: 'Год переоборудования',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('YYYY');
+							}
+						}
+					},
 					{ key: 'krovla', label: 'Кровля', sortable: true},
 					{ key: 'perekritia', label: 'Перекрытия', sortable: true},
 					{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
 					{ key: 'kybatura', label: 'Кубатура', sortable: true},
 					{ key: 'organizaciya', label: 'Организация', sortable: true},
 					{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
-			  ]
+				]
 			};
 		},
 		AFYsCount: function(){
@@ -266,8 +291,8 @@ Template.updateSkladForm.helpers({
 						sortable: false,
 						hidden: function () {
 							var loggedInUser = Meteor.user();
-							if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+									return true;
 							}
 						},
 						fn: function (value){
@@ -283,7 +308,7 @@ Template.updateSkladForm.helpers({
 							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AFY"></i></a>');
 						}
 					},
-					{ key: 'type_oborydov', label: 'ТИп оборудования', sortable: true},
+					{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
 					{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
 					{
 						key: 'mesto',
@@ -300,30 +325,30 @@ Template.updateSkladForm.helpers({
 							};
 						}
 					},
-					{ key: 'freqvansi', label: 'Частота', sortable: true },
-					{ key: 'freqvansi_prd', label: 'Частота прд.', sortable: true},
-					{ key: 'freqvansi_prm', label: 'Частота прм.', sortable: true },
+					{ key: 'freqvansi', label: 'Частота (Мгц)', sortable: true },
+					{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
+					{ key: 'freqvansi_prm', label: 'Частота прм. (Мгц)', sortable: true },
 					{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
-					{ key: 'power_tx', label: 'Мощность прд.', sortable: true},
-					{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ', sortable: true },
-					{ key: 'primechanie', label: 'Примечание', sortable: true },
-					{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр', sortable: true},
-					{ key: 'shirina_lycha', label: 'Ширина луча', sortable: true },
-					{ key: 'koll_pered', label: 'Количество прд.', sortable: true},
-					{ key: 'azimut_izluchenia', label: 'Азимут излучения', sortable: true },
-					{ key: 'ygol_mesta', label: 'Азимут излучения', sortable: true },
-					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн', sortable: true },
+					{ key: 'power_tx', label: 'Мощность прд. (Вт)', sortable: true},
+					{ key: 'moshnost_na_vhode_antenn_wt', label: 'Мощность на входе антенн (Вт)', sortable: true},
+					{ key: 'moshnost_na_vhode_antenn_Dbm', label: 'Мощность на входе антенн (Дбм)', sortable: true},
+					{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ (Дбм)', sortable: true },
+					{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр (Дбм)', sortable: true},
+					{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true },
+					{ key: 'koll_pered', label: 'Количество прд. (шт.)', sortable: true},
+					{ key: 'azimut_izluchenia', label: 'Азимут излучения (град.)', sortable: true },
+					{ key: 'ygol_mesta', label: 'Азимут излучения (град)', sortable: true },
+					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн (м)', sortable: true },
 					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true },
-					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр', sortable: true},
-					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн', sortable: true },
+					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр (м)', sortable: true},
+					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true },
 					{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
 					{ key: 'sechenie', label: 'Сечение', sortable: true },
-					{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ', sortable: true },
-					{ key: 'moshnost_na_vhode_antenn', label: 'Мощность на входе антенн', sortable: true},
+					{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ (м)', sortable: true },
 					{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
 					{ key: 'rezervir', label: 'Резервирование', sortable: true},
-					{ key: 'koll_potokov', label: 'Колич. потоков', sortable: true },
-					{ key: 'razmeshenie', label: 'Размещение', sortable: true }
+					{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true },
+					{ key: 'primechanie', label: 'Примечание', sortable: true },
 				]
 			};
 		},

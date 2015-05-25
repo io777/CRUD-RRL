@@ -77,62 +77,116 @@
 	  	{{else}}
 	  		{{> quickForm collection="AFYs" buttonContent=false doc=this id="updateAFYForm" }}
 	  	{{/if}} -->
-	  	{{#autoForm collection="AFYs" id="updateAFYForm" doc=this type="update"}}
-			<fieldset>
-				<legend>АФУ</legend>
-				{{> afQuickField name='type_oborydov'}}
-				{{> afQuickField name='inventarniu_nomer'}}
-				{{> afQuickField name='mesto'}}
-				{{> afQuickField name='freqvansi'}}
-				{{> afQuickField name='freqvansi_prd'}}
-				{{> afQuickField name='freqvansi_prm'}}
-				{{> afQuickField name='type_moduleshin'}}
-				{{> afQuickField name='ydelnie_poteri_na_metr'}}
-				{{> afQuickField name='dlinna_AVT_AFT'}}
-				<!-- Потери в АВТ / АФТ -->
-				{{#if poteri_AVT_AFT}}
-					<div class="form-group">
-						<label class="control-label">Потери в АВТ / АФТ:</label>
-						{{poteri_AVT_AFT}}
-					</div>
-				{{/if}}
-				<!-- end Потери в АВТ / АФТ -->
-				{{> afQuickField name='power_tx'}}
-				{{> afQuickField name='koll_pered'}}
-				<!-- Мощность на входе антенн (Вт) -->
-				{{#if moshnost_na_vhode_antenn_wt}}
-					<div class="form-group">
-						<label class="control-label">Мощность на входе антенн (Вт):</label>
-						{{moshnost_na_vhode_antenn_wt}}
-					</div>
-				{{/if}}
-				<!-- end Мощность на входе антенн (Вт) -->
-				<!-- Мощность на входе антенн (Дбм) -->
-				{{#if moshnost_na_vhode_antenn_Dbm}}
-					<div class="form-group">
-						<label class="control-label">Мощность на входе антенн (Дбм):</label>
-						{{moshnost_na_vhode_antenn_Dbm}}
-					</div>
-				{{/if}}
-				<!-- end Мощность на входе антенн (Дбм) -->
-				{{> afQuickField name='shirina_lycha'}}
-				{{> afQuickField name='azimut_izluchenia'}}
-				{{> afQuickField name='ygol_mesta'}}
-				{{> afQuickField name='visota_podvesa_antenn'}}
-				{{> afQuickField name='visota_ot_krovli'}}
-				{{> afQuickField name='type_antenn_diametr'}}
-				{{> afQuickField name='koeffcient_ysil_antenn'}}
-				{{> afQuickField name='type_AVT_AFT'}}
-				{{> afQuickField name='sechenie'}}
-				{{> afQuickField name='vladelec_oboryd'}}
-				{{> afQuickField name='rezervir'}}
-				{{> afQuickField name='koll_potokov'}}
-				{{> afQuickField name='primechanie'}}
-				
-
-			</fieldset>
-			<button type="submit" class="btn btn-primary">Изменить</button>
-		{{/autoForm}}
+	  	{{#if isInRole 'admin,moderator'}}
+		  	{{#autoForm collection="AFYs" id="updateAFYForm" doc=this type="update"}}
+				<fieldset>
+					<legend>АФУ</legend>
+					{{> afQuickField name='type_oborydov'}}
+					{{> afQuickField name='inventarniu_nomer'}}
+					{{> afQuickField name='mesto'}}
+					{{> afQuickField name='freqvansi'}}
+					{{> afQuickField name='freqvansi_prd'}}
+					{{> afQuickField name='freqvansi_prm'}}
+					{{> afQuickField name='type_moduleshin'}}
+					{{> afQuickField name='ydelnie_poteri_na_metr'}}
+					{{> afQuickField name='dlinna_AVT_AFT'}}
+					<!-- Потери в АВТ / АФТ -->
+					{{#if poteri_AVT_AFT}}
+						<div class="form-group">
+							<label class="control-label">Потери в АВТ / АФТ:</label>
+							{{poteri_AVT_AFT}}
+						</div>
+					{{/if}}
+					<!-- end Потери в АВТ / АФТ -->
+					{{> afQuickField name='power_tx'}}
+					{{> afQuickField name='koll_pered'}}
+					<!-- Мощность на входе антенн (Вт) -->
+					{{#if moshnost_na_vhode_antenn_wt}}
+						<div class="form-group">
+							<label class="control-label">Мощность на входе антенн (Вт):</label>
+							{{moshnost_na_vhode_antenn_wt}}
+						</div>
+					{{/if}}
+					<!-- end Мощность на входе антенн (Вт) -->
+					<!-- Мощность на входе антенн (Дбм) -->
+					{{#if moshnost_na_vhode_antenn_Dbm}}
+						<div class="form-group">
+							<label class="control-label">Мощность на входе антенн (Дбм):</label>
+							{{moshnost_na_vhode_antenn_Dbm}}
+						</div>
+					{{/if}}
+					<!-- end Мощность на входе антенн (Дбм) -->
+					{{> afQuickField name='shirina_lycha'}}
+					{{> afQuickField name='azimut_izluchenia'}}
+					{{> afQuickField name='ygol_mesta'}}
+					{{> afQuickField name='visota_podvesa_antenn'}}
+					{{> afQuickField name='visota_ot_krovli'}}
+					{{> afQuickField name='type_antenn_diametr'}}
+					{{> afQuickField name='koeffcient_ysil_antenn'}}
+					{{> afQuickField name='type_AVT_AFT'}}
+					{{> afQuickField name='sechenie'}}
+					{{> afQuickField name='vladelec_oboryd'}}
+					{{> afQuickField name='rezervir'}}
+					{{> afQuickField name='koll_potokov'}}
+					{{> afQuickField name='primechanie'}}
+				</fieldset>
+				<button type="submit" class="btn btn-primary">Изменить</button>
+			{{/autoForm}}
+		{{else}}
+			{{#autoForm collection="AFYs" id="updateAFYForm" doc=this type="update"}}
+				<fieldset>
+					<legend>АФУ</legend>
+					{{> afQuickField name='type_oborydov'}}
+					{{> afQuickField name='inventarniu_nomer'}}
+					{{> afQuickField name='mesto'}}
+					{{> afQuickField name='freqvansi'}}
+					{{> afQuickField name='freqvansi_prd'}}
+					{{> afQuickField name='freqvansi_prm'}}
+					{{> afQuickField name='type_moduleshin'}}
+					{{> afQuickField name='ydelnie_poteri_na_metr'}}
+					{{> afQuickField name='dlinna_AVT_AFT'}}
+					<!-- Потери в АВТ / АФТ -->
+					{{#if poteri_AVT_AFT}}
+						<div class="form-group">
+							<label class="control-label">Потери в АВТ / АФТ:</label>
+							{{poteri_AVT_AFT}}
+						</div>
+					{{/if}}
+					<!-- end Потери в АВТ / АФТ -->
+					{{> afQuickField name='power_tx'}}
+					{{> afQuickField name='koll_pered'}}
+					<!-- Мощность на входе антенн (Вт) -->
+					{{#if moshnost_na_vhode_antenn_wt}}
+						<div class="form-group">
+							<label class="control-label">Мощность на входе антенн (Вт):</label>
+							{{moshnost_na_vhode_antenn_wt}}
+						</div>
+					{{/if}}
+					<!-- end Мощность на входе антенн (Вт) -->
+					<!-- Мощность на входе антенн (Дбм) -->
+					{{#if moshnost_na_vhode_antenn_Dbm}}
+						<div class="form-group">
+							<label class="control-label">Мощность на входе антенн (Дбм):</label>
+							{{moshnost_na_vhode_antenn_Dbm}}
+						</div>
+					{{/if}}
+					<!-- end Мощность на входе антенн (Дбм) -->
+					{{> afQuickField name='shirina_lycha'}}
+					{{> afQuickField name='azimut_izluchenia'}}
+					{{> afQuickField name='ygol_mesta'}}
+					{{> afQuickField name='visota_podvesa_antenn'}}
+					{{> afQuickField name='visota_ot_krovli'}}
+					{{> afQuickField name='type_antenn_diametr'}}
+					{{> afQuickField name='koeffcient_ysil_antenn'}}
+					{{> afQuickField name='type_AVT_AFT'}}
+					{{> afQuickField name='sechenie'}}
+					{{> afQuickField name='vladelec_oboryd'}}
+					{{> afQuickField name='rezervir'}}
+					{{> afQuickField name='koll_potokov'}}
+					{{> afQuickField name='primechanie'}}
+				</fieldset>
+			{{/autoForm}}
+		{{/if}}
 	</div>
 </template>
 

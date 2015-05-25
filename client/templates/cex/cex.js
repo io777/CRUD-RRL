@@ -102,7 +102,16 @@ Template.updateCexForm.helpers({
 						}
 					},
 					{ key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
-					{ key: 'data_postyplenia_na_raboty', label: 'Дата поступления на работу', sortable: true},
+					{ 
+						key: 'data_postyplenia_na_raboty',
+						label: 'Дата поступления на работу',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
 					{ key: 'pol', label: 'Пол', sortable: true},
 					{ key: 'rost', label: 'Рост', sortable: true},
 					{ key: 'razmer_odezdi', label: 'Размер одежды', sortable: true},
@@ -110,7 +119,7 @@ Template.updateCexForm.helpers({
 					{ key: 'razmer_golovnogo_ubora', label: 'Размер головного убора', sortable: true},
 					{ key: 'tel', label: 'Телефон', sortable: true},
 					{ key: 'tel_rab', label: 'Рабочий телефон', sortable: true},
-					{ key: 'dolznost', label: 'dolznost', sortable: true},
+					{ key: 'dolznost', label: 'Должность', sortable: true},
 					{ key: 'podpis', label: 'Подпись', sortable: true}
 				]
 		};

@@ -106,11 +106,11 @@ Template.dashboard.onRendered(function () {
 			},
 			axis: {
 				x: {
-					label: {
-						text: 'Наименование объекта эксплуатации',
-						position: 'outer-center'
-					},
-					type: 'category' // this needed to load string x value
+					type: 'category', // this needed to load string x value
+					tick: {
+						rotate: 75,
+						multiline: false
+					}
 				},
 				y: {
 					label: {
