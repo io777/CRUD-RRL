@@ -75,7 +75,6 @@ Template.AMSList.helpers({
 				{ key: 'massa_ams', label: 'Масса АМС', sortable: true },
 				{ key: 'konstryktiv_ams', label: 'Конструктив АМС', sortable: true},
 				{ key: 'Visota_AMS', label: 'Высота АМС', sortable: true },
-				{ key: 'koll_pered', label: 'Количество прд.', sortable: true},
 				{ key: 'nagryzka', label: 'Нагрузка', sortable: true },
 				{ key: 'ploshad_ams', label: 'Площадь АМС', sortable: true },
 				{ key: 'visota_nad_zemley', label: 'Высота над землей', sortable: true},
