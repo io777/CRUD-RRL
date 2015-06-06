@@ -113,12 +113,15 @@ Template.CizList.helpers({
 					sortable: true,
 					fn: function(value){
 						nowDate = new Date();
-						if (nowDate > value){
-							return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
-						} else {
-							return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+						if(value == null){
+							return new Spacebars.SafeString('<span class="label label-info">Не поверяется</span>');
+						}else{
+							if (nowDate > value){
+								return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+							} else {
+								return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+							}
 						}
-						
 					}
 				}
 			]
@@ -168,13 +171,23 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 					var typeCizOne = TypeCizs.findOne({_id: typeCizId});
 					var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
 					var periodNumber = period.periodPoverki;
-					doc.periodPoverki = periodNumber;
+					if(periodNumber == 0){
+						doc.periodPoverki = periodNumber;
+					}else{
+						doc.periodPoverki = periodNumber;
+					}
+					// doc.periodPoverki = periodNumber;
 				} catch(e){}
-				if(AutoForm.getFieldValue("datePoverki")){
-					var datePoverki = AutoForm.getFieldValue("datePoverki");
-					doc.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
-				} else{
+				if(periodNumber == 0){
 					doc.dateSledPoverki = null;
+					doc.datePoverki = null;
+				}else{
+					if(AutoForm.getFieldValue("datePoverki")){
+						var datePoverki = AutoForm.getFieldValue("datePoverki");
+						doc.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
+					} else{
+						doc.dateSledPoverki = null;
+					}
 				}
 			}
 			AutoForm.validateForm("insertCizForm");
@@ -188,13 +201,23 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 					var typeCizOne = TypeCizs.findOne({_id: typeCizId});
 					var period = _.findWhere(typeCizOne.ciz, {name: nameCiz});
 					var periodNumber = period.periodPoverki;
-					doc.$set.periodPoverki = periodNumber;
+					if(periodNumber == 0){
+						doc.$set.periodPoverki = periodNumber;
+					}else{
+						doc.$set.periodPoverki = periodNumber;
+					}
+					// doc.periodPoverki = periodNumber;
 				} catch(e){}
-				if(AutoForm.getFieldValue("datePoverki")){
-					var datePoverki = AutoForm.getFieldValue("datePoverki");
-					doc.$set.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
-				} else{
+				if(periodNumber == 0){
 					doc.$set.dateSledPoverki = null;
+					doc.$set.datePoverki = null;
+				}else{
+					if(AutoForm.getFieldValue("datePoverki")){
+						var datePoverki = AutoForm.getFieldValue("datePoverki");
+						doc.$set.dateSledPoverki = moment(datePoverki).add(periodNumber, 'M').format();
+					} else{
+						doc.$set.dateSledPoverki = null;
+					}
 				}
 			}
 			AutoForm.validateForm("updateCizForm");
@@ -224,7 +247,7 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 		}
 	},
 	beginSubmit: function() {},
-  	endSubmit: function() {}
+	endSubmit: function() {}
 });
 // хелпер который показывает текущее значение строки
 // Template.registerHelper("test", function (fieldName) {

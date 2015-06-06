@@ -46,318 +46,320 @@ Template.skladList.helpers({
 });
 
 Template.updateSkladForm.helpers({
-		AMSsCount: function(){
-			var skladId = this._id;
-			var amss = AMSs.find().fetch();
-			var amsInSklad = _.where(amss, {mesto: skladId});
-			return amsInSklad.length;
-		},
-		settingsListAMS: function(){
-			var skladId = this._id;
-			var amss = AMSs.find().fetch();
-			var amsInSklad = _.where(amss, {mesto: skladId});
-			return {
-				collection: amsInSklad,
-				rowsPerPage: 5,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
-							if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg AMS"></i></a>');
-						}
-					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AMS"></i></a>');
-						}
-					},
-					{ key: 'name_psevdo', label: 'Наименование', sortable: true},
-					{ key: 'name_adress', label: 'Адресс', sortable: true },
-					{ key: 'inventari', label: 'Инв. номер', sortable: true },
-					{
-						key: 'mesto',
-						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
-					},
-					{ 
-						key: '_id',
-						label: 'Линия РРЛ',
-						sortable: true,
-						fn: function(value){
-							var result = [];
-							lines = Lines.find();
-							lines.forEach(function(line){
-								if(_.contains(line.ams, value.toString())){
-									result.push(" "+line.name+" - "+line.nomer);
-								}
-							});
-							return result;
-						}
-					},
-					{ key: 'sever_shirot', label: 'СШ', sortable: true },
-					{ key: 'west_dolg', label: 'ВД', sortable: true},
-					{ key: 'type_ams', label: 'Тип АМС', sortable: true },
-					{ key: 'massa_ams', label: 'Масса АМС', sortable: true },
-					{ key: 'konstryktiv_ams', label: 'Конструктив АМС', sortable: true},
-					{ key: 'Visota_AMS', label: 'Высота АМС', sortable: true },
-					{ key: 'nagryzka', label: 'Нагрузка', sortable: true },
-					{ key: 'ploshad_ams', label: 'Площадь АМС', sortable: true },
-					{ key: 'visota_nad_zemley', label: 'Высота над землей', sortable: true},
-					{ key: 'visota_nad_morem', label: 'Высота над уровнем моря', sortable: true },
-					{ 
-						key: 'god_vvoda_v_exsplyataz',
-						label: 'Год ввода в экспл.',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
-						}
-					},
-					{ key: 'koll_yarysov_ottazek', label: 'Колич. ярусов оттяжек', sortable: true },
-					{ key: 'nalichie_gosexpertiz', label: 'Наличие гос. эспертизы', sortable: true },
-					{ key: 'zashitnoe_pokritie_ams', label: 'Защитное покрытие АМС', sortable: true },
-					{ key: 'nalichie_lebedki', label: 'Наличие лебедки', sortable: true },
-					{ key: 'protokol_izmerenia_osadok_fundamenta', label: 'Протокол измерения осадков фундамента', sortable: true },
-					{ key: 'protokol_izmerenia_otklonenia_stvola_AMS_ot_vertikali', label: 'Протокол измерения отклонения ствола АМС от вертикали', sortable: true },
-					{ key: 'protokol_izmerenia_yglovih_otkloneniy_AMS', label: 'Протокол измерения угловых отклонений АМС', sortable: true },
-					{ key: 'akt_revizii_AMS', label: 'Акт ревизии АМС', sortable: true },
-					{ key: 'akt_proverki_natazenia_v_ottazkah', label: 'Акт проверки натяжения в оттяжках', sortable: true },
-					{ key: 'akt_priemki_remotnih_rabot_na_AMS', label: 'Акт приемки рем. работ на АМС', sortable: true },
-					{ key: 'akt_defectnogo_sostoyania_AMS', label: 'Акт дефектного состояния АМС', sortable: true },
-					{ key: 'akt_priemki_rabot_po_kap_remonty_AMS', label: 'Акт приемки работ по кап. рем. АМС', sortable: true },
-					{ key: 'remont_fundamentov_AMS', label: 'Ремонт фундаментов АМС', sortable: true },
-					{ key: 'kap_remont_AMS_bez_pokraski', label: 'Кап. рем. АМС без покраски', sortable: true },
-					{ key: 'nalicie_proektnoi_doc', label: 'Наличие проектной документации', sortable: true },
-					{ key: 'tip_proekta_AMS', label: 'Тип проекта АМС', sortable: true },
-					{ key: 'project_organization', label: 'Проектная организация', sortable: true },
-					{ key: 'nalich_transport_seti', label: 'Наличие транспортной сети', sortable: true },
-					{ key: 'obiem_transportnoi_seti', label: 'Объем транспортной сети', sortable: true },
-					{ key: 'nalichie_svidetelstva_na_pravo_sobstvennosti', label: 'Наличие свидет. на право собств.', sortable: true },
-					{ key: 'Vid_prava_na_zemel_ychastok', label: 'Вид права на земельный участок', sortable: true },
-					{ key: 'nalichie_soglas_s_aviachieu', label: 'Наличие согласования с авиацией', sortable: true },
-					{ key: 'nalichie_pasporta_som', label: 'Наличие паспорта СОМ', sortable: true },
-					{ key: 'nalichie_sanepid_na_PRTO', label: 'Наличие санэпид. на ПРТО', sortable: true },
-					{ key: 'nalichie_pasporta_na_kontyr_zazemlenia_AMS', label: 'Наличие паспорта на контур заземления АМС', sortable: true },
-					{ key: 'videlaemaya_moshnost_na_obekt', label: 'Выделяемая мощность на объект', sortable: true },
-					{ key: 'fakt_potreb_moshnost', label: 'Фактич. потреб. мощность', sortable: true },
-					{ key: 'MOL_dolznost', label: 'МОЛ должность', sortable: true },
-					{ key: 'MOL_FIO', label: 'МОЛ ФИО', sortable: true },
-					{ key: 'MOL_tel', label: 'МОЛ тел', sortable: true },
-					{ key: 'Otvetstv_za_AMS_dolznost', label: 'Ответств. за АМС должность', sortable: true },
-					{ key: 'Otvetstv_za_AMS_FIO', label: 'Ответств. за АМС ФИО', sortable: true },
-					{ key: 'Otvetstv_za_AMS_tel', label: 'Ответств. за АМС тел', sortable: true },
-					{ key: 'primechania_po_remonty', label: 'Примечания по ремонту', sortable: true }
-				]
-			};
-		},
-		TechZdaniasCount: function(){
-			var skladId = this._id;
-			var techZdanias = TechZdanias.find().fetch();
-			var techZdaniaInSklad = _.where(techZdanias, {mesto: skladId});
-			return techZdaniaInSklad.length;
-		},
-		settingsListTechZdania: function(){
-			var skladId = this._id;
-			var techZdanias = TechZdanias.find().fetch();
-			var techZdaniaInSklad = _.where(techZdanias, {mesto: skladId});
-			return {
-				collection: techZdaniaInSklad,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+	AMSsCount: function(){
+		var skladId = this._id;
+		var amss = AMSs.find().fetch();
+		var amsInSklad = _.where(amss, {mesto: skladId});
+		return amsInSklad.length;
+	},
+	settingsListAMS: function(){
+		var skladId = this._id;
+		var amss = AMSs.find().fetch();
+		var amsInSklad = _.where(amss, {mesto: skladId});
+		return {
+			collection: amsInSklad,
+			rowsPerPage: 5,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
+							return true;
+						}
+					},
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg AMS"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AMS"></i></a>');
+					}
+				},
+				{ key: 'name_psevdo', label: 'Наименование', sortable: true},
+				{ key: 'name_adress', label: 'Адресс', sortable: true, hidden: true},
+				{ key: 'inventari', label: 'Инв. номер', sortable: true },
+				{
+					key: 'mesto',
+					label: 'Место размещения',
+					sortable: true,
+					hidden: true,
+					fn: function (value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ 
+					key: '_id',
+					label: 'Линия РРЛ',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						var result = [];
+						lines = Lines.find();
+						lines.forEach(function(line){
+							if(_.contains(line.ams, value.toString())){
+								result.push(" "+line.name+" - "+line.nomer);
 							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg techZdania"></i></a>');
+						});
+						return result;
+					}
+				},
+				{ key: 'sever_shirot', label: 'Координаты размещения АМС (С.Ш.)', sortable: true },
+				{ key: 'west_dolg', label: 'Координаты размещения АМС (В.Д.)', sortable: true },
+				{ key: 'type_ams', label: 'Тип АМС(башня/мачта)', sortable: true },
+				{ key: 'massa_ams', label: 'Масса АМС(кг)', sortable: true },
+				{ key: 'konstryktiv_ams', label: 'Конструктив АМС (труба/уголок)', sortable: true },
+				{ key: 'Visota_AMS', label: 'Высота АМС (м)', sortable: true },
+				{ key: 'nagryzka', label: 'Проектная нагрузо-способность (кг)', sortable: true, hidden: true },
+				{ key: 'ploshad_ams', label: 'Общая площадь АМС (м²)', sortable: true, hidden: true },
+				{ key: 'visota_nad_zemley', label: 'Высота над уровнем земли (м)', sortable: true, hidden: true },
+				{ key: 'visota_nad_morem', label: 'Высота над уровнем моря (м)', sortable: true, hidden: true },
+				{ 
+					key: 'god_vvoda_v_exsplyataz',
+					label: 'Год ввода в экспл.(г)',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
+					}
+				},
+				{ key: 'koll_yarysov_ottazek', label: 'Кол-во ярусов оттяжек (шт)', sortable: true, hidden: true },
+				{ key: 'nalichie_gosexpertiz', label: 'Наличие гос экспертизы (есть/нет)', sortable: true, hidden: true },
+				{ key: 'zashitnoe_pokritie_ams', label: 'Защитное покрытие АМС (год/оцинкована)', sortable: true },
+				{ key: 'nalichie_lebedki', label: 'Наличие лебедки (тип)', sortable: true, hidden: true },
+				{ key: 'protokol_izmerenia_osadok_fundamenta', label: 'Протокол измерения осадок фундаментов АМС (год)', sortable: true, hidden: true },
+				{ key: 'protokol_izmerenia_otklonenia_stvola_AMS_ot_vertikali', label: 'Протокол измерения отклонения ствола АМС от вертикали (год)', sortable: true, hidden: true },
+				{ key: 'protokol_izmerenia_yglovih_otkloneniy_AMS', label: 'Протокол измерения угловых отклонений АМС (год)', sortable: true, hidden: true },
+				{ key: 'akt_revizii_AMS', label: 'Акт ревизии АМС (год)', sortable: true, hidden: true },
+				{ key: 'akt_proverki_natazenia_v_ottazkah', label: 'Акт проверки монтажных натяжений в оттяжках (год)', sortable: true, hidden: true },
+				{ key: 'akt_priemki_remotnih_rabot_na_AMS', label: 'Акт приемки ремонтных работ на АМС (год)', sortable: true, hidden: true },
+				{ key: 'akt_defectnogo_sostoyania_AMS', label: 'Акт дефектного состояния АМС (год)', sortable: true, hidden: true },
+				{ key: 'akt_priemki_rabot_po_kap_remonty_AMS', label: 'Акт приемки работ по капитальному ремонту АМС (год)', sortable: true, hidden: true },
+				{ key: 'remont_fundamentov_AMS', label: 'Ремонт фундаментов АМС (год)', sortable: true, hidden: true },
+				{ key: 'kap_remont_AMS_bez_pokraski', label: 'Капитальный ремонт АМС кроме покраски (год)', sortable: true, hidden: true },
+				{ key: 'nalicie_proektnoi_doc', label: 'Наличие проектной документации на АМС (нет/место хранения)', sortable: true, hidden: true },
+				{ key: 'tip_proekta_AMS', label: 'Тип проекта АМС (ГОСТ)', sortable: true, hidden: true },
+				{ key: 'project_organization', label: 'Проектная организация', sortable: true, hidden: true },
+				{ key: 'nalich_transport_seti', label: 'Наличие транспортной сети (ВОЛС/РРЛ/VSAT)', sortable: true, hidden: true },
+				{ key: 'obiem_transportnoi_seti', label: 'Объем транспортной сети (STM/Мбит/сек/Е1)', sortable: true, hidden: true },
+				{ key: 'nalichie_svidetelstva_na_pravo_sobstvennosti', label: 'Наличие свидетельства на право собственности(да/нет)', sortable: true, hidden: true },
+				{ key: 'Vid_prava_na_zemel_ychastok', label: 'Вид прав на земельный участок(собственность/ аренда (аренда = договор, собственник))', sortable: true, hidden: true },
+				{ key: 'nalichie_soglas_s_aviachieu', label: 'Наличие согласования с организациями области авиации (есть/нет)', sortable: true, hidden: true },
+				{ key: 'nalichie_pasporta_som', label: 'Наличие паспорта СОМ (да/нет)', sortable: true, hidden: true },
+				{ key: 'nalichie_sanepid_na_PRTO', label: 'Наличие санэпид заключения на эксплуатацию ПРТО (да/нет)', sortable: true, hidden: true },
+				{ key: 'nalichie_pasporta_na_kontyr_zazemlenia_AMS', label: 'Наличие паспорта на контур заземления АМС (да/нет)', sortable: true, hidden: true },
+				{ key: 'videlaemaya_moshnost_na_obekt', label: 'Выделенная мощность на объект (КВт)', sortable: true, hidden: true },
+				{ key: 'fakt_potreb_moshnost', label: 'Фактически потребляемая мощность объектом (КВт)', sortable: true, hidden: true },
+				{ key: 'MOL_dolznost', label: 'МОЛ должность', sortable: true, hidden: true },
+				{ key: 'MOL_FIO', label: 'МОЛ ФИО', sortable: true, hidden: true },
+				{ key: 'MOL_tel', label: 'МОЛ тел', sortable: true, hidden: true },
+				{ key: 'Otvetstv_za_AMS_dolznost', label: 'Ответств. за АМС должность', sortable: true, hidden: true },
+				{ key: 'Otvetstv_za_AMS_FIO', label: 'Ответств. за АМС ФИО', sortable: true, hidden: true },
+				{ key: 'Otvetstv_za_AMS_tel', label: 'Ответств. за АМС тел', sortable: true, hidden: true },
+				{ key: 'primechania_po_remonty', label: 'Примечания по ремонту', sortable: true, hidden: true }
+			]
+		};
+	},
+	TechZdaniasCount: function(){
+		var skladId = this._id;
+		var techZdanias = TechZdanias.find().fetch();
+		var techZdaniaInSklad = _.where(techZdanias, {mesto: skladId});
+		return techZdaniaInSklad.length;
+	},
+	settingsListTechZdania: function(){
+		var skladId = this._id;
+		var techZdanias = TechZdanias.find().fetch();
+		var techZdaniaInSklad = _.where(techZdanias, {mesto: skladId});
+		return {
+			collection: techZdaniaInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg techZdania"></i></a>');
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg techZdania"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg techZdania"></i></a>');
+					}
+				},
+				{ key: 'adress', label: 'Адресс', sortable: true},
+				{
+					key: 'mesto',
+					label: 'Место размещения',
+					sortable: true,
+					fn: function (value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ 
+					key: 'god_postroiki',
+					label: 'Год постройки',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
 						}
-					},
-					{ key: 'adress', label: 'Адресс', sortable: true},
-					{
-						key: 'mesto',
-						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
+					}
+				},
+				{ 
+					key: 'god_pereoboryd',
+					label: 'Год переоборудования',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
 						}
-					},
-					{ 
-						key: 'god_postroiki',
-						label: 'Год постройки',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('YYYY');
-							}
-						}
-					},
-					{ 
-						key: 'god_pereoboryd',
-						label: 'Год переоборудования',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('YYYY');
-							}
-						}
-					},
-					{ key: 'krovla', label: 'Кровля', sortable: true},
-					{ key: 'perekritia', label: 'Перекрытия', sortable: true},
-					{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
-					{ key: 'kybatura', label: 'Кубатура', sortable: true},
-					{ key: 'organizaciya', label: 'Организация', sortable: true},
-					{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
-				]
-			};
-		},
-		AFYsCount: function(){
+					}
+				},
+				{ key: 'krovla', label: 'Кровля', sortable: true},
+				{ key: 'perekritia', label: 'Перекрытия', sortable: true},
+				{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
+				{ key: 'kybatura', label: 'Кубатура', sortable: true},
+				{ key: 'organizaciya', label: 'Организация', sortable: true},
+				{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
+			]
+		};
+	},
+	AFYsCount: function(){
 			var skladId = this._id;
 			var afys = AFYs.find().fetch();
 			var afysInSklad = _.where(afys, {mesto: skladId});
 			return afysInSklad.length;
-		},
-		settingsListAFY: function(){
-			var skladId = this._id;
-			var afys = AFYs.find().fetch();
-			var afysInSklad = _.where(afys, {mesto: skladId});
-			return {
-				collection: afysInSklad,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+	},
+	settingsListAFY: function(){
+		var skladId = this._id;
+		var afys = AFYs.find().fetch();
+		var afysInSklad = _.where(afys, {mesto: skladId});
+		return {
+			collection: afysInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg AFY"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AFY"></i></a>');
-						}
-					},
-					{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
-					{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
-					{
-						key: 'mesto',
-						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
-					},
-					{ key: 'freqvansi', label: 'Частота (Мгц)', sortable: true },
-					{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
-					{ key: 'freqvansi_prm', label: 'Частота прм. (Мгц)', sortable: true },
-					{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
-					{ key: 'power_tx', label: 'Мощность прд. (Вт)', sortable: true},
-					{ key: 'moshnost_na_vhode_antenn_wt', label: 'Мощность на входе антенн (Вт)', sortable: true},
-					{ key: 'moshnost_na_vhode_antenn_Dbm', label: 'Мощность на входе антенн (Дбм)', sortable: true},
-					{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ (Дбм)', sortable: true },
-					{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр (Дбм)', sortable: true},
-					{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true },
-					{ key: 'koll_pered', label: 'Количество прд. (шт.)', sortable: true},
-					{ key: 'azimut_izluchenia', label: 'Азимут излучения (град.)', sortable: true },
-					{ key: 'ygol_mesta', label: 'Азимут излучения (град)', sortable: true },
-					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн (м)', sortable: true },
-					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true },
-					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр (м)', sortable: true},
-					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true },
-					{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
-					{ key: 'sechenie', label: 'Сечение', sortable: true },
-					{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ (м)', sortable: true },
-					{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
-					{ key: 'rezervir', label: 'Резервирование', sortable: true},
-					{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true },
-					{ key: 'primechanie', label: 'Примечание', sortable: true },
-				]
-			};
-		},
-		StancionOborydsCount: function(){
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg AFY"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg AFY"></i></a>');
+					}
+				},
+				{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
+				{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
+				{
+					key: 'mesto',
+					label: 'Место размещения',
+					sortable: true,
+					fn: function (value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.name;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.name;
+						};
+					}
+				},
+				{ key: 'freqvansi', label: 'Частоты (Мгц)', sortable: true },
+				{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
+				{ key: 'freqvansi_prm', label: 'Частота прм. (Мгц)', sortable: true },
+				{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
+				{ key: 'power_tx', label: 'Мощность прд. (Вт)', sortable: true},
+				{ key: 'moshnost_na_vhode_antenn_wt', label: 'Мощность на входе антенн (Вт)', sortable: true},
+				{ key: 'moshnost_na_vhode_antenn_Dbm', label: 'Мощность на входе антенн (Дбм)', sortable: true},
+				{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ (Дбм)', sortable: true },
+				{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр (Дбм)', sortable: true},
+				{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true, hidden: true },
+				{ key: 'koll_pered', label: 'Количество прд. (шт.)', sortable: true},
+				{ key: 'azimut_izluchenia', label: 'Азимут излучения (град.)', sortable: true },
+				{ key: 'ygol_mesta', label: 'Угол места (град.)', sortable: true, hidden: true },
+				{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн (м)', sortable: true },
+				{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true, hidden: true },
+				{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр (м)', sortable: true},
+				{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true, hidden: true },
+				{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
+				{ key: 'sechenie', label: 'Сечение', sortable: true, hidden: true },
+				{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ (м)', sortable: true },
+				{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
+				{ key: 'rezervir', label: 'Резервирование', sortable: true, hidden: true},
+				{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true, hidden: true },
+				{ key: 'primechanie', label: 'Примечание', sortable: true, hidden: true },
+			]
+		};
+	},
+	StancionOborydsCount: function(){
 			var skladId = this._id;
 			var stancionOboryds = StancionOboryds.find().fetch();
 			var stancionOborydInSklad = _.where(stancionOboryds, {mesto: skladId});
 			return stancionOborydInSklad.length;
-		},
-		settingsListStancionOboryd: function(){
+	},
+	settingsListStancionOboryd: function(){
 			var skladId = this._id;
 			var stancionOboryds = StancionOboryds.find().fetch();
 			var stancionOborydInSklad = _.where(stancionOboryds, {mesto: skladId});
@@ -417,14 +419,14 @@ Template.updateSkladForm.helpers({
 					{ key: 'primechanie', label: 'Примечание', sortable: true}
 			  ]
 			};
-		},
-		CizsCount: function(){
+	},
+	CizsCount: function(){
 			var skladId = this._id;
 			var cizs = Cizs.find().fetch();
 			var cizsInSklad = _.where(cizs, {mesto: skladId});
 			return cizsInSklad.length;
-		},
-		settingsListCiz: function(){
+	},
+	settingsListCiz: function(){
 			var skladId = this._id;
 			var cizs = Cizs.find().fetch();
 			var cizsInSklad = _.where(cizs, {mesto: skladId});
@@ -543,14 +545,14 @@ Template.updateSkladForm.helpers({
 					}
 				]
 			};
-		},
-		SpezOdezdasCount: function(){
+	},
+	SpezOdezdasCount: function(){
 			var skladId = this._id;
 			var spezOdezdas = SpezOdezdas.find().fetch();
 			var spezOdezdasInSklad = _.where(spezOdezdas, {mesto: skladId});
 			return spezOdezdasInSklad.length;
-		},
-		settingsListSpezOdezda: function(){
+	},
+	settingsListSpezOdezda: function(){
 			var skladId = this._id;
 			var spezOdezdas = SpezOdezdas.find().fetch();
 			var spezOdezdasInSklad = _.where(spezOdezdas, {mesto: skladId});
@@ -643,14 +645,14 @@ Template.updateSkladForm.helpers({
 					{ key: 'primechanie', label: 'Примечание', sortable: true}
 				]
 			};
-		},
-		MaterialsCount: function(){
+	},
+	MaterialsCount: function(){
 			var skladId = this._id;
 			var materials = Materials.find().fetch();
 			var materialsInSklad = _.where(materials, {mesto: skladId});
 			return materialsInSklad.length;
-		},
-		settingsListMaterial: function(){
+	},
+	settingsListMaterial: function(){
 			var skladId = this._id;
 			var materials = Materials.find().fetch();
 			var materialsInSklad = _.where(materials, {mesto: skladId});
@@ -707,7 +709,7 @@ Template.updateSkladForm.helpers({
 					{ key: 'primechanie', label: 'Примечание', sortable: true}
 			]
 			};
-		}
+	}
 });
 
 // редактировать материал

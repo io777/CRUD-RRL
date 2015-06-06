@@ -53,7 +53,7 @@ Template.AFYList.helpers({
 							};
 						}
 					},
-					{ key: 'freqvansi', label: 'Частота (Мгц)', sortable: true },
+					{ key: 'freqvansi', label: 'Частоты (Мгц)', sortable: true },
 					{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
 					{ key: 'freqvansi_prm', label: 'Частота прм. (Мгц)', sortable: true },
 					{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
@@ -62,21 +62,21 @@ Template.AFYList.helpers({
 					{ key: 'moshnost_na_vhode_antenn_Dbm', label: 'Мощность на входе антенн (Дбм)', sortable: true},
 					{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ (Дбм)', sortable: true },
 					{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр (Дбм)', sortable: true},
-					{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true },
+					{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true, hidden: true },
 					{ key: 'koll_pered', label: 'Количество прд. (шт.)', sortable: true},
 					{ key: 'azimut_izluchenia', label: 'Азимут излучения (град.)', sortable: true },
-					{ key: 'ygol_mesta', label: 'Азимут излучения (град)', sortable: true },
+					{ key: 'ygol_mesta', label: 'Угол места (град.)', sortable: true, hidden: true },
 					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн (м)', sortable: true },
-					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true },
+					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true, hidden: true },
 					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр (м)', sortable: true},
-					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true },
+					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true, hidden: true },
 					{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
-					{ key: 'sechenie', label: 'Сечение', sortable: true },
+					{ key: 'sechenie', label: 'Сечение', sortable: true, hidden: true },
 					{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ (м)', sortable: true },
 					{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
-					{ key: 'rezervir', label: 'Резервирование', sortable: true},
-					{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true },
-					{ key: 'primechanie', label: 'Примечание', sortable: true },
+					{ key: 'rezervir', label: 'Резервирование', sortable: true, hidden: true},
+					{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true, hidden: true },
+					{ key: 'primechanie', label: 'Примечание', sortable: true, hidden: true },
 				]
 			};
 		}

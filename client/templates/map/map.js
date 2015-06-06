@@ -47,23 +47,25 @@ Template.map.onRendered(function () {
 		});
 
 		var lineMarker = _.each(lines, function(line){
-			var amsCount = line.ams.length;
-			for(var i=0; i < (amsCount - 1); i++){
-				var j = i + 1;
-				var amsOne = AMSs.findOne({_id: line.ams[i]});
-				var amsTwo = AMSs.findOne({_id: line.ams[j]});
-				var geometry = [ [ amsOne.shirota_DD, amsOne.dolgota_DD ], [ amsTwo.shirota_DD, amsTwo.dolgota_DD ]];
-				properties = {
-					hintContent: '1213'
-				},
-				options = {
-					draggable: true,
-					strokeColor: '#120a8f',
-					strokeWidth: 5,
-					strokeOpacity: 0.7
-				},
-				polyline = new ymaps.Polyline(geometry, properties, options);
-				map.geoObjects.add(polyline);
+			if(line.ams){
+				var amsCount = line.ams.length;
+				for(var i=0; i < (amsCount - 1); i++){
+					var j = i + 1;
+					var amsOne = AMSs.findOne({_id: line.ams[i]});
+					var amsTwo = AMSs.findOne({_id: line.ams[j]});
+					var geometry = [ [ amsOne.shirota_DD, amsOne.dolgota_DD ], [ amsTwo.shirota_DD, amsTwo.dolgota_DD ]];
+					properties = {
+						hintContent: '1213'
+					},
+					options = {
+						draggable: true,
+						strokeColor: '#120a8f',
+						strokeWidth: 5,
+						strokeOpacity: 0.7
+					},
+					polyline = new ymaps.Polyline(geometry, properties, options);
+					map.geoObjects.add(polyline);
+				}
 			}
 		});
 	}

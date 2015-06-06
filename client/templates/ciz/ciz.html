@@ -29,7 +29,11 @@
 					</div>
 				{{/if}}
 				<!-- end Период поверки-->
-				{{> afQuickField name='datePoverki'}}
+				<!-- Дата поверки -->
+				{{#if periodPoverki}}
+					{{> afQuickField name='datePoverki'}}
+				{{/if}}
+				<!-- end Дата поверки-->
 				<!-- Дата следующей поверки -->
 				{{#if dateSledPoverki}}
 					<div class="form-group">
@@ -88,7 +92,11 @@
 						</div>
 					{{/if}}
 					<!-- end Период поверки-->
-					{{> afQuickField name='datePoverki'}}
+					<!-- Дата поверки -->
+					{{#if periodPoverki}}
+						{{> afQuickField name='datePoverki'}}
+					{{/if}}
+					<!-- end Дата поверки-->
 					<!-- Дата следующей поверки -->
 					{{#if dateSledPoverki}}
 						<div class="form-group">
@@ -156,15 +164,39 @@
 </template>
 
 <template name="CizList">
-	{{#if isInRole 'moderator,admin'}}
-		<a class="btn btn-success" href="{{pathFor 'insertCizForm'}}">
-			<i class="fa fa-plus">&nbsp;Добавить СИЗ</i>
-		</a>
-	{{/if}}
+	<div class="row">
+		<div class="col-md-4">
+			{{#if isInRole 'moderator,admin'}}
+				<a class="btn btn-success" href="{{pathFor 'insertCizForm'}}">
+					<i class="fa fa-plus">&nbsp;Добавить СИЗ</i>
+				</a>
+			{{/if}}
+		</div>
+	</div>
 	<br>
-	<br>
-	<legend>Список СИЗ</legend>
-	Всего СИЗ: {{CizsCount}}
-	{{> reactiveTable settings=settings}}
+	<div class="row">
+		<div class="col-md-12">
+			<legend>Список СИЗ</legend>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1">
+			Всего СИЗ: {{CizsCount}}
+		</div>
+		<div class="col-md-4">
+			<!-- {{#autoForm collection="Cizs" id="CizList" type="insert"}}
+				<fieldset>
+					{{> afQuickField name='mesto'}}
+				</fieldset>
+			{{/autoForm}} -->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			{{> reactiveTable settings=settings}}
+
+			{{> tabular table=TabularTables.Cizs class="table table-striped table-bordered table-condensed"}}
+		</div>
+	</div>
 </template>
 

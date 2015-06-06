@@ -102,8 +102,8 @@ Template.updateWorkerForm.helpers({
 					sortable: false,
 					hidden: function () {
 						var loggedInUser = Meteor.user();
-					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
 						}
 					},
 					fn: function (value){
@@ -122,6 +122,14 @@ Template.updateWorkerForm.helpers({
 				{ key: 'name', label: 'Наименование', sortable: true},
 				{ key: 'setevoi_nomer', label: 'Сетевой номер', sortable: true },
 				{ key: 'nomerKarti', label: 'Номер карты', sortable: true},
+				{ 
+					key: 'PRTO',
+					label: 'ПРТО',
+					sortable: true,
+					fn: function(value){
+						return new Spacebars.SafeString('<a class="label label-warning">ПРТО</a><br><a class="label label-success">exel</a><br><a class="label label-primary">doc</a>')
+					}
+				},
 				{ 
 					key: 'lineRRL',
 					label: 'Линия РРЛ',
@@ -144,18 +152,67 @@ Template.updateWorkerForm.helpers({
 						}
 					}	
 				},
-				{ key: 'adress', label: 'Адресс', sortable: true },
+				{ key: 'adress', label: 'Адресс', sortable: true, hidden: true },
 				{ key: 'rasstoyanie_do_osn_stancii', label: 'Расстояние до основной станции (км)', sortable: true },
 				{ key: 'rasstoyanie_mezdy_stanciami', label: 'Расстояние между станциями (км)', sortable: true },
-				{ key: 'worker_Familia', label: 'Ответственный', sortable: true },
-				{ key: 'COM_data', label: 'Измерение СОМ, дата', sortable: true },
-				{ key: 'COM_protokol', label: 'Измерение СОМ, протокол', sortable: true },
-				{ key: 'Metallosvazi_data', label: 'Измерение металлосвязи, дата', sortable: true },
-				{ key: 'Metallosvazi_protokol', label: 'Измерение металлосвязи, протокол', sortable: true },
-				{ key: 'Zazemlenia_data', label: 'Измерение заземления, дата', sortable: true },
-				{ key: 'Zazemlenia_protokol', label: 'Измерение заземления, протокол', sortable: true },
-				{ key: 'Petli_Faza_Null_data', label: 'Измерение петли фаза-ноль, дата', sortable: true },
-				{ key: 'Petli_Faza_Null_protokol', label: 'Измерение петли фаза-ноль, протокол', sortable: true }
+				{ 
+					key: 'god_vvoda_v_exsplyataz',
+					label: 'Год ввода в экспл.',
+					sortable: true,
+					fn: function(value){
+						if(value){
+						return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'COM_data',
+					label: 'Измерение СОМ, дата',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+						return moment(value).format('DD.MM.YYYY');
+						}
+					}
+				},
+				{ key: 'COM_protokol', label: 'Измерение СОМ, протокол', sortable: true, hidden: true },
+				{ 
+					key: 'Metallosvazi_data',
+					label: 'Измерение металлосвязи, дата',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
+					}
+				},
+				{ key: 'Metallosvazi_protokol', label: 'Измерение металлосвязи, протокол', sortable: true, hidden: true },
+				{ 
+					key: 'Zazemlenia_data',
+					label: 'Измерение заземления, дата',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
+					}
+				},
+				{ key: 'Zazemlenia_protokol', label: 'Измерение заземления, протокол', sortable: true, hidden: true },
+				{ 
+					key: 'Petli_Faza_Null_data',
+					label: 'Измерение петли фаза-ноль, дата',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
+					}
+				},
+				{ key: 'Petli_Faza_Null_protokol', label: 'Измерение петли фаза-ноль, протокол', sortable: true, hidden: true }
 			]
 		};
 	},
@@ -302,63 +359,87 @@ Template.updateWorkerForm.helpers({
 			showColumnToggles: true,
 			class: 'table table-bordered table-hover col-sm-12',
 			fields: [
-				{ 
-					key: 'delete',
-					//headerClass: 'col-md-1',
-					label: 'Удалить',
-					hideToggle: true,
-					sortable: false,
-					hidden: function () {
-						var loggedInUser = Meteor.user();
-					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
+					{ 
+						key: 'delete',
+						//headerClass: 'col-md-1',
+						label: 'Удалить',
+						hideToggle: true,
+						sortable: false,
+						hidden: function () {
+							var loggedInUser = Meteor.user();
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+									return true;
+							}
+						},
+						fn: function (value){
+							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg SpezOdezda"></i></a>');
 						}
 					},
-					fn: function (value){
-						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg SpezOdezda"></i></a>');
-					}
-				},
-				{ 
-					key: 'edit',
-					//headerClass: 'col-md-1',
-					label: 'Изменить / посмотреть',
-					sortable: false,
-					fn: function (value){
-						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg SpezOdezda"></i></a>');
-					}
-				},
-				{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
-				{
-					key: 'worker',
-					label: 'Работник',
-					sortable: true,
-					fn: function(value){
-						if (Workers.findOne({_id: value})){
-							var workerOne = Workers.findOne({_id: value});
-							return workerOne.Familia;
+					{ 
+						key: 'edit',
+						//headerClass: 'col-md-1',
+						label: 'Изменить / посмотреть',
+						sortable: false,
+						fn: function (value){
+							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg SpezOdezda"></i></a>');
 						}
-					}	
-				},
-				{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
-				{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
-				{ 
-					key: 'data_prihoda',
-					label: 'Дата прихода',
-					sortable: true,
-					fn: function (value){
-						return moment(value).format('DD-MM-YYYY');
-					}
-				},
-				{ key: 'kolvo_prihoda', label: 'Количество прихода (шт)', sortable: true},
-				{ key: 'data_vidachi', label: 'Дата выдачи', sortable: true},
-				{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
-				{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
-				{ key: 'srock_noski', label: 'Срок носки', sortable: true},
-				{ key: 'data_vozvrata', label: 'Дата возврата', sortable: true},
-				{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
-				{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
-				{ key: 'primechanie', label: 'Примечание', sortable: true}
-			]
+					},
+					{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
+					{
+						key: 'mesto',
+						label: 'Место размещение',
+						sortable: true,
+						fn: function(value){
+							if (Sklads.findOne({_id: value})){
+								var skladOne = Sklads.findOne({_id: value});
+								return skladOne.name;
+							};
+							if (Workers.findOne({_id: value})){
+								var workerOne = Workers.findOne({_id: value});
+								return workerOne.Familia;
+							};
+						}	
+					},
+					{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
+					{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
+					{ 
+						key: 'data_prihoda',
+						label: 'Дата прихода',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
+					{ key: 'kolvo_prihoda', label: 'Количество прихода (шт)', sortable: true},
+					{ 
+						key: 'data_vidachi',
+						label: 'Дата выдачи',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
+					{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
+					{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
+					{ key: 'srock_noski', label: 'Срок носки', sortable: true},
+					{ 
+						key: 'data_vozvrata',
+						label: 'Дата возврата',
+						sortable: true,
+						fn: function(value){
+							if(value){
+								return moment(value).format('DD.MM.YYYY');
+							}
+						}
+					},
+					{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
+					{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
+					{ key: 'primechanie', label: 'Примечание', sortable: true}
+				]
 		};
 	}
 });
