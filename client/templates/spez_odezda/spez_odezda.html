@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<legend>Спец. одежда</legend>
-		{{> quickForm collection="SpezOdezdas" buttonContent="Создать" id="insertSpezOdezdaForm" type="insert"}}
+		{{> quickForm collection="SpezOdezdas" buttonContent="Создать" id="insertSpezOdezdaForm" type="insert" fields="naimenovanie_ciz,mesto,naklad_prihod,sertificat_sootvetstvia,data_prihoda,kolvo_prihoda,data_vidachi,kolvo_vidachi,procent_iznosa_vidachi,srock_noski,data_vozvrata,kolvo_vozvrata,procent_iznosa_vozvrata,primechanie"}}
   	</div>
 </template>
 
@@ -19,9 +19,9 @@
 		<br>
 		<legend>Спец. одежда</legend>
 		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="SpezOdezdas" buttonContent="Изменить" doc=this id="updateSpezOdezdaForm" type="update"}}
+	  		{{> quickForm collection="SpezOdezdas" buttonContent="Изменить" doc=this id="updateSpezOdezdaForm" type="update" fields="naimenovanie_ciz,mesto,naklad_prihod,sertificat_sootvetstvia,data_prihoda,kolvo_prihoda,data_vidachi,kolvo_vidachi,procent_iznosa_vidachi,srock_noski,data_vozvrata,kolvo_vozvrata,procent_iznosa_vozvrata,primechanie"}}
 	  	{{else}}
-	  		{{> quickForm collection="SpezOdezdas" buttonContent=false doc=this id="updateSpezOdezdaForm" }}
+	  		{{> quickForm collection="SpezOdezdas" buttonContent=false doc=this id="updateSpezOdezdaForm" fields="naimenovanie_ciz,mesto,naklad_prihod,sertificat_sootvetstvia,data_prihoda,kolvo_prihoda,data_vidachi,kolvo_vidachi,procent_iznosa_vidachi,srock_noski,data_vozvrata,kolvo_vozvrata,procent_iznosa_vozvrata,primechanie"}}
 	  	{{/if}}
 	</div>
 </template>

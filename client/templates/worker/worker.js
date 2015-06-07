@@ -240,7 +240,7 @@ Template.updateWorkerForm.helpers({
 						}
 					},
 					fn: function (value){
-						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Ciz"></i></a>');
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
 					}
 				},
 				{ 
@@ -249,27 +249,13 @@ Template.updateWorkerForm.helpers({
 					label: 'Изменить / посмотреть',
 					sortable: false,
 					fn: function (value){
-						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Ciz"></i></a>');
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
 					}
 				},
 				{ 
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место нахождения',
-					sortable: true,
-					fn: function(value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (Workers.findOne({_id: value})){
-							var workerOne = Workers.findOne({_id: value});
-							return workerOne.Familia;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ 
 					key: 'mesto',
@@ -308,7 +294,9 @@ Template.updateWorkerForm.helpers({
 					label: 'Дата поверки',
 					sortable: true,
 					fn: function(value){
-						return moment(value).format('DD.MM.YYYY');
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{ 
@@ -316,7 +304,9 @@ Template.updateWorkerForm.helpers({
 					label: 'Дата следующей поверки',
 					sortable: true,
 					fn: function(value){
-						return moment(value).format('DD.MM.YYYY');
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{
@@ -325,12 +315,15 @@ Template.updateWorkerForm.helpers({
 					sortable: true,
 					fn: function(value){
 						nowDate = new Date();
-						if (nowDate > value){
-							return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
-						} else {
-							return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+						if(value == null){
+							return new Spacebars.SafeString('<span class="label label-info">Не поверяется</span>');
+						}else{
+							if (nowDate > value){
+								return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+							} else {
+								return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+							}
 						}
-						
 					}
 				}
 			]
@@ -339,13 +332,13 @@ Template.updateWorkerForm.helpers({
 	SpezOdezdasCount: function(){
 		var workerId = this._id;
 		var spezOdezdas = SpezOdezdas.find().fetch();
-		var spezOdezdasInWorker = _.where(spezOdezdas, {worker: workerId});
+		var spezOdezdasInWorker = _.where(spezOdezdas, {mesto: workerId});
 		return spezOdezdasInWorker.length;
 	},
 	settingsListSpezOdezda: function(){
 		var workerId = this._id;
 		var spezOdezdas = SpezOdezdas.find().fetch();
-		var spezOdezdasInWorker = _.where(spezOdezdas, {worker: workerId});
+		var spezOdezdasInWorker = _.where(spezOdezdas, {mesto: workerId});
 		return {
 			collection: spezOdezdasInWorker,
 			rowsPerPage: 10,
@@ -353,87 +346,77 @@ Template.updateWorkerForm.helpers({
 			showColumnToggles: true,
 			class: 'table table-bordered table-hover col-sm-12',
 			fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg SpezOdezda"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg SpezOdezda"></i></a>');
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg SpezOdezda"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg SpezOdezda"></i></a>');
+					}
+				},
+				{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
+				{
+					key: 'mestoName',
+					label: 'Место размещение',
+					sortable: true
+				},
+				{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
+				{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
+				{ 
+					key: 'data_prihoda',
+					label: 'Дата прихода',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
-					{
-						key: 'mesto',
-						label: 'Место размещение',
-						sortable: true,
-						fn: function(value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (Workers.findOne({_id: value})){
-								var workerOne = Workers.findOne({_id: value});
-								return workerOne.Familia;
-							};
-						}	
-					},
-					{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
-					{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
-					{ 
-						key: 'data_prihoda',
-						label: 'Дата прихода',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
+					}
+				},
+				{ key: 'kolvo_prihoda', label: 'Количество прихода (шт)', sortable: true},
+				{ 
+					key: 'data_vidachi',
+					label: 'Дата выдачи',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'kolvo_prihoda', label: 'Количество прихода (шт)', sortable: true},
-					{ 
-						key: 'data_vidachi',
-						label: 'Дата выдачи',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
+					}
+				},
+				{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
+				{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
+				{ key: 'srock_noski', label: 'Срок носки', sortable: true},
+				{ 
+					key: 'data_vozvrata',
+					label: 'Дата возврата',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
-					{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
-					{ key: 'srock_noski', label: 'Срок носки', sortable: true},
-					{ 
-						key: 'data_vozvrata',
-						label: 'Дата возврата',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
-						}
-					},
-					{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
-					{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
-					{ key: 'primechanie', label: 'Примечание', sortable: true}
-				]
+					}
+				},
+				{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
+				{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
+				{ key: 'primechanie', label: 'Примечание', sortable: true}
+			]
 		};
 	}
 });
