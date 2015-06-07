@@ -39,15 +39,9 @@ Template.AlarmList.helpers({
 					{ key: 'name', label: 'Наименование', sortable: true},
 					{ key: 'type', label: 'Тип', sortable: true },
 					{
-						key: 'mesto',
+						key: 'mestoName',
 						label: 'Место аварии',
-						sortable: true,
-						fn: function (value){
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
+						sortable: true
 					},
 					{ 
 						key: 'date',
@@ -98,26 +92,50 @@ Template.AlarmList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertAlarmForm', 'updateAlarmForm'], {
-		after: {
-			insert: function(error, result) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-						console.log("Insert Error:", error);
-				} else {
-					Router.go('AlarmList');
-					alertify.success("Авария успешно добавлена!");
-					console.log("Insert Result:", result);
-				}
-			},
-			update: function(error) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-					console.log("Update Error:", error);
-				} else {
-					Router.go('AlarmList');
-					alertify.success("Авария успешно изменена!");
-					console.log("Updated!");
-				}
+	before: {
+		insert: function(doc){
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.mestoName = obectExplyatOne.name;
+				};
+			}
+			AutoForm.validateForm("insertAlarmForm");
+			return doc;
+		},
+		update: function(doc){
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.$set.mestoName = obectExplyatOne.name;
+				};
+			}
+			AutoForm.validateForm("updateAlarmForm");
+			return doc;
+		}
+	},
+	after: {
+		insert: function(error, result) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Insert Error:", error);
+			} else {
+				Router.go('AlarmList');
+				alertify.success("Авария успешно добавлена!");
+				console.log("Insert Result:", result);
+			}
+		},
+		update: function(error) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Update Error:", error);
+			} else {
+				Router.go('AlarmList');
+				alertify.success("Авария успешно изменена!");
+				console.log("Updated!");
 			}
 		}
-	});
+	}
+});

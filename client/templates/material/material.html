@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<legend>Материал</legend>
-		{{> quickForm collection="Materials" buttonContent="Создать" id="insertMaterialForm" type="insert"}}
+		{{> quickForm collection="Materials" buttonContent="Создать" id="insertMaterialForm" type="insert" fields="name,mesto,kolvo,razmer,primechanie"}}
   	</div>
 </template>
 
@@ -19,9 +19,9 @@
 		<br>
 		<legend>Материал</legend>
 		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="Materials" buttonContent="Изменить" doc=this id="updateMaterialForm" type="update"}}
+	  		{{> quickForm collection="Materials" buttonContent="Изменить" doc=this id="updateMaterialForm" type="update" fields="name,mesto,kolvo,razmer,primechanie"}}
 	  	{{else}}
-	  		{{> quickForm collection="Materials" buttonContent=false doc=this id="updateMaterialForm" }}
+	  		{{> quickForm collection="Materials" buttonContent=false doc=this id="updateMaterialForm" fields="name,mesto,kolvo,razmer,primechanie"}}
 	  	{{/if}}
 	</div>
 </template>

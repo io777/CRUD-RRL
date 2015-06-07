@@ -52,10 +52,26 @@ Template.ObectExplyatList.helpers({
 					label: 'Линия РРЛ',
 					sortable: true,
 					fn: function (value){
-						if (Lines.findOne({_id: value})){
-							var lineOne = Lines.findOne({_id: value});
-							return lineOne.name+" - "+lineOne.nomer;
-						};
+						// if (Lines.findOne({_id: value})){
+						// 	var lineOne = Lines.findOne({_id: value});
+						// 	return lineOne.name+" - "+lineOne.nomer;
+						// };
+						// var result = [];
+						// lines = Lines.find();
+						// lines.forEach(function(line){
+						// 	if(_.contains(line.ams, value.toString())){
+						// 		result.push(" "+line.name+" - "+line.nomer);
+						// 	}
+						// });
+						// return result;
+						var result = [];
+						_.each(value, function(lineRRL_id){
+							if(Lines.findOne({_id: lineRRL_id})){
+								var line = Lines.findOne({_id: lineRRL_id});
+								result.push(" "+line.name+" - "+line.nomer);
+							}
+						});
+						return result;
 					}
 				},
 				{

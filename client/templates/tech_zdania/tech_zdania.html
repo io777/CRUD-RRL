@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<legend>Тех. здания</legend>
-		{{> quickForm collection="TechZdanias" buttonContent="Создать" id="insertTechZdaniaForm" type="insert"}}
+		{{> quickForm collection="TechZdanias" buttonContent="Создать" id="insertTechZdaniaForm" type="insert" fields="adress,mesto,god_postroiki,god_pereoboryd,material_sten_vnesh_obhifka,material_sten_vertical_stoiki_mezdy_polom_potolkom,material_sten_verticalnie_stoiki,material_sten_yteplitel,material_sten_vnytrennya_obshifka,krovla,perekritia,chislo_etozei,systema_otoplenia,nalichie_vodoprovoda,nalichie_kanalizacii,kybatura,organizaciya,sistema_ventilacii,gazosnabzenie,sistema_gorachego_vodosnabzenie"}}
   	</div>
 </template>
 
@@ -19,9 +19,9 @@
 		<br>
 		<legend>Тех. здания</legend>
 		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="TechZdanias" buttonContent="Изменить" doc=this id="updateTechZdaniaForm" type="update"}}
+	  		{{> quickForm collection="TechZdanias" buttonContent="Изменить" doc=this id="updateTechZdaniaForm" type="update" fields="adress,mesto,god_postroiki,god_pereoboryd,material_sten_vnesh_obhifka,material_sten_vertical_stoiki_mezdy_polom_potolkom,material_sten_verticalnie_stoiki,material_sten_yteplitel,material_sten_vnytrennya_obshifka,krovla,perekritia,chislo_etozei,systema_otoplenia,nalichie_vodoprovoda,nalichie_kanalizacii,kybatura,organizaciya,sistema_ventilacii,gazosnabzenie,sistema_gorachego_vodosnabzenie"}}
 	  	{{else}}
-	  		{{> quickForm collection="TechZdanias" buttonContent=false doc=this id="updateTechZdaniaForm" }}
+	  		{{> quickForm collection="TechZdanias" buttonContent=false doc=this id="updateTechZdaniaForm" fields="adress,mesto,god_postroiki,god_pereoboryd,material_sten_vnesh_obhifka,material_sten_vertical_stoiki_mezdy_polom_potolkom,material_sten_verticalnie_stoiki,material_sten_yteplitel,material_sten_vnytrennya_obshifka,krovla,perekritia,chislo_etozei,systema_otoplenia,nalichie_vodoprovoda,nalichie_kanalizacii,kybatura,organizaciya,sistema_ventilacii,gazosnabzenie,sistema_gorachego_vodosnabzenie"}}
 	  	{{/if}}
 	</div>
 </template>

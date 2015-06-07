@@ -41,15 +41,9 @@ Template.WorkerList.helpers({
 					{ key: 'Otchestvo', label: 'Отчество', sortable: true},
 					{ key: 'nomerKarti', label: 'Номер карты', sortable: true},
 					{
-						key: 'cex',
+						key: 'cexName',
 						label: 'Цех',
-						sortable: true,
-						fn: function(value){
-							if (Cexs.findOne({_id: value})){
-								var cexOne = Cexs.findOne({_id: value});
-								return cexOne.full_name;
-							};
-						}
+						sortable: true
 					},
 					{ key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
 					{ 
@@ -527,15 +521,15 @@ Template.updateWorkerForm.events({
 		var ObectExplyat = this;
 		// checks if the actual clicked element has the class `delete`
 		if (event.target.className == "fa fa-times fa-lg obectExplyat") {
-				ObectExplyats.remove(ObectExplyat._id, function(error){
-					if(error){
-						alertify.error("Ошибка!", error);
-						console.log("Remove Error:", error);
-					} else {
-						alertify.success("Объект эксплуатации успешно удален!");
-						console.log("ObectExplyat Remove!");
-					}
-				});
+			ObectExplyats.remove(ObectExplyat._id, function(error){
+				if(error){
+					alertify.error("Ошибка!", error);
+					console.log("Remove Error:", error);
+				} else {
+					alertify.success("Объект эксплуатации успешно удален!");
+					console.log("ObectExplyat Remove!");
+				}
+			});
 		}
 	}
 });
@@ -573,26 +567,50 @@ Template.WorkerList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertWorkerForm', 'updateWorkerForm'], {
-		after: {
-			insert: function(error, result) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-						console.log("Insert Error:", error);
-				} else {
-					Router.go('WorkerList');
-					alertify.success("Работник успешно добавлен!");
-					console.log("Insert Result:", result);
-				}
-			},
-			update: function(error) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-					console.log("Update Error:", error);
-				} else {
-					Router.go('WorkerList');
-					alertify.success("Работник успешно изменен!");
-					console.log("Updated!");
-				}
+	before: {
+		insert: function(doc){
+			if(AutoForm.getFieldValue("cex")){
+				var cexId = AutoForm.getFieldValue("cex");
+				if (Cexs.findOne({_id: cexId})){
+					var cexOne = Cexs.findOne({_id: cexId});
+					doc.cexName = cexOne.full_name;
+				};
+			}
+			AutoForm.validateForm("insertWorkerForm");
+			return doc;
+		},
+		update: function(doc){
+			if(AutoForm.getFieldValue("cex")){
+				var cexId = AutoForm.getFieldValue("cex");
+				if (Cexs.findOne({_id: cexId})){
+					var cexOne = Cexs.findOne({_id: cexId});
+					doc.$set.cexName = cexOne.full_name;
+				};
+			}
+			AutoForm.validateForm("updateWorkerForm");
+			return doc;
+		}
+	},
+	after: {
+		insert: function(error, result) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Insert Error:", error);
+			} else {
+				Router.go('WorkerList');
+				alertify.success("Работник успешно добавлен!");
+				console.log("Insert Result:", result);
+			}
+		},
+		update: function(error) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Update Error:", error);
+			} else {
+				Router.go('WorkerList');
+				alertify.success("Работник успешно изменен!");
+				console.log("Updated!");
 			}
 		}
+	}
 });

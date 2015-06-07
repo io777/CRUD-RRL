@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<legend>Станционное оборудование</legend>
-		{{> quickForm collection="StancionOboryds" buttonContent="Создать" id="insertStancionOborydForm" type="insert"}}
+		{{> quickForm collection="StancionOboryds" buttonContent="Создать" id="insertStancionOborydForm" type="insert" fields="full_name,inventari_nomer,mesto,function_naznachenie,decimal_nomer,serial_nomer,adress,primechanie"}}
   	</div>
 </template>
 
@@ -19,9 +19,9 @@
 		<br>
 		<legend>Станционное оборудование</legend>
 		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="StancionOboryds" buttonContent="Изменить" doc=this id="updateStancionOborydForm" type="update"}}
+	  		{{> quickForm collection="StancionOboryds" buttonContent="Изменить" doc=this id="updateStancionOborydForm" type="update" fields="full_name,inventari_nomer,mesto,function_naznachenie,decimal_nomer,serial_nomer,adress,primechanie"}}
 	  	{{else}}
-	  		{{> quickForm collection="StancionOboryds" buttonContent=false doc=this id="updateStancionOborydForm" }}
+	  		{{> quickForm collection="StancionOboryds" buttonContent=false doc=this id="updateStancionOborydForm" fields="full_name,inventari_nomer,mesto,function_naznachenie,decimal_nomer,serial_nomer,adress,primechanie"}}
 	  	{{/if}}
 	</div>
 </template>

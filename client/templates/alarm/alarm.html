@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<legend>Аварии</legend>
-		{{> quickForm collection="Alarms" buttonContent="Создать" id="insertAlarmForm" type="insert"}}
+		{{> quickForm collection="Alarms" buttonContent="Создать" id="insertAlarmForm" type="insert" fields="name,type,mesto,date,primechanie"}}
   	</div>
 </template>
 
@@ -19,9 +19,9 @@
 		<br>
 		<legend>Аварии</legend>
 		{{#if isInRole 'admin,moderator'}}
-	  		{{> quickForm collection="Alarms" buttonContent="Изменить" doc=this id="updateAlarmForm" type="update"}}
+	  		{{> quickForm collection="Alarms" buttonContent="Изменить" doc=this id="updateAlarmForm" type="update" fields="name,type,mesto,date,primechanie"}}
 	  	{{else}}
-	  		{{> quickForm collection="Alarms" buttonContent=false doc=this id="updateAlarmForm" }}
+	  		{{> quickForm collection="Alarms" buttonContent=false doc=this id="updateAlarmForm" fields="name,type,mesto,date,primechanie"}}
 	  	{{/if}}
 	</div>
 </template>

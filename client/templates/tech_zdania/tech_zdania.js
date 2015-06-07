@@ -38,19 +38,9 @@ Template.TechZdaniaList.helpers({
 					},
 					{ key: 'adress', label: 'Адресс', sortable: true},
 					{
-						key: 'mesto',
+						key: 'mestoName',
 						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
+						sortable: true
 					},
 					{ 
 						key: 'god_postroiki',
@@ -116,26 +106,58 @@ Template.TechZdaniaList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertTechZdaniaForm', 'updateTechZdaniaForm'], {
-		after: {
-			insert: function(error, result) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-						console.log("Insert Error:", error);
-				} else {
-					Router.go('TechZdaniaList');
-					alertify.success("Тех. здание успешно добавлено!");
-					console.log("Insert Result:", result);
+	before: {
+		insert: function(doc){
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.mestoName = skladOne.name;
 				}
-			},
-			update: function(error) {
-				if (error) {
-					alertify.error("Ошибка!", error);
-					console.log("Update Error:", error);
-				} else {
-					Router.go('TechZdaniaList');
-					alertify.success("Тех. здание успешно изменено!");
-					console.log("Updated!");
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.mestoName = obectExplyatOne.name;
 				}
 			}
+			AutoForm.validateForm("insertTechZdaniaForm");
+			return doc;
+		},
+		update: function(doc){
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.$set.mestoName = skladOne.name;
+				}
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.$set.mestoName = obectExplyatOne.name;
+				}
+			}
+			AutoForm.validateForm("updateTechZdaniaForm");
+			return doc;
 		}
-	});
+	},
+	after: {
+		insert: function(error, result) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Insert Error:", error);
+			} else {
+				Router.go('TechZdaniaList');
+				alertify.success("Тех. здание успешно добавлено!");
+				console.log("Insert Result:", result);
+			}
+		},
+		update: function(error) {
+			if (error) {
+				alertify.error("Ошибка!", error);
+				console.log("Update Error:", error);
+			} else {
+				Router.go('TechZdaniaList');
+				alertify.success("Тех. здание успешно изменено!");
+				console.log("Updated!");
+			}
+		}
+	}
+});

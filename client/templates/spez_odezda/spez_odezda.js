@@ -38,19 +38,9 @@ Template.SpezOdezdaList.helpers({
 					},
 					{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
 					{
-						key: 'mesto',
+						key: 'mestoName',
 						label: 'Место размещение',
-						sortable: true,
-						fn: function(value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (Workers.findOne({_id: value})){
-								var workerOne = Workers.findOne({_id: value});
-								return workerOne.Familia;
-							};
-						}	
+						sortable: true
 					},
 					{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
 					{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
@@ -129,6 +119,38 @@ Template.SpezOdezdaList.events({
 });
 // перенаправить на список после создания и изменения
 AutoForm.addHooks(['insertSpezOdezdaForm', 'updateSpezOdezdaForm'], {
+	before: {
+		insert: function(doc){
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.mestoName = skladOne.name;
+				}
+				if (Workers.findOne({_id: mestoId})){
+					var workerOne = Workers.findOne({_id: mestoId});
+					doc.mestoName = workerOne.Familia;
+				};
+			}
+			AutoForm.validateForm("insertSpezOdezdaForm");
+			return doc;
+		},
+		update: function(doc){
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.$set.mestoName = skladOne.name;
+				}
+				if (Workers.findOne({_id: mestoId})){
+					var workerOne = Workers.findOne({_id: mestoId});
+					doc.$set.mestoName = workerOne.Familia;
+				};
+			}
+			AutoForm.validateForm("updateSpezOdezdaForm");
+			return doc;
+		}
+	},
 	after: {
 		insert: function(error, result) {
 			if (error) {

@@ -1,85 +1,75 @@
 Template.AFYList.helpers({
-		AFYsCount: function(){
-			return AFYs.find().count();
-		},
-		// настройки для reactiv table
-		settings: function(){
-			return {
-				collection: AFYs,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+	AFYsCount: function(){
+		return AFYs.find().count();
+	},
+	// настройки для reactiv table
+	settings: function(){
+		return {
+			collection: AFYs,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
-						}
-					},
-					{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
-					{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
-					{
-						key: 'mesto',
-						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
-					},
-					{ key: 'freqvansi', label: 'Частоты (Мгц)', sortable: true },
-					{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
-					{ key: 'freqvansi_prm', label: 'Частота прм. (Мгц)', sortable: true },
-					{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
-					{ key: 'power_tx', label: 'Мощность прд. (Вт)', sortable: true},
-					{ key: 'moshnost_na_vhode_antenn_wt', label: 'Мощность на входе антенн (Вт)', sortable: true},
-					{ key: 'moshnost_na_vhode_antenn_Dbm', label: 'Мощность на входе антенн (Дбм)', sortable: true},
-					{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ (Дбм)', sortable: true },
-					{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр (Дбм)', sortable: true},
-					{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true, hidden: true },
-					{ key: 'koll_pered', label: 'Количество прд. (шт.)', sortable: true},
-					{ key: 'azimut_izluchenia', label: 'Азимут излучения (град.)', sortable: true },
-					{ key: 'ygol_mesta', label: 'Угол места (град.)', sortable: true, hidden: true },
-					{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн (м)', sortable: true },
-					{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true, hidden: true },
-					{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр (м)', sortable: true},
-					{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true, hidden: true },
-					{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
-					{ key: 'sechenie', label: 'Сечение', sortable: true, hidden: true },
-					{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ (м)', sortable: true },
-					{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
-					{ key: 'rezervir', label: 'Резервирование', sortable: true, hidden: true},
-					{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true, hidden: true },
-					{ key: 'primechanie', label: 'Примечание', sortable: true, hidden: true },
-				]
-			};
-		}
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+					}
+				},
+				{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
+				{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
+				{
+					key: 'mestoName',
+					label: 'Место размещения',
+					sortable: true
+				},
+				{ key: 'freqvansi', label: 'Частоты (Мгц)', sortable: true },
+				{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
+				{ key: 'freqvansi_prm', label: 'Частота прм. (Мгц)', sortable: true },
+				{ key: 'type_moduleshin', label: 'Тип модуляции', sortable: true },
+				{ key: 'power_tx', label: 'Мощность прд. (Вт)', sortable: true},
+				{ key: 'moshnost_na_vhode_antenn_wt', label: 'Мощность на входе антенн (Вт)', sortable: true},
+				{ key: 'moshnost_na_vhode_antenn_Dbm', label: 'Мощность на входе антенн (Дбм)', sortable: true},
+				{ key: 'poteri_AVT_AFT', label: 'Потери в АВТ / АФТ (Дбм)', sortable: true },
+				{ key: 'ydelnie_poteri_na_metr', label: 'Удельные потери на метр (Дбм)', sortable: true},
+				{ key: 'shirina_lycha', label: 'Ширина луча в азимутальной/вертикальной плоскости (град)', sortable: true, hidden: true },
+				{ key: 'koll_pered', label: 'Количество прд. (шт.)', sortable: true},
+				{ key: 'azimut_izluchenia', label: 'Азимут излучения (град.)', sortable: true },
+				{ key: 'ygol_mesta', label: 'Угол места (град.)', sortable: true, hidden: true },
+				{ key: 'visota_podvesa_antenn', label: 'Высота подвеса антенн (м)', sortable: true },
+				{ key: 'visota_ot_krovli', label: 'Высота от кровли (м)', sortable: true, hidden: true },
+				{ key: 'type_antenn_diametr', label: 'Тип антенн диаметр (м)', sortable: true},
+				{ key: 'koeffcient_ysil_antenn', label: 'Коэффициент усил. антенн (дБi)', sortable: true, hidden: true },
+				{ key: 'type_AVT_AFT', label: 'Тип АВТ / АФТ', sortable: true},
+				{ key: 'sechenie', label: 'Сечение', sortable: true, hidden: true },
+				{ key: 'dlinna_AVT_AFT', label: 'Длинна АВТ / АФТ (м)', sortable: true },
+				{ key: 'vladelec_oboryd', label: 'Владелец оборудования', sortable: true },
+				{ key: 'rezervir', label: 'Резервирование', sortable: true, hidden: true},
+				{ key: 'koll_potokov', label: 'Колич. потоков (шт.)', sortable: true, hidden: true },
+				{ key: 'primechanie', label: 'Примечание', sortable: true, hidden: true },
+			]
+		};
+	}
 });
 
 // редактировать склад
@@ -137,6 +127,17 @@ AutoForm.addHooks(['insertAFYForm', 'updateAFYForm'], {
 					doc.moshnost_na_vhode_antenn_wt = ((Math.pow(10,(doc.moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
 				}catch(e){}
 			}
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.mestoName = skladOne.name;
+				}
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.mestoName = obectExplyatOne.name;
+				}
+			}
 			AutoForm.validateForm("insertAFYForm");
 			return doc;
 		},
@@ -160,6 +161,17 @@ AutoForm.addHooks(['insertAFYForm', 'updateAFYForm'], {
 				try{
 					doc.$set.moshnost_na_vhode_antenn_wt = ((Math.pow(10,(doc.$set.moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
 				}catch(e){}
+			}
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.$set.mestoName = skladOne.name;
+				}
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.$set.mestoName = obectExplyatOne.name;
+				}
 			}
 			AutoForm.validateForm("updateAFYForm");
 			return doc;

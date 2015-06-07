@@ -40,20 +40,10 @@ Template.AMSList.helpers({
 				{ key: 'name_adress', label: 'Адресс', sortable: true, hidden: true},
 				{ key: 'inventari', label: 'Инв. номер', sortable: true },
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
 					sortable: true,
-					hidden: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					hidden: true
 				},
 				{ 
 					key: '_id',
@@ -183,6 +173,18 @@ AutoForm.addHooks(['insertAMSForm', 'updateAMSForm'], {
 					doc.dolgota_DD = dolgota;
 				} catch(e){}
 			}
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.mestoName = skladOne.name;
+				};
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.mestoName = obectExplyatOne.name;
+				};
+			}
+			AutoForm.validateForm("insertAMSForm");
 			return doc;
 		},
 		update: function(doc) {
@@ -204,6 +206,18 @@ AutoForm.addHooks(['insertAMSForm', 'updateAMSForm'], {
 					doc.$set.dolgota_DD = dolgota;
 				} catch(e){}
 			}
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.$set.mestoName = skladOne.name;
+				};
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.$set.mestoName = obectExplyatOne.name;
+				};
+			}
+			AutoForm.validateForm("updateAMSForm");
 			return doc;
 		}
 	},

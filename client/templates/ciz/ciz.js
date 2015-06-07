@@ -37,23 +37,9 @@ Template.CizList.helpers({
 					}
 				},
 				{ 
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место нахождения',
-					sortable: true,
-					fn: function(value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (Workers.findOne({_id: value})){
-							var workerOne = Workers.findOne({_id: value});
-							return workerOne.Familia;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ 
 					key: 'mesto',
@@ -190,6 +176,21 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 					}
 				}
 			}
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.mestoName = skladOne.name;
+				};
+				if (Workers.findOne({_id: mestoId})){
+					var workerOne = Workers.findOne({_id: mestoId});
+					doc.mestoName = workerOne.Familia;
+				};
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.mestoName = obectExplyatOne.name;
+				};
+			}
 			AutoForm.validateForm("insertCizForm");
 			return doc;
 		},
@@ -219,6 +220,21 @@ AutoForm.addHooks(['insertCizForm', 'updateCizForm'], {
 						doc.$set.dateSledPoverki = null;
 					}
 				}
+			}
+			if(AutoForm.getFieldValue("mesto")){
+				var mestoId = AutoForm.getFieldValue("mesto");
+				if (Sklads.findOne({_id: mestoId})){
+					var skladOne = Sklads.findOne({_id: mestoId});
+					doc.$set.mestoName = skladOne.name;
+				};
+				if (Workers.findOne({_id: mestoId})){
+					var workerOne = Workers.findOne({_id: mestoId});
+					doc.$set.mestoName = workerOne.Familia;
+				};
+				if (ObectExplyats.findOne({_id: mestoId})){
+					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
+					doc.$set.mestoName = obectExplyatOne.name;
+				};
 			}
 			AutoForm.validateForm("updateCizForm");
 			return doc;
