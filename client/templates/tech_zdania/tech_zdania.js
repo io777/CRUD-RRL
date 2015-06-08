@@ -1,76 +1,76 @@
 Template.TechZdaniaList.helpers({
-		TechZdaniasCount: function(){
-			return TechZdanias.find().count();
-		},
-		// настройки для reactiv table
-		settings: function(){
-			return {
-				collection: TechZdanias,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+	TechZdaniasCount: function(){
+		return TechZdanias.find().count();
+	},
+	// настройки для reactiv table
+	settings: function(){
+		return {
+			collection: TechZdanias,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+					}
+				},
+				{ key: 'adress', label: 'Адресс', sortable: true},
+				{
+					key: 'mestoName',
+					label: 'Место размещения',
+					sortable: true
+				},
+				{ 
+					key: 'god_postroiki',
+					label: 'Год постройки',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
 						}
-					},
-					{ key: 'adress', label: 'Адресс', sortable: true},
-					{
-						key: 'mestoName',
-						label: 'Место размещения',
-						sortable: true
-					},
-					{ 
-						key: 'god_postroiki',
-						label: 'Год постройки',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('YYYY');
-							}
+					}
+				},
+				{ 
+					key: 'god_pereoboryd',
+					label: 'Год переоборудования',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
 						}
-					},
-					{ 
-						key: 'god_pereoboryd',
-						label: 'Год переоборудования',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('YYYY');
-							}
-						}
-					},
-					{ key: 'krovla', label: 'Кровля', sortable: true},
-					{ key: 'perekritia', label: 'Перекрытия', sortable: true},
-					{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
-					{ key: 'kybatura', label: 'Кубатура', sortable: true},
-					{ key: 'organizaciya', label: 'Организация', sortable: true},
-					{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
-				]
-			};
-		}
+					}
+				},
+				{ key: 'krovla', label: 'Кровля', sortable: true},
+				{ key: 'perekritia', label: 'Перекрытия', sortable: true},
+				{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
+				{ key: 'kybatura', label: 'Кубатура', sortable: true},
+				{ key: 'organizaciya', label: 'Организация', sortable: true},
+				{ key: 'nalichie_kanalizacii', label: 'Наличие канализации', sortable: true}
+			]
+		};
+	}
 });
 
 // редактировать склад

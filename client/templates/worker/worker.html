@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<legend>Работник</legend>
-		{{> quickForm collection="Workers" buttonContent="Создать" id="insertWorkerForm" type="insert"}}
+		{{> quickForm collection="Workers" buttonContent="Создать" id="insertWorkerForm" type="insert" fields="Familia,Name,Otchestvo,nomerKarti,cex,tabel_nomer,data_postyplenia_na_raboty,pol,rost,razmer_odezdi,razmer_obyvi,razmer_golovnogo_ubora,tel,tel_rab,dolznost,podpis"}}
   	</div>
 </template>
 
@@ -23,9 +23,9 @@
 		<div id="editObectExplyat" class="collapse in">
 			<legend>Работник</legend>
 			{{#if isInRole 'admin,moderator'}}
-				{{> quickForm collection="Workers" buttonContent="Изменить" doc=this id="updateWorkerForm" type="update"}}
+				{{> quickForm collection="Workers" buttonContent="Изменить" doc=this id="updateWorkerForm" type="update" fields="Familia,Name,Otchestvo,nomerKarti,cex,tabel_nomer,data_postyplenia_na_raboty,pol,rost,razmer_odezdi,razmer_obyvi,razmer_golovnogo_ubora,tel,tel_rab,dolznost,podpis"}}
 			{{else}}
-				{{> quickForm collection="Workers" buttonContent=false doc=this id="updateWorkerForm" }}
+				{{> quickForm collection="Workers" buttonContent=false doc=this id="updateWorkerForm" fields="Familia,Name,Otchestvo,nomerKarti,cex,tabel_nomer,data_postyplenia_na_raboty,pol,rost,razmer_odezdi,razmer_obyvi,razmer_golovnogo_ubora,tel,tel_rab,dolznost,podpis"}}
 			{{/if}}
 		</div>
 	</div>

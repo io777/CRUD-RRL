@@ -129,10 +129,26 @@ Template.updateWorkerForm.helpers({
 					label: 'Линия РРЛ',
 					sortable: true,
 					fn: function (value){
-						if (Lines.findOne({_id: value})){
-							var lineOne = Lines.findOne({_id: value});
-							return lineOne.name+" - "+lineOne.nomer;
-						};
+						// if (Lines.findOne({_id: value})){
+						// 	var lineOne = Lines.findOne({_id: value});
+						// 	return lineOne.name+" - "+lineOne.nomer;
+						// };
+						// var result = [];
+						// lines = Lines.find();
+						// lines.forEach(function(line){
+						// 	if(_.contains(line.ams, value.toString())){
+						// 		result.push(" "+line.name+" - "+line.nomer);
+						// 	}
+						// });
+						// return result;
+						var result = [];
+						_.each(value, function(lineRRL_id){
+							if(Lines.findOne({_id: lineRRL_id})){
+								var line = Lines.findOne({_id: lineRRL_id});
+								result.push(" "+line.name+" - "+line.nomer);
+							}
+						});
+						return result;
 					}
 				},
 				{
@@ -240,7 +256,7 @@ Template.updateWorkerForm.helpers({
 						}
 					},
 					fn: function (value){
-						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Ciz"></i></a>');
 					}
 				},
 				{ 
@@ -249,7 +265,7 @@ Template.updateWorkerForm.helpers({
 					label: 'Изменить / посмотреть',
 					sortable: false,
 					fn: function (value){
-						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Ciz"></i></a>');
 					}
 				},
 				{ 

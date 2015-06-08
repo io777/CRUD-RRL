@@ -1,62 +1,62 @@
 Template.AlarmList.helpers({
-		AlarmsCount: function(){
-			return Alarms.find().count();
-		},
-		// настройки для reactiv table
-		settings: function(){
-			return {
-				collection: Alarms,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+	AlarmsCount: function(){
+		return Alarms.find().count();
+	},
+	// настройки для reactiv table
+	settings: function(){
+		return {
+			collection: Alarms,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg"></i></a>');
+					}
+				},
+				{ key: 'name', label: 'Наименование', sortable: true},
+				{ key: 'type', label: 'Тип', sortable: true },
+				{
+					key: 'mestoName',
+					label: 'Место аварии',
+					sortable: true
+				},
+				{ 
+					key: 'date',
+					label: 'Дата аварии',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'name', label: 'Наименование', sortable: true},
-					{ key: 'type', label: 'Тип', sortable: true },
-					{
-						key: 'mestoName',
-						label: 'Место аварии',
-						sortable: true
-					},
-					{ 
-						key: 'date',
-						label: 'Дата аварии',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
-						}
-					},
-					{ key: 'primechanie', label: 'Примечание', sortable: true }
+					}
+				},
+				{ key: 'primechanie', label: 'Примечание', sortable: true }
 			]
-			};
-		}
+		};
+	}
 });
 
 // редактировать аварию

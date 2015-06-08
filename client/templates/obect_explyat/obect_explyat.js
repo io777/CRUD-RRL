@@ -177,8 +177,8 @@ Template.updateObectExplyatForm.helpers({
 					sortable: false,
 					hidden: function () {
 						var loggedInUser = Meteor.user();
-					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
 						}
 					},
 					fn: function (value){
@@ -197,14 +197,18 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'name', label: 'Наименование', sortable: true},
 				{ key: 'type', label: 'Тип', sortable: true },
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место аварии',
+					sortable: true
+				},
+				{ 
+					key: 'date',
+					label: 'Дата аварии',
 					sortable: true,
-					fn: function (value){
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{ key: 'primechanie', label: 'Примечание', sortable: true }
@@ -257,20 +261,10 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'name_adress', label: 'Адресс', sortable: true, hidden: true},
 				{ key: 'inventari', label: 'Инв. номер', sortable: true },
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
 					sortable: true,
-					hidden: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					hidden: true
 				},
 				{ 
 					key: '_id',
@@ -290,8 +284,8 @@ Template.updateObectExplyatForm.helpers({
 				},
 				{ key: 'sever_shirot', label: 'Координаты размещения АМС (С.Ш.)', sortable: true },
 				{ key: 'west_dolg', label: 'Координаты размещения АМС (В.Д.)', sortable: true },
-				{ key: 'type_ams', label: 'Тип АМС(башня/мачта)', sortable: true },
-				{ key: 'massa_ams', label: 'Масса АМС(кг)', sortable: true },
+				{ key: 'type_ams', label: 'Тип АМС (башня/мачта)', sortable: true },
+				{ key: 'massa_ams', label: 'Масса АМС (кг)', sortable: true },
 				{ key: 'konstryktiv_ams', label: 'Конструктив АМС (труба/уголок)', sortable: true },
 				{ key: 'Visota_AMS', label: 'Высота АМС (м)', sortable: true },
 				{ key: 'nagryzka', label: 'Проектная нагрузо-способность (кг)', sortable: true, hidden: true },
@@ -300,7 +294,7 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'visota_nad_morem', label: 'Высота над уровнем моря (м)', sortable: true, hidden: true },
 				{ 
 					key: 'god_vvoda_v_exsplyataz',
-					label: 'Год ввода в экспл.(г)',
+					label: 'Год ввода в экспл. (г)',
 					sortable: true,
 					fn: function(value){
 						if(value){
@@ -327,7 +321,7 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'project_organization', label: 'Проектная организация', sortable: true, hidden: true },
 				{ key: 'nalich_transport_seti', label: 'Наличие транспортной сети (ВОЛС/РРЛ/VSAT)', sortable: true, hidden: true },
 				{ key: 'obiem_transportnoi_seti', label: 'Объем транспортной сети (STM/Мбит/сек/Е1)', sortable: true, hidden: true },
-				{ key: 'nalichie_svidetelstva_na_pravo_sobstvennosti', label: 'Наличие свидетельства на право собственности(да/нет)', sortable: true, hidden: true },
+				{ key: 'nalichie_svidetelstva_na_pravo_sobstvennosti', label: 'Наличие свидетельства на право собственности (да/нет)', sortable: true, hidden: true },
 				{ key: 'Vid_prava_na_zemel_ychastok', label: 'Вид прав на земельный участок(собственность/ аренда (аренда = договор, собственник))', sortable: true, hidden: true },
 				{ key: 'nalichie_soglas_s_aviachieu', label: 'Наличие согласования с организациями области авиации (есть/нет)', sortable: true, hidden: true },
 				{ key: 'nalichie_pasporta_som', label: 'Наличие паспорта СОМ (да/нет)', sortable: true, hidden: true },
@@ -389,19 +383,9 @@ Template.updateObectExplyatForm.helpers({
 				},
 				{ key: 'adress', label: 'Адресс', sortable: true},
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
-					sortable: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ 
 					key: 'god_postroiki',
@@ -477,19 +461,9 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
 				{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
-					sortable: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ key: 'freqvansi', label: 'Частоты (Мгц)', sortable: true },
 				{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
@@ -543,8 +517,8 @@ Template.updateObectExplyatForm.helpers({
 					sortable: false,
 					hidden: function () {
 						var loggedInUser = Meteor.user();
-					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
 						}
 					},
 					fn: function (value){
@@ -563,26 +537,16 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'full_name', label: 'Наименование', sortable: true},
 				{ key: 'inventari_nomer', label: 'Инвентарный номер', sortable: true},
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
-					sortable: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ key: 'function_naznachenie', label: 'Функциональное назначение', sortable: true},
 				{ key: 'decimal_nomer', label: 'Децимальный номер', sortable: true},
 				{ key: 'serial_nomer', label: 'Серийный номер', sortable: true},
 				{ key: 'adress', label: 'Адресс', sortable: true},
 				{ key: 'primechanie', label: 'Примечание', sortable: true}
-		  ]
+			]
 		};
 	},
 	CizsCount: function(){
@@ -628,23 +592,9 @@ Template.updateObectExplyatForm.helpers({
 					}
 				},
 				{ 
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место нахождения',
-					sortable: true,
-					fn: function(value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (Workers.findOne({_id: value})){
-							var workerOne = Workers.findOne({_id: value});
-							return workerOne.Familia;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ 
 					key: 'mesto',
@@ -683,7 +633,9 @@ Template.updateObectExplyatForm.helpers({
 					label: 'Дата поверки',
 					sortable: true,
 					fn: function(value){
-						return moment(value).format('DD.MM.YYYY');
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{ 
@@ -691,7 +643,9 @@ Template.updateObectExplyatForm.helpers({
 					label: 'Дата следующей поверки',
 					sortable: true,
 					fn: function(value){
-						return moment(value).format('DD.MM.YYYY');
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
+						}
 					}
 				},
 				{
@@ -700,12 +654,15 @@ Template.updateObectExplyatForm.helpers({
 					sortable: true,
 					fn: function(value){
 						nowDate = new Date();
-						if (nowDate > value){
-							return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
-						} else {
-							return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+						if(value == null){
+							return new Spacebars.SafeString('<span class="label label-info">Не поверяется</span>');
+						}else{
+							if (nowDate > value){
+								return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
+							} else {
+								return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
+							}
 						}
-						
 					}
 				}
 			]
@@ -736,8 +693,8 @@ Template.updateObectExplyatForm.helpers({
 					sortable: false,
 					hidden: function () {
 						var loggedInUser = Meteor.user();
-					if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
 						}
 					},
 					fn: function (value){
@@ -755,24 +712,14 @@ Template.updateObectExplyatForm.helpers({
 				},
 				{ key: 'name', label: 'Наименование', sortable: true},
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
-					sortable: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ key: 'kolvo', label: 'Количество', sortable: true},
 				{ key: 'razmer', label: 'Размер', sortable: true},
 				{ key: 'primechanie', label: 'Примечание', sortable: true}
-		]
+			]
 		};
 	}
 });

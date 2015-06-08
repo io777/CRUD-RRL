@@ -92,20 +92,10 @@ Template.updateSkladForm.helpers({
 				{ key: 'name_adress', label: 'Адресс', sortable: true, hidden: true},
 				{ key: 'inventari', label: 'Инв. номер', sortable: true },
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
 					sortable: true,
-					hidden: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					hidden: true
 				},
 				{ 
 					key: '_id',
@@ -125,8 +115,8 @@ Template.updateSkladForm.helpers({
 				},
 				{ key: 'sever_shirot', label: 'Координаты размещения АМС (С.Ш.)', sortable: true },
 				{ key: 'west_dolg', label: 'Координаты размещения АМС (В.Д.)', sortable: true },
-				{ key: 'type_ams', label: 'Тип АМС(башня/мачта)', sortable: true },
-				{ key: 'massa_ams', label: 'Масса АМС(кг)', sortable: true },
+				{ key: 'type_ams', label: 'Тип АМС (башня/мачта)', sortable: true },
+				{ key: 'massa_ams', label: 'Масса АМС (кг)', sortable: true },
 				{ key: 'konstryktiv_ams', label: 'Конструктив АМС (труба/уголок)', sortable: true },
 				{ key: 'Visota_AMS', label: 'Высота АМС (м)', sortable: true },
 				{ key: 'nagryzka', label: 'Проектная нагрузо-способность (кг)', sortable: true, hidden: true },
@@ -135,7 +125,7 @@ Template.updateSkladForm.helpers({
 				{ key: 'visota_nad_morem', label: 'Высота над уровнем моря (м)', sortable: true, hidden: true },
 				{ 
 					key: 'god_vvoda_v_exsplyataz',
-					label: 'Год ввода в экспл.(г)',
+					label: 'Год ввода в экспл. (г)',
 					sortable: true,
 					fn: function(value){
 						if(value){
@@ -162,7 +152,7 @@ Template.updateSkladForm.helpers({
 				{ key: 'project_organization', label: 'Проектная организация', sortable: true, hidden: true },
 				{ key: 'nalich_transport_seti', label: 'Наличие транспортной сети (ВОЛС/РРЛ/VSAT)', sortable: true, hidden: true },
 				{ key: 'obiem_transportnoi_seti', label: 'Объем транспортной сети (STM/Мбит/сек/Е1)', sortable: true, hidden: true },
-				{ key: 'nalichie_svidetelstva_na_pravo_sobstvennosti', label: 'Наличие свидетельства на право собственности(да/нет)', sortable: true, hidden: true },
+				{ key: 'nalichie_svidetelstva_na_pravo_sobstvennosti', label: 'Наличие свидетельства на право собственности (да/нет)', sortable: true, hidden: true },
 				{ key: 'Vid_prava_na_zemel_ychastok', label: 'Вид прав на земельный участок(собственность/ аренда (аренда = договор, собственник))', sortable: true, hidden: true },
 				{ key: 'nalichie_soglas_s_aviachieu', label: 'Наличие согласования с организациями области авиации (есть/нет)', sortable: true, hidden: true },
 				{ key: 'nalichie_pasporta_som', label: 'Наличие паспорта СОМ (да/нет)', sortable: true, hidden: true },
@@ -224,19 +214,9 @@ Template.updateSkladForm.helpers({
 				},
 				{ key: 'adress', label: 'Адресс', sortable: true},
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
-					sortable: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ 
 					key: 'god_postroiki',
@@ -312,19 +292,9 @@ Template.updateSkladForm.helpers({
 				{ key: 'type_oborydov', label: 'Тип оборудования', sortable: true},
 				{ key: 'inventarniu_nomer', label: 'Инвентарный номер', sortable: true },
 				{
-					key: 'mesto',
+					key: 'mestoName',
 					label: 'Место размещения',
-					sortable: true,
-					fn: function (value){
-						if (Sklads.findOne({_id: value})){
-							var skladOne = Sklads.findOne({_id: value});
-							return skladOne.name;
-						};
-						if (ObectExplyats.findOne({_id: value})){
-							var obectExplyatOne = ObectExplyats.findOne({_id: value});
-							return obectExplyatOne.name;
-						};
-					}
+					sortable: true
 				},
 				{ key: 'freqvansi', label: 'Частоты (Мгц)', sortable: true },
 				{ key: 'freqvansi_prd', label: 'Частота прд. (Мгц)', sortable: true},
@@ -360,65 +330,55 @@ Template.updateSkladForm.helpers({
 			return stancionOborydInSklad.length;
 	},
 	settingsListStancionOboryd: function(){
-			var skladId = this._id;
-			var stancionOboryds = StancionOboryds.find().fetch();
-			var stancionOborydInSklad = _.where(stancionOboryds, {mesto: skladId});
-			return {
-				collection: stancionOborydInSklad,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+		var skladId = this._id;
+		var stancionOboryds = StancionOboryds.find().fetch();
+		var stancionOborydInSklad = _.where(stancionOboryds, {mesto: skladId});
+		return {
+			collection: stancionOborydInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg stancionOboryd"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg stancionOboryd"></i></a>');
-						}
-					},
-					{ key: 'full_name', label: 'Наименование', sortable: true},
-					{ key: 'inventari_nomer', label: 'Инвентарный номер', sortable: true},
-					{
-						key: 'mesto',
-						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
-					},
-					{ key: 'function_naznachenie', label: 'Функциональное назначение', sortable: true},
-					{ key: 'decimal_nomer', label: 'Децимальный номер', sortable: true},
-					{ key: 'serial_nomer', label: 'Серийный номер', sortable: true},
-					{ key: 'adress', label: 'Адресс', sortable: true},
-					{ key: 'primechanie', label: 'Примечание', sortable: true}
-			  ]
-			};
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg stancionOboryd"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg stancionOboryd"></i></a>');
+					}
+				},
+				{ key: 'full_name', label: 'Наименование', sortable: true},
+				{ key: 'inventari_nomer', label: 'Инвентарный номер', sortable: true},
+				{
+					key: 'mestoName',
+					label: 'Место размещения',
+					sortable: true
+				},
+				{ key: 'function_naznachenie', label: 'Функциональное назначение', sortable: true},
+				{ key: 'decimal_nomer', label: 'Децимальный номер', sortable: true},
+				{ key: 'serial_nomer', label: 'Серийный номер', sortable: true},
+				{ key: 'adress', label: 'Адресс', sortable: true},
+				{ key: 'primechanie', label: 'Примечание', sortable: true}
+			]
+		};
 	},
 	CizsCount: function(){
 			var skladId = this._id;
@@ -427,124 +387,117 @@ Template.updateSkladForm.helpers({
 			return cizsInSklad.length;
 	},
 	settingsListCiz: function(){
-			var skladId = this._id;
-			var cizs = Cizs.find().fetch();
-			var cizsInSklad = _.where(cizs, {mesto: skladId});
-			return {
-				collection: cizsInSklad,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
-							if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-								return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Ciz"></i></a>');
+		var skladId = this._id;
+		var cizs = Cizs.find().fetch();
+		var cizsInSklad = _.where(cizs, {mesto: skladId});
+		return {
+			collection: cizsInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
+						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Ciz"></i></a>');
-						}
-					},
-					{ 
-						key: 'mesto',
-						label: 'Место нахождения',
-						sortable: true,
-						fn: function(value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (Workers.findOne({_id: value})){
-								var workerOne = Workers.findOne({_id: value});
-								return workerOne.Familia;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
-					},
-					{ 
-						key: 'mesto',
-						label: 'Номер карты',
-						sortable: true,
-						fn: function(value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.nomerKarti;
-							};
-							if (Workers.findOne({_id: value})){
-								var workerOne = Workers.findOne({_id: value});
-								return workerOne.nomerKarti;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.nomerKarti;
-							};
-						}
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Ciz"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Ciz"></i></a>');
+					}
+				},
+				{ 
+					key: 'mestoName',
+					label: 'Место нахождения',
+					sortable: true
+				},
+				{ 
+					key: 'mesto',
+					label: 'Номер карты',
+					sortable: true,
+					fn: function(value){
+						if (Sklads.findOne({_id: value})){
+							var skladOne = Sklads.findOne({_id: value});
+							return skladOne.nomerKarti;
+						};
+						if (Workers.findOne({_id: value})){
+							var workerOne = Workers.findOne({_id: value});
+							return workerOne.nomerKarti;
+						};
+						if (ObectExplyats.findOne({_id: value})){
+							var obectExplyatOne = ObectExplyats.findOne({_id: value});
+							return obectExplyatOne.nomerKarti;
+						};
+					}
 
-					},
-					{ key: 'number', label: 'Порядковый номер', sortable: true },
-					{ 
-						key: 'typeCiz',
-						label: 'Тип СИЗ',
-						sortable: true,
-						fn: function (value) {
-							var typeCizOne = TypeCizs.findOne({_id: value});
-							return typeCizOne.name;
-						}
-					},
-					{ key: 'nameCiz', label: 'Наименование СИЗ', sortable: true},
-					{ key: 'periodPoverki', label: 'Период поверки (мес)', sortable: true},
-					{ 
-						key: 'datePoverki',
-						label: 'Дата поверки',
-						sortable: true,
-						fn: function(value){
+				},
+				{ key: 'number', label: 'Порядковый номер', sortable: true },
+				{ 
+					key: 'typeCiz',
+					label: 'Тип СИЗ',
+					sortable: true,
+					fn: function (value) {
+						var typeCizOne = TypeCizs.findOne({_id: value});
+						return typeCizOne.name;
+					}
+				},
+				{ key: 'nameCiz', label: 'Наименование СИЗ', sortable: true},
+				{ key: 'periodPoverki', label: 'Период поверки (мес)', sortable: true},
+				{ 
+					key: 'datePoverki',
+					label: 'Дата поверки',
+					sortable: true,
+					fn: function(value){
+						if(value){
 							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ 
-						key: 'dateSledPoverki',
-						label: 'Дата следующей поверки',
-						sortable: true,
-						fn: function(value){
+					}
+				},
+				{ 
+					key: 'dateSledPoverki',
+					label: 'Дата следующей поверки',
+					sortable: true,
+					fn: function(value){
+						if(value){
 							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{
-						key: 'dateSledPoverki',
-						label: 'Поверка',
-						sortable: true,
-						fn: function(value){
-							nowDate = new Date();
+					}
+				},
+				{
+					key: 'dateSledPoverki',
+					label: 'Поверка',
+					sortable: true,
+					fn: function(value){
+						nowDate = new Date();
+						if(value == null){
+							return new Spacebars.SafeString('<span class="label label-info">Не поверяется</span>');
+						}else{
 							if (nowDate > value){
 								return new Spacebars.SafeString('<span class="label label-danger">Просрочено</span>');
 							} else {
 								return new Spacebars.SafeString('<span class="label label-success">Норма</span>');
 							}
-							
 						}
 					}
-				]
-			};
+				}
+			]
+		};
 	},
 	SpezOdezdasCount: function(){
 			var skladId = this._id;
@@ -553,98 +506,88 @@ Template.updateSkladForm.helpers({
 			return spezOdezdasInSklad.length;
 	},
 	settingsListSpezOdezda: function(){
-			var skladId = this._id;
-			var spezOdezdas = SpezOdezdas.find().fetch();
-			var spezOdezdasInSklad = _.where(spezOdezdas, {mesto: skladId});
-			return {
-				collection: spezOdezdasInSklad,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+		var skladId = this._id;
+		var spezOdezdas = SpezOdezdas.find().fetch();
+		var spezOdezdasInSklad = _.where(spezOdezdas, {mesto: skladId});
+		return {
+			collection: spezOdezdasInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg spezOdezda"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg spezOdezda"></i></a>');
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg spezOdezda"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg spezOdezda"></i></a>');
+					}
+				},
+				{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
+				{
+					key: 'mestoName',
+					label: 'Место размещение',
+					sortable: true
+				},
+				{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
+				{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
+				{ 
+					key: 'data_prihoda',
+					label: 'Дата прихода',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'naimenovanie_ciz', label: 'Наименование СИЗ', sortable: true},
-					{
-						key: 'mesto',
-						label: 'Место размещение',
-						sortable: true,
-						fn: function(value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (Workers.findOne({_id: value})){
-								var workerOne = Workers.findOne({_id: value});
-								return workerOne.Familia;
-							};
-						}	
-					},
-					{ key: 'naklad_prihod', label: 'Номер накладной', sortable: true},
-					{ key: 'sertificat_sootvetstvia', label: 'Сертификат соответствия', sortable: true},
-					{ 
-						key: 'data_prihoda',
-						label: 'Дата прихода',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
+					}
+				},
+				{ key: 'kolvo_prihoda', label: 'Количество прихода (шт)', sortable: true},
+				{ 
+					key: 'data_vidachi',
+					label: 'Дата выдачи',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'kolvo_prihoda', label: 'Количество прихода (шт)', sortable: true},
-					{ 
-						key: 'data_vidachi',
-						label: 'Дата выдачи',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
+					}
+				},
+				{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
+				{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
+				{ key: 'srock_noski', label: 'Срок носки', sortable: true},
+				{ 
+					key: 'data_vozvrata',
+					label: 'Дата возврата',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
-					{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
-					{ key: 'srock_noski', label: 'Срок носки', sortable: true},
-					{ 
-						key: 'data_vozvrata',
-						label: 'Дата возврата',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
-						}
-					},
-					{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
-					{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
-					{ key: 'primechanie', label: 'Примечание', sortable: true}
-				]
-			};
+					}
+				},
+				{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
+				{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
+				{ key: 'primechanie', label: 'Примечание', sortable: true}
+			]
+		};
 	},
 	MaterialsCount: function(){
 			var skladId = this._id;
@@ -653,62 +596,52 @@ Template.updateSkladForm.helpers({
 			return materialsInSklad.length;
 	},
 	settingsListMaterial: function(){
-			var skladId = this._id;
-			var materials = Materials.find().fetch();
-			var materialsInSklad = _.where(materials, {mesto: skladId});
-			return {
-				collection: materialsInSklad,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+		var skladId = this._id;
+		var materials = Materials.find().fetch();
+		var materialsInSklad = _.where(materials, {mesto: skladId});
+		return {
+			collection: materialsInSklad,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg material"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg material"></i></a>');
-						}
-					},
-					{ key: 'name', label: 'Наименование', sortable: true},
-					{
-						key: 'mesto',
-						label: 'Место размещения',
-						sortable: true,
-						fn: function (value){
-							if (Sklads.findOne({_id: value})){
-								var skladOne = Sklads.findOne({_id: value});
-								return skladOne.name;
-							};
-							if (ObectExplyats.findOne({_id: value})){
-								var obectExplyatOne = ObectExplyats.findOne({_id: value});
-								return obectExplyatOne.name;
-							};
-						}
-					},
-					{ key: 'kolvo', label: 'Количество', sortable: true},
-					{ key: 'razmer', label: 'Размер', sortable: true},
-					{ key: 'primechanie', label: 'Примечание', sortable: true}
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg material"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg material"></i></a>');
+					}
+				},
+				{ key: 'name', label: 'Наименование', sortable: true},
+				{
+					key: 'mestoName',
+					label: 'Место размещения',
+					sortable: true
+				},
+				{ key: 'kolvo', label: 'Количество', sortable: true},
+				{ key: 'razmer', label: 'Размер', sortable: true},
+				{ key: 'primechanie', label: 'Примечание', sortable: true}
 			]
-			};
+		};
 	}
 });
 
@@ -731,15 +664,15 @@ Template.updateSkladForm.events({
 		var Material = this;
 		// checks if the actual clicked element has the class `delete`
 		if (event.target.className == "fa fa-times fa-lg material") {
-				Materials.remove(Material._id, function(error){
-					if(error){
-						alertify.error("Ошибка!", error);
-						console.log("Remove Error:", error);
-					} else {
-						alertify.success("Матерьял успешно удален!");
-						console.log("Material Remove!");
-					}
-				});
+			Materials.remove(Material._id, function(error){
+				if(error){
+					alertify.error("Ошибка!", error);
+					console.log("Remove Error:", error);
+				} else {
+					alertify.success("Матерьял успешно удален!");
+					console.log("Material Remove!");
+				}
+			});
 		}
 	}
 });
@@ -764,15 +697,15 @@ Template.updateSkladForm.events({
 		var SpezOdezda = this;
 		// checks if the actual clicked element has the class `delete`
 		if (event.target.className == "fa fa-times fa-lg spezOdezda") {
-				SpezOdezdas.remove(SpezOdezda._id, function(error){
-					if(error){
-						alertify.error("Ошибка!", error);
-						console.log("Remove Error:", error);
-					} else {
-						alertify.success("Спец. одежда успешно удалена!");
-						console.log("SpezOdezda Remove!");
-					}
-				});
+			SpezOdezdas.remove(SpezOdezda._id, function(error){
+				if(error){
+					alertify.error("Ошибка!", error);
+					console.log("Remove Error:", error);
+				} else {
+					alertify.success("Спец. одежда успешно удалена!");
+					console.log("SpezOdezda Remove!");
+				}
+			});
 		}
 	}
 });

@@ -55,73 +55,67 @@ Template.updateCexForm.helpers({
 		var workers = Workers.find().fetch();
 		var workersInCex = _.where(workers, {cex: CexId});
 		return {
-				collection: workersInCex,
-				rowsPerPage: 10,
-				showFilter: true,
-				showColumnToggles: true,
-				class: 'table table-bordered table-hover col-sm-12',
-				fields: [
-					{ 
-						key: 'delete',
-						//headerClass: 'col-md-1',
-						label: 'Удалить',
-						hideToggle: true,
-						sortable: false,
-						hidden: function () {
-							var loggedInUser = Meteor.user();
+			collection: workersInCex,
+			rowsPerPage: 10,
+			showFilter: true,
+			showColumnToggles: true,
+			class: 'table table-bordered table-hover col-sm-12',
+			fields: [
+				{ 
+					key: 'delete',
+					//headerClass: 'col-md-1',
+					label: 'Удалить',
+					hideToggle: true,
+					sortable: false,
+					hidden: function () {
+						var loggedInUser = Meteor.user();
 						if (!Roles.userIsInRole(loggedInUser, ['admin','moderator'])) {
-									return true;
-							}
-						},
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Worker"></i></a>');
+							return true;
 						}
 					},
-					{ 
-						key: 'edit',
-						//headerClass: 'col-md-1',
-						label: 'Изменить / посмотреть',
-						sortable: false,
-						fn: function (value){
-							return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Worker"></i></a>');
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-times fa-lg Worker"></i></a>');
+					}
+				},
+				{ 
+					key: 'edit',
+					//headerClass: 'col-md-1',
+					label: 'Изменить / посмотреть',
+					sortable: false,
+					fn: function (value){
+						return new Spacebars.SafeString('<a><i class="fa fa-pencil fa-lg Worker"></i></a>');
+					}
+				},
+				{ key: 'Familia', label: 'Фамилия', sortable: true},
+				{ key: 'Name', label: 'Имя', sortable: true},
+				{ key: 'Otchestvo', label: 'Отчество', sortable: true},
+				{ key: 'nomerKarti', label: 'Номер карты', sortable: true},
+				{
+					key: 'cexName',
+					label: 'Цех',
+					sortable: true
+				},
+				{ key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
+				{ 
+					key: 'data_postyplenia_na_raboty',
+					label: 'Дата поступления на работу',
+					sortable: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('DD.MM.YYYY');
 						}
-					},
-					{ key: 'Familia', label: 'Фамилия', sortable: true},
-					{ key: 'Name', label: 'Имя', sortable: true},
-					{ key: 'Otchestvo', label: 'Отчество', sortable: true},
-					{ key: 'nomerKarti', label: 'Номер карты', sortable: true},
-					{
-						key: 'cex',
-						label: 'Цех',
-						sortable: true,
-						fn: function(value){
-							if (Cexs.findOne({_id: value})){
-								var cexOne = Cexs.findOne({_id: value});
-								return cexOne.full_name;
-							};
-						}
-					},
-					{ key: 'tabel_nomer', label: 'Табельный номер', sortable: true},
-					{ 
-						key: 'data_postyplenia_na_raboty',
-						label: 'Дата поступления на работу',
-						sortable: true,
-						fn: function(value){
-							if(value){
-								return moment(value).format('DD.MM.YYYY');
-							}
-						}
-					},
-					{ key: 'pol', label: 'Пол', sortable: true},
-					{ key: 'rost', label: 'Рост', sortable: true},
-					{ key: 'razmer_odezdi', label: 'Размер одежды', sortable: true},
-					{ key: 'razmer_obyvi', label: 'Размер обуви', sortable: true},
-					{ key: 'razmer_golovnogo_ubora', label: 'Размер головного убора', sortable: true},
-					{ key: 'tel', label: 'Телефон', sortable: true},
-					{ key: 'tel_rab', label: 'Рабочий телефон', sortable: true},
-					{ key: 'dolznost', label: 'Должность', sortable: true},
-					{ key: 'podpis', label: 'Подпись', sortable: true}
-				]
+					}
+				},
+				{ key: 'pol', label: 'Пол', sortable: true},
+				{ key: 'rost', label: 'Рост', sortable: true},
+				{ key: 'razmer_odezdi', label: 'Размер одежды', sortable: true},
+				{ key: 'razmer_obyvi', label: 'Размер обуви', sortable: true},
+				{ key: 'razmer_golovnogo_ubora', label: 'Размер головного убора', sortable: true},
+				{ key: 'tel', label: 'Телефон', sortable: true},
+				{ key: 'tel_rab', label: 'Рабочий телефон', sortable: true},
+				{ key: 'dolznost', label: 'Должность', sortable: true},
+				{ key: 'podpis', label: 'Подпись', sortable: true}
+			]
 		};
 	}
 });
