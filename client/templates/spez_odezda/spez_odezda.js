@@ -66,20 +66,20 @@ Template.SpezOdezdaList.helpers({
 					}
 				},
 				{ key: 'kolvo_vidachi', label: 'Количество выдачи (шт)', sortable: true},
-				{ key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
+				// { key: 'procent_iznosa_vidachi', label: 'Процент износа выдачи (%)', sortable: true},
 				{ key: 'srock_noski', label: 'Срок носки', sortable: true},
-				{ 
-					key: 'data_vozvrata',
-					label: 'Дата возврата',
-					sortable: true,
-					fn: function(value){
-						if(value){
-							return moment(value).format('DD.MM.YYYY');
-						}
-					}
-				},
-				{ key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
-				{ key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
+				// { 
+				// 	key: 'data_vozvrata',
+				// 	label: 'Дата возврата',
+				// 	sortable: true,
+				// 	fn: function(value){
+				// 		if(value){
+				// 			return moment(value).format('DD.MM.YYYY');
+				// 		}
+				// 	}
+				// },
+				// { key: 'kolvo_vozvrata', label: 'Количество возврата (шт)', sortable: true},
+				// { key: 'procent_iznosa_vozvrata', label: 'Процент износа возврата (%)', sortable: true},
 				{ key: 'primechanie', label: 'Примечание', sortable: true}
 			]
 		};
