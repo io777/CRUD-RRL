@@ -294,7 +294,7 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'visota_nad_morem', label: 'Высота над уровнем моря (м)', sortable: true, hidden: true },
 				{ 
 					key: 'god_vvoda_v_exsplyataz',
-					label: 'Год ввода в экспл. (г)',
+					label: 'Год ввода в экспл. (год)',
 					sortable: true,
 					fn: function(value){
 						if(value){
@@ -306,16 +306,116 @@ Template.updateObectExplyatForm.helpers({
 				{ key: 'nalichie_gosexpertiz', label: 'Наличие гос экспертизы (есть/нет)', sortable: true, hidden: true },
 				{ key: 'zashitnoe_pokritie_ams', label: 'Защитное покрытие АМС (год/оцинкована)', sortable: true },
 				{ key: 'nalichie_lebedki', label: 'Наличие лебедки (тип)', sortable: true, hidden: true },
-				{ key: 'protokol_izmerenia_osadok_fundamenta', label: 'Протокол измерения осадок фундаментов АМС (год)', sortable: true, hidden: true },
-				{ key: 'protokol_izmerenia_otklonenia_stvola_AMS_ot_vertikali', label: 'Протокол измерения отклонения ствола АМС от вертикали (год)', sortable: true, hidden: true },
-				{ key: 'protokol_izmerenia_yglovih_otkloneniy_AMS', label: 'Протокол измерения угловых отклонений АМС (год)', sortable: true, hidden: true },
-				{ key: 'akt_revizii_AMS', label: 'Акт ревизии АМС (год)', sortable: true, hidden: true },
-				{ key: 'akt_proverki_natazenia_v_ottazkah', label: 'Акт проверки монтажных натяжений в оттяжках (год)', sortable: true, hidden: true },
-				{ key: 'akt_priemki_remotnih_rabot_na_AMS', label: 'Акт приемки ремонтных работ на АМС (год)', sortable: true, hidden: true },
-				{ key: 'akt_defectnogo_sostoyania_AMS', label: 'Акт дефектного состояния АМС (год)', sortable: true, hidden: true },
-				{ key: 'akt_priemki_rabot_po_kap_remonty_AMS', label: 'Акт приемки работ по капитальному ремонту АМС (год)', sortable: true, hidden: true },
-				{ key: 'remont_fundamentov_AMS', label: 'Ремонт фундаментов АМС (год)', sortable: true, hidden: true },
-				{ key: 'kap_remont_AMS_bez_pokraski', label: 'Капитальный ремонт АМС кроме покраски (год)', sortable: true, hidden: true },
+				{ 
+					key: 'protokol_izmerenia_osadok_fundamenta',
+					label: 'Протокол измерения осадок фундаментов АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'protokol_izmerenia_otklonenia_stvola_AMS_ot_vertikali',
+					label: 'Протокол измерения отклонения ствола АМС от вертикали (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'protokol_izmerenia_yglovih_otkloneniy_AMS',
+					label: 'Протокол измерения угловых отклонений АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					} 
+				},
+				{ 
+					key: 'akt_revizii_AMS',
+					label: 'Акт ревизии АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'akt_proverki_natazenia_v_ottazkah',
+					label: 'Акт проверки монтажных натяжений в оттяжках (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'akt_priemki_remotnih_rabot_na_AMS',
+					label: 'Акт приемки ремонтных работ на АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'akt_defectnogo_sostoyania_AMS',
+					label: 'Акт дефектного состояния АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'akt_priemki_rabot_po_kap_remonty_AMS',
+					label: 'Акт приемки работ по капитальному ремонту АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'remont_fundamentov_AMS',
+					label: 'Ремонт фундаментов АМС (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
+				{ 
+					key: 'kap_remont_AMS_bez_pokraski',
+					label: 'Капитальный ремонт АМС кроме покраски (год)',
+					sortable: true,
+					hidden: true,
+					fn: function(value){
+						if(value){
+							return moment(value).format('YYYY');
+						}
+					}
+				},
 				{ key: 'nalicie_proektnoi_doc', label: 'Наличие проектной документации на АМС (нет/место хранения)', sortable: true, hidden: true },
 				{ key: 'tip_proekta_AMS', label: 'Тип проекта АМС (ГОСТ)', sortable: true, hidden: true },
 				{ key: 'project_organization', label: 'Проектная организация', sortable: true, hidden: true },

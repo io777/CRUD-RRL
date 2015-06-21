@@ -112,32 +112,42 @@ AutoForm.addHooks(['insertAFYForm', 'updateAFYForm'], {
 				var dlinna_AVT_AFT = AutoForm.getFieldValue("dlinna_AVT_AFT");
 				try{
 					doc.poteri_AVT_AFT = (ydelnie_poteri_na_metr * dlinna_AVT_AFT).toFixed(2);
-				} catch(e){}
-			}
+				} catch(e){
+					console.log(error);
+				};
+			};
 			if(AutoForm.getFieldValue("power_tx") && doc.poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
 				var power_tx = AutoForm.getFieldValue("power_tx");
 				var koll_pered = AutoForm.getFieldValue("koll_pered");
 				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
 				try{
 					doc.moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx) / 0.001)) - doc.poteri_AVT_AFT).toFixed(2);
-				}catch(e){}
-			}
+				}catch(e){
+					console.log(error);
+				}
+			}else{
+				doc.moshnost_na_vhode_antenn_Dbm = 0;
+			};
 			if(doc.moshnost_na_vhode_antenn_Dbm){
 				try{
 					doc.moshnost_na_vhode_antenn_wt = ((Math.pow(10,(doc.moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
-				}catch(e){}
-			}
+				}catch(e){
+					console.log(error);
+				};
+			}else{
+				doc.moshnost_na_vhode_antenn_wt = 0;
+			};
 			if(AutoForm.getFieldValue("mesto")){
 				var mestoId = AutoForm.getFieldValue("mesto");
 				if (Sklads.findOne({_id: mestoId})){
 					var skladOne = Sklads.findOne({_id: mestoId});
 					doc.mestoName = skladOne.name;
-				}
+				};
 				if (ObectExplyats.findOne({_id: mestoId})){
 					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
 					doc.mestoName = obectExplyatOne.name;
-				}
-			}
+				};
+			};
 			AutoForm.validateForm("insertAFYForm");
 			return doc;
 		},
@@ -147,32 +157,40 @@ AutoForm.addHooks(['insertAFYForm', 'updateAFYForm'], {
 				var dlinna_AVT_AFT = AutoForm.getFieldValue("dlinna_AVT_AFT");
 				try{
 					doc.$set.poteri_AVT_AFT = ((ydelnie_poteri_na_metr * dlinna_AVT_AFT)).toFixed(2);
-				} catch(e){}
-			}
+				}catch(e){console.log(error);}
+			};
 			if(AutoForm.getFieldValue("power_tx") && doc.$set.poteri_AVT_AFT && AutoForm.getFieldValue("koll_pered")){
 				var power_tx = AutoForm.getFieldValue("power_tx");
 				var koll_pered = AutoForm.getFieldValue("koll_pered");
 				var log10 = function(x) { return Math.LOG10E * Math.log(x); }
 				try{
 					doc.$set.moshnost_na_vhode_antenn_Dbm = ((10 * log10((koll_pered * power_tx) / 0.001)) - doc.$set.poteri_AVT_AFT).toFixed(2);
-				}catch(e){}
-			}
+				}catch(e){
+					console.log(error);
+				};
+			}else{
+				doc.$set.moshnost_na_vhode_antenn_Dbm = 0;
+			};
 			if(doc.$set.moshnost_na_vhode_antenn_Dbm){
 				try{
 					doc.$set.moshnost_na_vhode_antenn_wt = ((Math.pow(10,(doc.$set.moshnost_na_vhode_antenn_Dbm / 10))) / 1000).toFixed(2);
-				}catch(e){}
-			}
+				}catch(e){
+					console.log(error);
+				};
+			}else{
+				doc.$set.moshnost_na_vhode_antenn_wt = 0;
+			};
 			if(AutoForm.getFieldValue("mesto")){
 				var mestoId = AutoForm.getFieldValue("mesto");
 				if (Sklads.findOne({_id: mestoId})){
 					var skladOne = Sklads.findOne({_id: mestoId});
 					doc.$set.mestoName = skladOne.name;
-				}
+				};
 				if (ObectExplyats.findOne({_id: mestoId})){
 					var obectExplyatOne = ObectExplyats.findOne({_id: mestoId});
 					doc.$set.mestoName = obectExplyatOne.name;
-				}
-			}
+				};
+			};
 			AutoForm.validateForm("updateAFYForm");
 			return doc;
 		}

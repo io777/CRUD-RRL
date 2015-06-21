@@ -62,6 +62,16 @@ Template.TechZdaniaList.helpers({
 						}
 					}
 				},
+				{ key: 'material_sten_vnesh_obhifka', label: 'Материал стен внешней обшивки', sortable: true, hidden: true},
+				{ key: 'material_sten_vertical_stoiki_mezdy_polom_potolkom', label: 'Материал стен вертикальные стойки между полом и потолком', sortable: true, hidden: true},
+				{ key: 'material_sten_verticalnie_stoiki', label: 'Материал стен вертикальные стойки', sortable: true, hidden: true},
+				{ key: 'material_sten_yteplitel', label: 'Материал стен утеплитель', sortable: true, hidden: true},
+				{ key: 'material_sten_vnytrennya_obshifka', label: 'Материал стен внутренняя обшивка', sortable: true, hidden: true},
+				{ key: 'systema_otoplenia', label: 'Система отопления', sortable: true, hidden: true},
+				{ key: 'nalichie_vodoprovoda', label: 'Наличие водопровода', sortable: true, hidden: true},
+				{ key: 'sistema_ventilacii', label: 'Система вентиляции', sortable: true, hidden: true},
+				{ key: 'sistema_gorachego_vodosnabzenie', label: 'Система горячего водоснабжения', sortable: true, hidden: true},
+				{ key: 'gazosnabzenie', label: 'Газоснабжение', sortable: true, hidden: true},
 				{ key: 'krovla', label: 'Кровля', sortable: true},
 				{ key: 'perekritia', label: 'Перекрытия', sortable: true},
 				{ key: 'chislo_etozei', label: 'Число этажей', sortable: true},
